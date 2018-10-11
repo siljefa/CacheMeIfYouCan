@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,38 +32,25 @@ public class MainActivity extends AppCompatActivity
     {
 
         private LatLng HIOF = new LatLng(59.12797849, 11.35272861);
-        private LatLng FREDRIKSTAD = new LatLng(59.21047628, 10.93994737);
         private GoogleMap gMap;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
-            //setContentView(R.layout.activity_main);
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
+            Log.d("","Create -----------------------------------------");
         }
 
         @Override
         public void onMapReady(GoogleMap googleMap)
         {
+            Log.d("","Ready -----------------------------------------");
             gMap = googleMap;
-            setUpDefaultUISettings();
-
-            gMap.addMarker(new MarkerOptions().position(HIOF).title("Østfold University College"));
             gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(HIOF, 15, 0, 0)));
-
-            gMap.addMarker(new MarkerOptions().position(FREDRIKSTAD).title("Fredrikstad Kino"));
-            gMap.animateCamera(CameraUpdateFactory.newLatLng(FREDRIKSTAD), 2000, null);
-        }
-
-        private void setUpDefaultUISettings() {
-            UiSettings uiSettings = gMap.getUiSettings();
-            uiSettings.setCompassEnabled(true);
-            uiSettings.setTiltGesturesEnabled(true);
-            uiSettings.setZoomControlsEnabled(true);
-            uiSettings.setMapToolbarEnabled(false);
         }
     }
 
@@ -74,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab =  findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -150,12 +138,6 @@ public class MainActivity extends AppCompatActivity
         {
 
         } else if (id == R.id.nav_manage)
-        {
-
-        } else if (id == R.id.nav_share)
-        {
-
-        } else if (id == R.id.nav_send)
         {
 
         }
