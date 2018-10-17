@@ -1,6 +1,5 @@
 package no.hiof.stianad.cachemeifyoucan;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,10 +15,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener
 {
     private LatLng HIOF_CACHE = new LatLng(59.12797849, 11.35272861);
     private LatLng FREDRIKSTAD_CACHE = new LatLng(59.21047628, 10.93994737);
@@ -76,5 +75,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapLongClick(LatLng latLng)
     {
         addMarker(latLng);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker)
+    {
+        return false;
     }
 }
