@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,32 +28,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
-
-    class MainMap extends FragmentActivity implements OnMapReadyCallback
-    {
-
-        private LatLng HIOF = new LatLng(59.12797849, 11.35272861);
-        private GoogleMap gMap;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState)
-        {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-            Log.d("","Create -----------------------------------------");
-        }
-
-        @Override
-        public void onMapReady(GoogleMap googleMap)
-        {
-            Log.d("","Ready -----------------------------------------");
-            gMap = googleMap;
-            gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(HIOF, 15, 0, 0)));
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -81,6 +56,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //MapFragment movieDetailFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
     }
 
     @Override
@@ -139,8 +117,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage)
         {
-
+            MapFragment mapFragment = new MapFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.mainLayout, mapFragment).commit();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
