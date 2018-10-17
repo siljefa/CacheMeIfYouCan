@@ -28,23 +28,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
+    MapFragment mapFragment = new MapFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mainLayout, mapFragment).commit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab =  findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mapFragment.addMarker(new LatLng(59.12797849, 11.35272861));
             }
         });
 
@@ -56,9 +57,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        //MapFragment movieDetailFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
     }
 
     @Override
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -99,7 +97,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item)
     {
@@ -108,7 +105,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera)
         {
-            // Handle the camera action
         } else if (id == R.id.nav_gallery)
         {
 
@@ -117,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage)
         {
-            MapFragment mapFragment = new MapFragment();
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.mainLayout, mapFragment).commit();
         }
