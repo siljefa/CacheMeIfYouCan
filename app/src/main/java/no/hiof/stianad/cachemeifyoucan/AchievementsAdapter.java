@@ -9,16 +9,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class AchievementsAdapter extends ArrayAdapter<Achievement> {
-    public AchievementsAdapter(Context context, ArrayList<Achievement> achievements){
+public class AchievementsAdapter extends ArrayAdapter<Achievement>
+{
+    public AchievementsAdapter(Context context, ArrayList<Achievement> achievements)
+    {
         super(context, 0, achievements);
     }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
 
         Achievement achievement = getItem(position);
 
-        if(convertView == null)
+        if (convertView == null)
         {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_achievement, parent, false);
         }

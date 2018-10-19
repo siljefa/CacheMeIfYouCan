@@ -62,7 +62,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private void setUpDefaultUISettings()
     {
         UiSettings uiSettings = gMap.getUiSettings();
-        uiSettings.setCompassEnabled(true);
+        uiSettings.setCompassEnabled(false);
         uiSettings.setTiltGesturesEnabled(true);
         uiSettings.setZoomControlsEnabled(false);
         uiSettings.setMapToolbarEnabled(false);
