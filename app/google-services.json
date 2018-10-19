@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "380586936678",
+    "firebase_url": "https://cachemeifyoucan-f9042.firebaseio.com",
+    "project_id": "cachemeifyoucan-f9042",
+    "storage_bucket": "cachemeifyoucan-f9042.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380586936678:android:c36e5a8ea4b3a98f",
+        "android_client_info": {
+          "package_name": "no.hiof.stianad.cachemeifyoucan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380586936678-o7oc34tbtc4jvnd9g1bo2q6ofl14vu4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "no.hiof.stianad.cachemeifyoucan",
+            "certificate_hash": "39536dcb7d20ccdd47d5b379724b5001b915a2d9"
+          }
+        },
+        {
+          "client_id": "380586936678-uudgjpj4e9o10bmo84ncvso5oou95gnt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIPkdXagNodxsbFns257csBUC8qc-60yE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380586936678-uudgjpj4e9o10bmo84ncvso5oou95gnt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
