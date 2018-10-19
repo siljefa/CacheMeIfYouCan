@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.editText_username);  //Username
         password = (EditText)findViewById(R.id.editText_password);  //Password
         login_button = (Button)findViewById(R.id.button_login);     //Loginbutton
-        createAccount_button = (Button)findViewById(R.id.button_createUser);    //Create User 
+        createAccount_button = (Button)findViewById(R.id.button_createUser);    //Create User
 
         login_button.setOnClickListener(
                 new View.OnClickListener() {
