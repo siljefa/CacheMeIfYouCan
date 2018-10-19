@@ -16,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
     private static EditText username;
     private static EditText password;
     private static Button login_button;
-    private static Button createAccount_button;
+    private static Button createAccount_button;  //In beta version this will have functionality. In alpha version this merely included for structure.
     int loginAttempts = 3;
 
     @Override
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.editText_username);  //Username
         password = (EditText)findViewById(R.id.editText_password);  //Password
         login_button = (Button)findViewById(R.id.button_login);     //Loginbutton
-        createAccount_button = (Button)findViewById(R.id.button_createUser);    //Create User button
+        createAccount_button = (Button)findViewById(R.id.button_createUser);    //Create User 
 
         login_button.setOnClickListener(
                 new View.OnClickListener() {
