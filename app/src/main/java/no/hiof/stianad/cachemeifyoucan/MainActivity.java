@@ -83,13 +83,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera)
         {
-            CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
-            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            /*CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
+            bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());*/
+            ProfileFragment profileFragment = new ProfileFragment();
+            fragmentManager.beginTransaction().replace(R.id.mainLayout, profileFragment).commit();
 
         }
         else if (id == R.id.nav_gallery)
@@ -102,12 +106,11 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_manage)
         {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+
             fragmentManager.beginTransaction().replace(R.id.mainLayout, mapFragment).commit();
         }
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
