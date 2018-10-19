@@ -1,5 +1,6 @@
 package no.hiof.stianad.cachemeifyoucan;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,6 +49,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     {
         gMap = googleMap;
         googleMap.setOnMapLongClickListener(this);
+        googleMap.setOnMarkerClickListener(this);
         setUpDefaultUISettings();
 
         //gMap.addMarker(new MarkerOptions().position(HIOF_CACHE).title("Cache ved Østfold University College"));
@@ -77,9 +79,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         addMarker(latLng);
     }
 
+
+
     @Override
     public boolean onMarkerClick(Marker marker)
     {
+        CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
+        bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
         return false;
     }
 }
