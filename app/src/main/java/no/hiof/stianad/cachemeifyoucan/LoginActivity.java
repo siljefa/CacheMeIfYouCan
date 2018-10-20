@@ -52,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                         /*Checks if username and password matches. In beta version this will have functionality that checks against a database of stored user information.
                          In alpha version this is merely set up to show the structure of the app.
                          */
-                        if (username.getText().toString().equals("user")
-                                && password.getText().toString().equals("pass")) {
+                        if (true/*username.getText().toString().equals("user")
+                                && password.getText().toString().equals("pass")*/) {
                             //When user information input is correct this opens up the geocache app to the main page of it
                             startApp();
                         }

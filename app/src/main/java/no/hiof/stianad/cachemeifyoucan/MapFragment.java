@@ -77,6 +77,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapLongClick(LatLng latLng)
     {
         addMarker(latLng);
+        CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isEditing", true);
+        bottomSheetDialogFragment.setArguments(args);
+        bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 
 
@@ -85,7 +90,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public boolean onMarkerClick(Marker marker)
     {
         CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isEditing", false);
+        bottomSheetDialogFragment.setArguments(args);
         bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
         return false;
     }
+
+
 }

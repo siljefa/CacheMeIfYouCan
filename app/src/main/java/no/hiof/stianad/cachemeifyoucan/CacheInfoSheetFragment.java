@@ -1,25 +1,23 @@
 package no.hiof.stianad.cachemeifyoucan;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 
 public class CacheInfoSheetFragment extends BottomSheetDialogFragment
 {
-
     private boolean isEditing;
+    private View contentView;
 
-    private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback()
+    /*private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback()
     {
         @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState)
@@ -33,27 +31,43 @@ public class CacheInfoSheetFragment extends BottomSheetDialogFragment
         public void onSlide(@NonNull View bottomSheet, float slideOffset)
         {
         }
-    };
+    };*/
 
-
-    @SuppressLint("RestrictedApi")
     @Override
-    public void setupDialog(Dialog dialog, int style)
+    public void onStart()
     {
-        super.setupDialog(dialog, style);
-        View contentView = View.inflate(getContext(), R.layout.fragment_cache_info_sheet, null);
-        dialog.setContentView(contentView);
+        super.onStart();
 
-
-
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
-
-        if (behavior != null && behavior instanceof BottomSheetBehavior)
+        if(!isEditing)
         {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-            ((BottomSheetBehavior) behavior).setPeekHeight(500);
+            EditText editText = contentView.findViewById(R.id.sheetTopText);
+            editText.setFocusable(false);
+            editText.setClickable(false);
+            editText.setFocusableInTouchMode(false);
+            editText.setLongClickable(false);
+            editText.setInputType(InputType.TYPE_NULL);
         }
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        contentView = View.inflate(getContext(), R.layout.fragment_cache_info_sheet, null);
+        if (getArguments() != null)
+        {
+            isEditing = getArguments().getBoolean("isEditing");
+        }
+        return contentView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) contentView.getParent());
+        mBehavior.setPeekHeight(200);
     }
 }
 
