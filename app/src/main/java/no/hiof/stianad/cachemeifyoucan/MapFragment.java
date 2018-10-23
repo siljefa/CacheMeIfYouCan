@@ -80,6 +80,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
         Bundle args = new Bundle();
         args.putBoolean("isEditing", true);
+        args.putDouble("Lat", latLng.latitude);
+        args.putDouble("Lon", latLng.longitude);
         bottomSheetDialogFragment.setArguments(args);
         bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }

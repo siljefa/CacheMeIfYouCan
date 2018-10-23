@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView android:id="@+id/bottom_sheet1"
+<android.support.v4.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
@@ -8,106 +9,124 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="vertical"
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:windowSoftInputMode="stateHidden">
 
-        <LinearLayout
-            android:id="@+id/tap_action_layout"
-            android:padding="10dp"
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="700dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/saveCacheBtn" />
+
+        <Button
+            android:id="@+id/saveCacheBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Save Cache"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout3" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout4"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_menu_gallery"/>
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Cache Tittel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <EditText
-                android:id="@+id/sheetTopText"
-                android:text="Info om cache og stuff! Avstand osv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
-
-
-            <Button
-                android:id="@+id/funnetCacheBtn"
+                android:id="@+id/name_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Funnet cache"
-                android:layout_alignParentBottom="true"/>
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tap_action_layout2"
-            android:padding="10dp"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="horizontal">
+            android:layout_height="47dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Latitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout4">
 
-            <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_menu_gallery"/>
-
-            <TextView
+            <EditText
+                android:id="@+id/lat_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nyttig Info /n Masse tekst, mer text all teksten"
-                android:textColor="#000000"/>
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tap_action_layout3"
-            android:padding="10dp"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout2"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Longitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout">
 
-            <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_menu_gallery"/>
-
-            <TextView
+            <EditText
+                android:id="@+id/lon_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nyttig Info /n Masse tekst, mer text all teksten"
-                android:textColor="#000000"/>
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tap_action_layout4"
-            android:padding="10dp"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout3"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout2">
 
-            <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_menu_gallery"/>
-
-            <TextView
+            <EditText
+                android:id="@+id/description_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nyttig Info /n/r Masse tekst, mer text all teksten"
-                android:textColor="#000000"/>
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/foundCacheBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Løst Cache"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout3" />
 
-    </LinearLayout>
-
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
