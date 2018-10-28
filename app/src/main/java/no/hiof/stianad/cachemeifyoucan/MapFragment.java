@@ -62,7 +62,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private void setUpDefaultUISettings()
     {
         UiSettings uiSettings = gMap.getUiSettings();
-        uiSettings.setCompassEnabled(true);
+        uiSettings.setCompassEnabled(false);
         uiSettings.setTiltGesturesEnabled(true);
         uiSettings.setZoomControlsEnabled(false);
         uiSettings.setMapToolbarEnabled(false);
@@ -77,6 +77,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapLongClick(LatLng latLng)
     {
         addMarker(latLng);
+        CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isEditing", true);
+        args.putDouble("Lat", latLng.latitude);
+        args.putDouble("Lon", latLng.longitude);
+        bottomSheetDialogFragment.setArguments(args);
+        bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 
 
@@ -85,7 +92,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public boolean onMarkerClick(Marker marker)
     {
         CacheInfoSheetFragment bottomSheetDialogFragment = new CacheInfoSheetFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isEditing", false);
+        bottomSheetDialogFragment.setArguments(args);
         bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
         return false;
     }
+
+
 }
