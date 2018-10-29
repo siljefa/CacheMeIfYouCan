@@ -18,4 +18,23 @@ public class Cache
         this.difficulty = difficulty;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public LatLng getLatLng()
+    {
+        return latLng;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public int getDifficulty()
+    {
+        return difficulty;
+    }
 }

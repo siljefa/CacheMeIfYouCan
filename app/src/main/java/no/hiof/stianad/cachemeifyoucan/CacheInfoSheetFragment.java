@@ -1,5 +1,6 @@
-package no.hiof.stianad.cachemeifyoucan;
+/*package no.hiof.stianad.cachemeifyoucan;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import com.google.android.gms.maps.model.LatLng;
@@ -135,6 +138,23 @@ public class CacheInfoSheetFragment extends BottomSheetDialogFragment
     }
 
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setTitle("Suche verfeinern");
+
+
+        //set the dialog to non-modal and disable dim out fragment behind
+        Window window = dialog.getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+        return dialog;
+    }
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
@@ -155,5 +175,5 @@ public class CacheInfoSheetFragment extends BottomSheetDialogFragment
         }
         return contentView;
     }
-}
+}*/
 
