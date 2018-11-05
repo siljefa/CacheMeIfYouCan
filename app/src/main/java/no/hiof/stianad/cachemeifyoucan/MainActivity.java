@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -60,6 +61,20 @@ public class MainActivity extends AppCompatActivity
         {
             super.onBackPressed();
         }
+    }
+
+    public void showActionBar()
+    {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.hasExpandedActionView();
+        getSupportActionBar().show();
+    }
+
+    public void hideActionBar()
+    {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.collapseActionView();
+        getSupportActionBar().hide();
     }
 
     @Override
