@@ -1,10 +1,12 @@
 package no.hiof.stianad.cachemeifyoucan;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -34,6 +37,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private LatLng FREDRIKSTAD_CACHE = new LatLng(59.21047628, 10.93994737);
     private GoogleMap gMap;
     View bottomSheet;
+    View mainView;
     private int lastSheetState;
     private BottomSheetBehavior mBehavior;
 
@@ -48,8 +52,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        mainView = view;
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if(mapFragment != null)
+        if (mapFragment != null)
         {
             mapFragment.getMapAsync(this);
         }
@@ -62,9 +67,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback()
         {
             boolean isChangingSheetState;
+
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState)
             {
+                if( newState == BottomSheetBehavior.STATE_EXPANDED)
+                {
+                    Button closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
+                    closeSheetBtn.setVisibility(View.VISIBLE);
+                }
+
                 if (newState == BottomSheetBehavior.STATE_DRAGGING)
                 {
                     isChangingSheetState = true;
@@ -82,14 +94,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
                         ((MainActivity) getActivity()).hideActionBar();
-                    }
-                    else if ((slideOffset > 0 && lastSheetState == BottomSheetBehavior.STATE_COLLAPSED) || (slideOffset < 1 && lastSheetState == BottomSheetBehavior.STATE_EXPANDED))
+                    } else if ((slideOffset > 0 && lastSheetState == BottomSheetBehavior.STATE_COLLAPSED) || (slideOffset < 1 && lastSheetState == BottomSheetBehavior.STATE_EXPANDED))
                     {
                         mBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                         lastSheetState = BottomSheetBehavior.STATE_HALF_EXPANDED;
                         ((MainActivity) getActivity()).showActionBar();
-                    }
-                    else if ((slideOffset < 0.5 && lastSheetState == BottomSheetBehavior.STATE_HALF_EXPANDED) || (slideOffset <= 0.40 && lastSheetState == BottomSheetBehavior.STATE_EXPANDED))
+                    } else if ((slideOffset < 0.5 && lastSheetState == BottomSheetBehavior.STATE_HALF_EXPANDED) || (slideOffset <= 0.40 && lastSheetState == BottomSheetBehavior.STATE_EXPANDED))
                     {
                         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         lastSheetState = BottomSheetBehavior.STATE_COLLAPSED;
@@ -109,16 +119,86 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             lastSheetState = BottomSheetBehavior.STATE_HIDDEN;
         });
 
+        EditText editTextLat = bottomSheet.findViewById(R.id.lat_edit);
+        EditText editTextLon = bottomSheet.findViewById(R.id.lon_edit);
+        EditText editTextdescription = bottomSheet.findViewById(R.id.description_edit);
+        EditText editTextName = bottomSheet.findViewById(R.id.name_edit);
 
+        editTextLat.setOnFocusChangeListener((v, hasFocus) ->
+        {
+            if (!hasFocus)
+            {
+                hideKeyboard(v);
+            }
+            else
+            {
+                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
+                ((MainActivity) getActivity()).hideActionBar();
+            }
+        });
+
+
+        editTextLon.setOnFocusChangeListener((v, hasFocus) ->
+        {
+            if (!hasFocus)
+            {
+                hideKeyboard(v);
+            }
+            else
+            {
+                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
+                ((MainActivity) getActivity()).hideActionBar();
+            }
+        });
+
+
+        editTextdescription.setOnFocusChangeListener((v, hasFocus) ->
+        {
+            if (!hasFocus)
+            {
+                hideKeyboard(v);
+            }
+            else
+            {
+                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
+                ((MainActivity) getActivity()).hideActionBar();
+            }
+        });
+
+
+        editTextName.setOnFocusChangeListener((v, hasFocus) ->
+        {
+            if (!hasFocus)
+            {
+                hideKeyboard(v);
+            }
+            else
+            {
+                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
+                ((MainActivity) getActivity()).hideActionBar();
+            }
+        });
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void openViewBottomSheet(Cache selectedCache)
     {
+        // closeSheetBtn
         mBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         lastSheetState = BottomSheetBehavior.STATE_HALF_EXPANDED;
         Button saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
         Button foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
+        Button closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
         saveCacheBtn.setVisibility(View.GONE);
+        closeSheetBtn.setVisibility(View.GONE);
         foundCacheBtn.setVisibility(View.VISIBLE);
 
         EditText editTextLat = bottomSheet.findViewById(R.id.lat_edit);
@@ -138,12 +218,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     private void openEditBottomSheet(LatLng latLng)
     {
-        mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-        ((MainActivity) getActivity()).hideActionBar();
+        mBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        lastSheetState = BottomSheetBehavior.STATE_HALF_EXPANDED;
         Button foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
         Button saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
+        Button closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
         foundCacheBtn.setVisibility(View.GONE);
+        closeSheetBtn.setVisibility(View.GONE);
         saveCacheBtn.setVisibility(View.VISIBLE);
 
         EditText editTextLat = bottomSheet.findViewById(R.id.lat_edit);
