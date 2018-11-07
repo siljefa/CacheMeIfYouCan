@@ -1,14 +1,25 @@
 package no.hiof.stianad.cachemeifyoucan;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,23 +27,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.google.android.gms.maps.model.LatLng;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     MapFragment mapFragment = new MapFragment();
     FragmentManager fragmentManager = getSupportFragmentManager();
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    LocationManager locationManager;
+    String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         fragmentManager.beginTransaction().replace(R.id.mainLayout, mapFragment).commit();
 
-        //Style Toolbar to transparent and without title.
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), false);
+        checkLocationPermission();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         setSupportActionBar(toolbar);
@@ -49,6 +65,83 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
+    public boolean checkLocationPermission()
+    {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                new AlertDialog.Builder(this)
+                        .setTitle("Location Permission")
+                        .setMessage("Asking for permission")
+                        .setPositiveButton("Ok", (dialogInterface, i) ->
+                        {
+                            //Prompt the user once explanation has been shown
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+                        })
+                        .create()
+                        .show();
+            }
+            else
+            {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        }
+        else
+        {
+            locationManager.requestLocationUpdates(provider, 400, 1, mapFragment);
+            return true;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case MY_PERMISSIONS_REQUEST_LOCATION:
+            {
+                // If request is cancelled, the result array is empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        locationManager.requestLocationUpdates(provider, 400, 1, mapFragment);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED)
+        {
+            locationManager.requestLocationUpdates(provider, 400, 1, mapFragment);
+        }
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED)
+        {
+            locationManager.removeUpdates(mapFragment);
+        }
+    }
+
 
     @Override
     public void onBackPressed()

@@ -116,18 +116,18 @@
 
             <Button
                 android:id="@+id/closeSheetBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@android:drawable/ic_menu_close_clear_cancel"
+                android:background="@android:drawable/btn_dialog"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/saveCacheBtn"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Save Cache"
                 app:layout_constraintStart_toStartOf="parent"
