@@ -28,11 +28,16 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     MapFragment mapFragment = new MapFragment();
     FragmentManager fragmentManager = getSupportFragmentManager();
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference databaseCache = database.getReference("cache");
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     LocationManager locationManager;
@@ -63,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        DatabaseReference myRef = database.getReference("test");
+        String testId = myRef.push().getKey();
+        myRef.child(testId).setValue("Hello, World!");
 
     }
 
