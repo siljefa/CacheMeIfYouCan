@@ -16,15 +16,15 @@ public final class Caches
         return caches;
     }
 
-    public static Cache createCashe(LatLng latLng, String description, String name, int difficulty)
+    public static Cache createCache(LatLng latLng, String description, String name, int difficulty)
     {
         Cache newCache = new Cache(latLng, description, name, difficulty);
         caches.put((caches.size()+1), newCache);
         return  newCache;
     }
 
-    private static void addCacheToDatabse()
-    {
+        private static void addCacheToDatabse(Cache cache)
+        {
 
-    }
+        }
 }

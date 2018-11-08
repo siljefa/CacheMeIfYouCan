@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, LocationListener
@@ -41,7 +42,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private MainActivity parentActivity;
     private LatLng testLatLon = new LatLng(0,0);
     private Button closeSheetBtn, foundCacheBtn, saveCacheBtn;
-    private  EditText editTextLat, editTextLon, editTextdescription, editTextName;
+    private EditText editTextLat, editTextLon, editTextdescription, editTextName;
+    public  HashMap<String, Integer> markersOnMap = new HashMap<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -60,16 +62,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             mapFragment.getMapAsync(this);
         }
 
-        Caches.createCashe(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
-        Caches.createCashe(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
-        Caches.createCashe(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
-        Caches.createCashe(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
-        Caches.createCashe(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
-
-
-
         bottomSheet = view.findViewById(R.id.bottom_sheet2);
         mBehavior = BottomSheetBehavior.from(bottomSheet);
+        editTextLat = bottomSheet.findViewById(R.id.lat_edit);
+        editTextLon = bottomSheet.findViewById(R.id.lon_edit);
+        editTextdescription = bottomSheet.findViewById(R.id.description_edit);
+        editTextName = bottomSheet.findViewById(R.id.name_edit);
+        closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
+        foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
+        saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
+
+        Caches.createCache(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
+        Caches.createCache(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
+        Caches.createCache(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
+        Caches.createCache(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
+        Caches.createCache(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
+
         mBehavior.setHideable(true);
         setSheetState(BottomSheetBehavior.STATE_HIDDEN);
         mBehavior.setPeekHeight(200);
@@ -119,21 +127,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
         });
 
-        closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
-        foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
-        saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
         closeSheetBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_COLLAPSED));
         foundCacheBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_HIDDEN));
         saveCacheBtn.setOnClickListener(v ->
         {
-            Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
+            Caches.createCache(newCacheLocation, editTextdescription.getText().toString(),editTextdescription.getText().toString(), 2);
             setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
         });
-
-        editTextLat = bottomSheet.findViewById(R.id.lat_edit);
-        editTextLon = bottomSheet.findViewById(R.id.lon_edit);
-        editTextdescription = bottomSheet.findViewById(R.id.description_edit);
-        editTextName = bottomSheet.findViewById(R.id.name_edit);
 
         editTextLat.setOnFocusChangeListener((v, hasFocus) ->
         {
@@ -310,12 +310,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         HashMap<Integer, Cache> testCaches = Caches.getCaches();
         LatLngBounds testBounds = getBoundingBox(testLatLon, 10);
-        for(Cache cache: testCaches.values())
+        //for(Cache cache: testCaches.values())
+        for(Map.Entry<Integer, Cache> e : testCaches.entrySet())
         {
+            Integer cacheId = e.getKey();
+            Cache cache = e.getValue();
             addMarker(testBounds.northeast,"northeast BoundingBox");
             addMarker(testBounds.southwest,"southwest BoundingBox");
             if(testBounds.contains(cache.getLatLng()))
-                gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+            {
+                Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+                markersOnMap.put(newMarker.getId(), cacheId);
+            }
         }
     }
 
@@ -369,7 +375,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void addMarker(LatLng latLng, String title)
     {
-        gMap.addMarker(new MarkerOptions().position(latLng).title(title));
+
+        Marker newMarker = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     @Override
