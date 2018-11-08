@@ -27,7 +27,6 @@ public class AchievementsFragment extends Fragment{
         AttachCustomAdapterToListView();
     }
 
-
     private void AttachCustomAdapterToListView() {
         ArrayList<Achievement> achievements = new ArrayList<>();
 
@@ -50,5 +49,4 @@ public class AchievementsFragment extends Fragment{
 
         adapter.addAll(newAchievements);
     }
-
 }

@@ -18,7 +18,7 @@ public final class Caches
 
     public static Cache createCashe(LatLng latLng, String description, String name, int difficulty)
     {
-       Cache newCache = new Cache(latLng, description, name, difficulty);
+        Cache newCache = new Cache(latLng, description, name, difficulty);
         caches.put((caches.size()+1), newCache);
         return  newCache;
     }
