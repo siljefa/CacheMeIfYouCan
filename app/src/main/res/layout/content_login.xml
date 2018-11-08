@@ -8,4 +8,35 @@
     tools:context=".LoginActivity"
     tools:showIn="@layout/activity_login">
 
+    <Button
+        android:id="@+id/LoginActivity_button_signUp"
+        android:layout_width="304dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="369dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="22dp"
+        android:contentDescription="Sign up button"
+        android:text="Sign up"
+        app:layout_constraintBottom_toTopOf="@+id/LoginAcitivty_button_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/LoginAcitivty_button_login"
+        android:layout_width="304dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="80dp"
+        android:contentDescription="Login button"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LoginActivity_button_signUp" />
 </android.support.constraint.ConstraintLayout>
