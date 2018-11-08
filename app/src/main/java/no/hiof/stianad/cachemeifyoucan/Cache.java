@@ -18,6 +18,9 @@ public class Cache
         this.difficulty = difficulty;
     }
 
+    public Cache(){
+
+    }
     public String getName()
     {
         return name;
