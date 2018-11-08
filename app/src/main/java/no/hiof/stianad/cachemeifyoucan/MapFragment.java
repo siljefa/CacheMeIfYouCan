@@ -23,8 +23,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.HashMap;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, LocationListener
@@ -36,7 +39,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private boolean isChangingSheetState = false;
     private BottomSheetBehavior mBehavior;
     private MainActivity parentActivity;
-    private LatLng testLatLon;
+    private LatLng testLatLon = new LatLng(0,0);
     private Button closeSheetBtn, foundCacheBtn, saveCacheBtn;
     private  EditText editTextLat, editTextLon, editTextdescription, editTextName;
 
@@ -56,6 +59,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         {
             mapFragment.getMapAsync(this);
         }
+
+        Caches.createCashe(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
+        Caches.createCashe(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
+        Caches.createCashe(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
+        Caches.createCashe(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
+        Caches.createCashe(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
+
+
 
         bottomSheet = view.findViewById(R.id.bottom_sheet2);
         mBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -293,10 +304,58 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.setOnMapClickListener(this);
         setUpDefaultUISettings();
 
-
-        gMap.addMarker(new MarkerOptions().position(testLatLon).title("Cache ved Fredrikstad Kino"));
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(testLatLon, 15, 0, 0)));
+        //gMap.addMarker(new MarkerOptions().position(testLatLon).title("Cache ved Fredrikstad Kino"));
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(testLatLon, 10, 0, 0)));
         gMap.animateCamera(CameraUpdateFactory.newLatLng(testLatLon), 2000, null);
+
+        HashMap<Integer, Cache> testCaches = Caches.getCaches();
+        LatLngBounds testBounds = getBoundingBox(testLatLon, 10);
+        for(Cache cache: testCaches.values())
+        {
+            addMarker(testBounds.northeast,"northeast BoundingBox");
+            addMarker(testBounds.southwest,"southwest BoundingBox");
+            if(testBounds.contains(cache.getLatLng()))
+                gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+        }
+    }
+
+    private LatLngBounds getBoundingBox(LatLng latLng, double distance)
+    {
+        // Bounding box surrounding the point at given coordinates,
+        // assuming local approximation of Earth surface as a sphere
+        // of radius given by WGS84
+        // http://en.wikipedia.org/wiki/Earth_radius
+        double lat = Math.PI * latLng.latitude / 180.0;
+        double lon = Math.PI * latLng.longitude / 180.0;
+        double halfSide = 1000 * distance;
+
+        // Radius of Earth at given latitude
+        double radius = WGS84EarthRadius(lat);
+        // Radius of the parallel at given latitude
+        double pradius = radius * Math.cos(lat);
+
+        double latMin = lat - halfSide / radius;
+        double latMax = lat + halfSide / radius;
+        double lonMin = lon - halfSide / pradius;
+        double lonMax = lon + halfSide / pradius;
+
+        LatLng ne = new LatLng(180.0 * latMin / Math.PI, 180.0 * lonMin / Math.PI);
+        LatLng sw =  new LatLng( 180.0 * latMax / Math.PI, 180.0 * lonMax / Math.PI);
+
+        return new LatLngBounds(ne,sw);
+    }
+
+    private static double WGS84EarthRadius(double lat)
+    {
+        double WGS84_a = 6378137.0; // Major semiaxis [m]
+        double WGS84_b = 6356752.3; // Minor semiaxis [m]
+
+        // http://en.wikipedia.org/wiki/Earth_radius
+        double An = WGS84_a * WGS84_a * Math.cos(lat);
+        double Bn = WGS84_b * WGS84_b * Math.sin(lat);
+        double Ad = WGS84_a * Math.cos(lat);
+        double Bd = WGS84_b * Math.sin(lat);
+        return Math.sqrt((An*An + Bn*Bn) / (Ad*Ad + Bd*Bd));
     }
 
     private void setUpDefaultUISettings()
@@ -310,7 +369,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void addMarker(LatLng latLng, String title)
     {
-        gMap.addMarker(new MarkerOptions().position(latLng).title("Cache ved Østfold University College"));
+        gMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     @Override
