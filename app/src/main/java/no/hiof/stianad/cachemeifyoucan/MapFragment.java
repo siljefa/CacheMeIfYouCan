@@ -44,12 +44,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private BottomSheetBehavior mBehavior;
     private MainActivity parentActivity;
     private LatLng testLatLon = new LatLng(0,0);
-    private Button closeSheetBtn, foundCacheBtn, saveCacheBtn;
+    private Button closeSheetBtn, foundCacheBtn, saveCacheBtn, weatherBtn;
     private EditText editTextLat, editTextLon, editTextDescription, editTextName;
     private  HashMap<String, Integer> markersOnMap = new HashMap<>();
     private Marker newMarkerForCache;
-    private Button closeSheetBtn, foundCacheBtn, saveCacheBtn, weatherBtn;
-    private  EditText editTextLat, editTextLon, editTextdescription, editTextName;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -362,11 +360,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             Cache cache = e.getValue();
             addMarker(testBounds.northeast,"northeast BoundingBox");
             addMarker(testBounds.southwest,"southwest BoundingBox");
-            if(testBounds.contains(cache.getLatLng()))
+
+            Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+            markersOnMap.put(newMarker.getId(), cacheId);
+
+            /*if(testBounds.contains(cache.getLatLng()))
             {
                 Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
                 markersOnMap.put(newMarker.getId(), cacheId);
-            }
+            }*/
         }
     }
 
