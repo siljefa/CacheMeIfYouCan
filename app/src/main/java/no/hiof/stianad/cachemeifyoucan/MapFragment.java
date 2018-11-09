@@ -35,15 +35,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 {
     private LatLng newCacheLocation;
     private GoogleMap gMap;
-    private View bottomSheet;
     private int lastSheetState;
     private boolean isChangingSheetState = false;
     private BottomSheetBehavior mBehavior;
     private MainActivity parentActivity;
     private LatLng testLatLon = new LatLng(0,0);
     private Button closeSheetBtn, foundCacheBtn, saveCacheBtn;
-    private EditText editTextLat, editTextLon, editTextdescription, editTextName;
-    public  HashMap<String, Integer> markersOnMap = new HashMap<>();
+    private EditText editTextLat, editTextLon, editTextDescription, editTextName;
+    private  HashMap<String, Integer> markersOnMap = new HashMap<>();
+    private Marker newMarkerForCache;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -62,11 +62,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             mapFragment.getMapAsync(this);
         }
 
-        bottomSheet = view.findViewById(R.id.bottom_sheet2);
+        View bottomSheet = view.findViewById(R.id.bottom_sheet2);
         mBehavior = BottomSheetBehavior.from(bottomSheet);
         editTextLat = bottomSheet.findViewById(R.id.lat_edit);
         editTextLon = bottomSheet.findViewById(R.id.lon_edit);
-        editTextdescription = bottomSheet.findViewById(R.id.description_edit);
+        editTextDescription = bottomSheet.findViewById(R.id.description_edit);
         editTextName = bottomSheet.findViewById(R.id.name_edit);
         closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
         foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
@@ -134,12 +134,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             //Silje was here, tried to make so that description and name from the txt fields are
             // passed as name and desctiption values to the create cache function feel free to
             //comment out and go back to old if its wrong or messes up the code in any way
-            String cDescription = editTextdescription.getText().toString();
+            String cDescription = editTextDescription.getText().toString();
             String cName = editTextName.getText().toString();
-            Caches.createCashe(newCacheLocation, cDescription,cName, 2);
-            //old code
-            // Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
-            setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
+            String cLat = editTextLat.getText().toString();
+            String cLon = editTextLon.getText().toString();
+
+            if (cLat.length() > 0 && cLon.length() > 0)
+            {
+                LatLng latLng = new LatLng(Double.parseDouble(editTextLat.getText().toString()), Double.parseDouble(editTextLon.getText().toString()));
+                Cache newCache = Caches.createCashe(latLng, cDescription,cName, 2);
+                //old code
+                // Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
+                setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
+                if(newMarkerForCache.getPosition() != latLng)
+                {
+                    newMarkerForCache.setPosition(latLng);
+                }
+                markersOnMap.put(newMarkerForCache.getId(), newCache.getCacheId());
+            }
+
         });
 
         editTextLat.setOnFocusChangeListener((v, hasFocus) ->
@@ -168,7 +181,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 parentActivity.hideActionBar();
             }
         });
-        editTextdescription.setOnFocusChangeListener((v, hasFocus) ->
+        editTextDescription.setOnFocusChangeListener((v, hasFocus) ->
         {
             if (!hasFocus)
             {
@@ -257,12 +270,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         setEditable(editTextLat, false);
         setEditable(editTextLon, false);
-        setEditable(editTextdescription, false);
+        setEditable(editTextDescription, false);
         setEditable(editTextName, false);
 
         editTextLat.setText(Double.toString(selectedCache.getLatLng().latitude));
         editTextLon.setText(Double.toString(selectedCache.getLatLng().longitude));
-        editTextdescription.setText(selectedCache.getDescription());
+        editTextDescription.setText(selectedCache.getDescription());
         editTextName.setText(selectedCache.getName());
     }
 
@@ -274,11 +287,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         setEditable(editTextLat, true);
         setEditable(editTextLon, true);
-        setEditable(editTextdescription, true);
+        setEditable(editTextDescription, true);
         setEditable(editTextName, true);
         editTextLat.setText(Double.toString(latLng.latitude));
         editTextLon.setText(Double.toString(latLng.longitude));
-        editTextdescription.setText("");
+        editTextDescription.setText("");
         editTextName.setText("");
     }
 
@@ -382,7 +395,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void addMarker(LatLng latLng, String title)
     {
-        gMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        newMarkerForCache = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     @Override
@@ -396,8 +409,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public boolean onMarkerClick(Marker marker)
     {
-        Cache newCache = new Cache(new LatLng(20,20), "Dette er en test Cache", "TestNavn", 1);
-        openViewBottomSheet(newCache);
+        Integer i = markersOnMap.get(marker.getId());
+
+        if(i != null)
+        {
+            Cache cache = Caches.getCaches().get(i);
+            openViewBottomSheet(cache);
+        }
+        //Cache newCache = new Cache(new LatLng(20,20), "Dette er en test Cache", "TestNavn", 1);
+
         return false;
     }
 
