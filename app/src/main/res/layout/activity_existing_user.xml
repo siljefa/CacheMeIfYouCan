@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toTopOf="@+id/activity_existingUser_tv_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_existingUser_tv_field" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_existingUser_tv_info" />
 
     <EditText
         android:id="@+id/activity_existingUser_tv_password"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/activity_existingUser_tv_username" />
 
     <TextView
-        android:id="@+id/activity_existingUser_tv_field"
+        android:id="@+id/activity_existingUser_tv_info"
         android:layout_width="221dp"
         android:layout_height="56dp"
         android:layout_marginStart="105dp"
