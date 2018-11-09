@@ -38,14 +38,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    
-    //Method that start loginActivity
+
+    //Method that start signUpActivity
     public void openSignUpActivity(){
         Intent intent1 = new Intent(this, SignUpActivity.class);
         startActivity(intent1);
     }
 
-    //Method that starts ExistingUseractivity
+    //Method that starts existingUseractivity
     public void openExiStingUserActivity(){
         Intent intent2 = new Intent(this, ExistingUserActivity.class);
         startActivity(intent2);
