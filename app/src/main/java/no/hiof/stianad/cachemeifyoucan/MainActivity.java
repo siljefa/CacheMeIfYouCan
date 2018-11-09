@@ -70,10 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        DatabaseReference myRef = database.getReference("test");
-        String testId = myRef.push().getKey();
-        myRef.child(testId).setValue("Hello, World!");
-
     }
 
     public boolean checkLocationPermission()

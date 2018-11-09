@@ -60,11 +60,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             mapFragment.getMapAsync(this);
         }
 
-        Caches.createCashe(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
-        Caches.createCashe(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
-        Caches.createCashe(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
-        Caches.createCashe(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
-        Caches.createCashe(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
+        //Caches.createCashe(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
+        //Caches.createCashe(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
+        //Caches.createCashe(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
+        //Caches.createCashe(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
+        //Caches.createCashe(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
 
 
 
@@ -126,7 +126,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         foundCacheBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_HIDDEN));
         saveCacheBtn.setOnClickListener(v ->
         {
-            Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
+            //Silje was here, tried to make so that description and name from the txt fields are
+            // passed as name and desctiption values to the create cache function feel free to
+            //comment out and go back to old if its wrong or messes up the code in any way
+            String cDescription = editTextdescription.getText().toString();
+            String cName = editTextName.getText().toString();
+            Caches.createCashe(newCacheLocation, cDescription,cName, 2);
+            //old code
+            // Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
             setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
         });
 
