@@ -6,4 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".ExistingUserActivity">
 
+    <EditText
+        android:id="@+id/activity_existingUser_tv_username"
+        android:layout_width="273dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="14dp"
+        android:contentDescription="@string/enter_username"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:text="@string/name"
+        app:layout_constraintBottom_toTopOf="@+id/activity_existingUser_tv_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_existingUser_tv_field" />
+
+    <EditText
+        android:id="@+id/activity_existingUser_tv_password"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="34dp"
+        android:contentDescription="@string/enter_password"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:text="@string/password"
+        app:layout_constraintBottom_toTopOf="@+id/activity_existingUser_btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_existingUser_tv_username" />
+
+    <TextView
+        android:id="@+id/activity_existingUser_tv_field"
+        android:layout_width="221dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="64dp"
+        android:text="Sign up"
+        app:layout_constraintBottom_toTopOf="@+id/activity_existingUser_tv_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/activity_existingUser_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginBottom="192dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_existingUser_tv_password"
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

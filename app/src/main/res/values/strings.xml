@@ -18,9 +18,12 @@
     <string name="create_user">Create user</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="sign_up">Sign up</string>
     <string name="login">Login</string>
     <string name="sign_up_button">Sign up button</string>
     <string name="login_button">Login button</string>
     <string name="logo">Logo</string>
+    <string name="write_username">Write username</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter password</string>
+    <string name="name">Name</string>
 </resources>
