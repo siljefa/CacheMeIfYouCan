@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Objects;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, LocationListener
@@ -40,7 +44,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private BottomSheetBehavior mBehavior;
     private MainActivity parentActivity;
     private LatLng testLatLon = new LatLng(0,0);
-    private Button closeSheetBtn, foundCacheBtn, saveCacheBtn;
+    private Button closeSheetBtn, foundCacheBtn, saveCacheBtn, weatherBtn;
     private  EditText editTextLat, editTextLon, editTextdescription, editTextName;
 
     @Override
@@ -65,8 +69,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         //Caches.createCashe(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
         //Caches.createCashe(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
         //Caches.createCashe(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
-
-
 
         bottomSheet = view.findViewById(R.id.bottom_sheet2);
         mBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -122,12 +124,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
         foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
         saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
+        weatherBtn = bottomSheet.findViewById(R.id.weatherBtn);
+        weatherBtn.setOnClickListener(v ->
+                {
+                    WeatherFragment weatherFragmentWithBundle = new WeatherFragment();
+                    Bundle args = new Bundle();
+                    //TODO : Replace default values with lat and lon from selected cache
+                    args.putDouble("latitude", 59.28);
+                    args.putDouble("longitude", 11.12);
+                    weatherFragmentWithBundle.setArguments(args);
+
+                    FragmentTransaction fragmentTransaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+
+                    fragmentTransaction.replace(R.id.mainLayout, weatherFragmentWithBundle);
+
+                    fragmentTransaction.commit();
+
+                    //.replace(R.id.mainLayout, weatherFragmentWithBundle);
+                    setSheetState(lastSheetState);
+                });
         closeSheetBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_COLLAPSED));
         foundCacheBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_HIDDEN));
         saveCacheBtn.setOnClickListener(v ->
         {
             //Silje was here, tried to make so that description and name from the txt fields are
-            // passed as name and desctiption values to the create cache function feel free to
+            // passed as name and description values to the create cache function feel free to
             //comment out and go back to old if its wrong or messes up the code in any way
             String cDescription = editTextdescription.getText().toString();
             String cName = editTextName.getText().toString();
@@ -196,8 +217,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         });
     }
 
-
-
     private void setSheetState(int state)
     {
         switch (state)
@@ -254,14 +273,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         saveCacheBtn.setVisibility(View.GONE);
         foundCacheBtn.setVisibility(View.VISIBLE);
+        weatherBtn.setVisibility(View.VISIBLE);
 
         setEditable(editTextLat, false);
         setEditable(editTextLon, false);
         setEditable(editTextdescription, false);
         setEditable(editTextName, false);
 
-        editTextLat.setText(Double.toString(selectedCache.getLatLng().latitude));
-        editTextLon.setText(Double.toString(selectedCache.getLatLng().longitude));
+        editTextLat.setText(String.format(Locale.getDefault(),"%s", selectedCache.getLatLng().latitude));
+        editTextLon.setText(String.format(Locale.getDefault(),"%s", selectedCache.getLatLng().longitude));
         editTextdescription.setText(selectedCache.getDescription());
         editTextName.setText(selectedCache.getName());
     }
@@ -271,13 +291,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         foundCacheBtn.setVisibility(View.GONE);
         saveCacheBtn.setVisibility(View.VISIBLE);
+        weatherBtn.setVisibility(View.GONE);
 
         setEditable(editTextLat, true);
         setEditable(editTextLon, true);
         setEditable(editTextdescription, true);
         setEditable(editTextName, true);
-        editTextLat.setText(Double.toString(latLng.latitude));
-        editTextLon.setText(Double.toString(latLng.longitude));
+        editTextLat.setText(String.format(Locale.getDefault(), "%s", latLng.latitude));
+        editTextLon.setText(String.format(Locale.getDefault(), "%s", latLng.longitude));
         editTextdescription.setText("");
         editTextName.setText("");
     }
