@@ -30,18 +30,13 @@ public final class Caches
         return  newCache;
     }
 
-<<<<<<< HEAD
-        private static void addCacheToDatabse(Cache cache)
-        {
-=======
+
     private static void addCacheToDatabse(Cache cache)
     {
-        //firebase refference and instance
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference databaseCache = database.getReference("cache");
-        //String cacheId = databaseCache.push().getKey();
-        //databaseCache.child(cacheId).setValue(cache);
->>>>>>> master
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseCache = database.getReference("cache");
+        String cacheId = databaseCache.push().getKey();
+        databaseCache.child(cacheId).setValue(cache);
 
         }
 }
