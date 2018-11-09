@@ -361,15 +361,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             addMarker(testBounds.northeast,"northeast BoundingBox");
             addMarker(testBounds.southwest,"southwest BoundingBox");
 
-            Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
-            markersOnMap.put(newMarker.getId(), cacheId);
+            /*Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+            markersOnMap.put(newMarker.getId(), cacheId);*/
 
-            /*if(testBounds.contains(cache.getLatLng()))
+            if(testBounds.contains(cache.getLatLng()))
             {
                 Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
                 markersOnMap.put(newMarker.getId(), cacheId);
-            }*/
+            }
         }
+    }
+
+    private void onFirstLocation(LatLng latlon)
+    {
+
     }
 
     private LatLngBounds getBoundingBox(LatLng latLng, double distance)
@@ -463,6 +468,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onLocationChanged(Location location)
     {
         testLatLon = new LatLng(location.getLatitude(), location.getLongitude());
+        onFirstLocation(testLatLon);
     }
 
     @Override
