@@ -48,6 +48,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private EditText editTextLat, editTextLon, editTextDescription, editTextName;
     private  HashMap<String, Integer> markersOnMap = new HashMap<>();
     private Marker newMarkerForCache;
+    private boolean mapReady = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -348,33 +349,35 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         setUpDefaultUISettings();
 
         //gMap.addMarker(new MarkerOptions().position(testLatLon).title("Cache ved Fredrikstad Kino"));
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(testLatLon, 10, 0, 0)));
-        gMap.animateCamera(CameraUpdateFactory.newLatLng(testLatLon), 2000, null);
-
-        HashMap<Integer, Cache> testCaches = Caches.getCaches();
-        LatLngBounds testBounds = getBoundingBox(testLatLon, 10);
-        //for(Cache cache: testCaches.values())
-        for(Map.Entry<Integer, Cache> e : testCaches.entrySet())
-        {
-            Integer cacheId = e.getKey();
-            Cache cache = e.getValue();
-            addMarker(testBounds.northeast,"northeast BoundingBox");
-            addMarker(testBounds.southwest,"southwest BoundingBox");
-
-            /*Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
-            markersOnMap.put(newMarker.getId(), cacheId);*/
-
-            if(testBounds.contains(cache.getLatLng()))
-            {
-                Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
-                markersOnMap.put(newMarker.getId(), cacheId);
-            }
-        }
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(59.12797849, 11.35272861), 10, 0, 0)));
+        gMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(59.12797849, 11.35272861)), 2000, null);
+        mapReady = true;
     }
 
     private void onFirstLocation(LatLng latlon)
     {
+            gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(testLatLon, 10, 0, 0)));
+            gMap.animateCamera(CameraUpdateFactory.newLatLng(testLatLon), 2000, null);
 
+            HashMap<Integer, Cache> testCaches = Caches.getCaches();
+            LatLngBounds testBounds = getBoundingBox(testLatLon, 10);
+            //for(Cache cache: testCaches.values())
+            for(Map.Entry<Integer, Cache> e : testCaches.entrySet())
+            {
+                Integer cacheId = e.getKey();
+                Cache cache = e.getValue();
+                addMarker(testBounds.northeast,"northeast BoundingBox");
+                addMarker(testBounds.southwest,"southwest BoundingBox");
+
+            /*Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+            markersOnMap.put(newMarker.getId(), cacheId);*/
+
+                if(testBounds.contains(cache.getLatLng()))
+                {
+                    Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+                    markersOnMap.put(newMarker.getId(), cacheId);
+                }
+            }
     }
 
     private LatLngBounds getBoundingBox(LatLng latLng, double distance)
@@ -468,7 +471,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onLocationChanged(Location location)
     {
         testLatLon = new LatLng(location.getLatitude(), location.getLongitude());
-        onFirstLocation(testLatLon);
+        if (mapReady)
+        {
+            onFirstLocation(testLatLon);
+        }
+
     }
 
     @Override
