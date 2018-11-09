@@ -26,4 +26,5 @@
     <string name="enter_username">Enter username</string>
     <string name="enter_password">Enter password</string>
     <string name="name">Name</string>
+    <string name="sign_up">sign_up</string>
 </resources>

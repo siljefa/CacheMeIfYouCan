@@ -10,13 +10,12 @@
 
     <Button
         android:id="@+id/activity_login_btn_signUp"
-        android:layout_width="304dp"
+        android:layout_width="319dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="34dp"
-        android:contentDescription="@string/sign_up_button"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="14dp"
         android:text="@string/sign_up"
         app:layout_constraintBottom_toTopOf="@+id/activty_login_btn_login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,34 +24,32 @@
 
     <Button
         android:id="@+id/activty_login_btn_login"
-        android:layout_width="304dp"
+        android:layout_width="321dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="133dp"
         android:contentDescription="@string/login_button"
         android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_btn_signUp"
-        app:layout_constraintVertical_bias="0.825" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_btn_signUp" />
 
     <ImageView
         android:id="@+id/activity_login_iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="103dp"
-        android:contentDescription="@string/logo"
+        android:layout_width="254dp"
+        android:layout_height="188dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="89dp"
         app:layout_constraintBottom_toTopOf="@+id/activity_login_btn_signUp"
-        app:layout_constraintEnd_toStartOf="@+id/activity_login_btn_signUp"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[2]" />
+        app:srcCompat="@drawable/adobe_post_20181109_120924" />
 
 </android.support.constraint.ConstraintLayout>
