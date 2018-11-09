@@ -22,7 +22,7 @@ public final class Caches
         return caches;
     }
 
-    public static Cache createCache(LatLng latLng, String description, String name, int difficulty)
+    public static Cache createCashe(LatLng latLng, String description, String name, int difficulty)
     {
         Cache newCache = new Cache(latLng, description, name, difficulty);
         caches.put((caches.size()+1), newCache);
@@ -30,13 +30,13 @@ public final class Caches
         return  newCache;
     }
 
-
     private static void addCacheToDatabse(Cache cache)
     {
+        //firebase refference and instance
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseCache = database.getReference("cache");
         String cacheId = databaseCache.push().getKey();
         databaseCache.child(cacheId).setValue(cache);
 
-        }
+    }
 }

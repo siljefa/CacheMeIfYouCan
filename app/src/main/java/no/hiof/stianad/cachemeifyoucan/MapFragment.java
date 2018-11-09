@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,11 +72,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
         saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
 
-        Caches.createCache(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
-        Caches.createCache(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
-        Caches.createCache(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
-        Caches.createCache(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
-        Caches.createCache(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
+        Caches.createCashe(new LatLng(37.42, -122.07), "Hello","Some Name", 2);
+        Caches.createCashe(new LatLng(37.47, -122.07), "Hello","Some Name", 3);
+        Caches.createCashe(new LatLng(37.62, -122.07), "Hello","Some Name", 4);
+        Caches.createCashe(new LatLng(37.72, -122.07), "Hello","Some Name", 5);
+        Caches.createCashe(new LatLng(38.82, -122.07), "Hello","Some Name", 6);
 
         mBehavior.setHideable(true);
         setSheetState(BottomSheetBehavior.STATE_HIDDEN);
@@ -132,7 +131,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         foundCacheBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_HIDDEN));
         saveCacheBtn.setOnClickListener(v ->
         {
-            Caches.createCache(newCacheLocation, editTextdescription.getText().toString(),editTextdescription.getText().toString(), 2);
+            //Silje was here, tried to make so that description and name from the txt fields are
+            // passed as name and desctiption values to the create cache function feel free to
+            //comment out and go back to old if its wrong or messes up the code in any way
+            String cDescription = editTextdescription.getText().toString();
+            String cName = editTextName.getText().toString();
+            Caches.createCashe(newCacheLocation, cDescription,cName, 2);
+            //old code
+            // Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
             setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
         });
 
@@ -376,8 +382,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void addMarker(LatLng latLng, String title)
     {
-
-        Marker newMarker = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        gMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     @Override
@@ -416,11 +421,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras)
     {
+
     }
 
     @Override
     public void onProviderEnabled(String provider)
     {
+
     }
 
     @Override
