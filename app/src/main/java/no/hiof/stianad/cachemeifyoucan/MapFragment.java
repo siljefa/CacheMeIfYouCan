@@ -1,16 +1,20 @@
 package no.hiof.stianad.cachemeifyoucan;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,18 +41,19 @@ import java.util.Objects;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, LocationListener
 {
-    private LatLng newCacheLocation;
     private GoogleMap gMap;
     private int lastSheetState;
     private boolean isChangingSheetState = false;
     private BottomSheetBehavior mBehavior;
     private MainActivity parentActivity;
     private LatLng testLatLon = new LatLng(0,0);
-    private Button closeSheetBtn, foundCacheBtn, saveCacheBtn, weatherBtn;
+    private Button foundCacheBtn, saveCacheBtn, weatherBtn;
     private EditText editTextLat, editTextLon, editTextDescription, editTextName;
+    private View filler;
     private  HashMap<String, Integer> markersOnMap = new HashMap<>();
-    private Marker newMarkerForCache;
+    private Marker selectedCacheMarker;
     private boolean mapReady = false;
+    private boolean isExpandedSheed = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -69,11 +74,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         View bottomSheet = view.findViewById(R.id.bottom_sheet2);
         mBehavior = BottomSheetBehavior.from(bottomSheet);
+        filler =  bottomSheet.findViewById(R.id.filler);
         editTextLat = bottomSheet.findViewById(R.id.lat_edit);
         editTextLon = bottomSheet.findViewById(R.id.lon_edit);
         editTextDescription = bottomSheet.findViewById(R.id.description_edit);
         editTextName = bottomSheet.findViewById(R.id.name_edit);
-        closeSheetBtn = bottomSheet.findViewById(R.id.closeSheetBtn);
         foundCacheBtn = bottomSheet.findViewById(R.id.foundCacheBtn);
         saveCacheBtn = bottomSheet.findViewById(R.id.saveCacheBtn);
         weatherBtn = bottomSheet.findViewById(R.id.weatherBtn);
@@ -94,15 +99,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             {
                 switch (newState)
                 {
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                    {
-                    }
-                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
-                    {
-                    }
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                    {
-                    }
                     case BottomSheetBehavior.STATE_DRAGGING:
                     {
                         isChangingSheetState = true;
@@ -137,12 +133,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 {
                     WeatherFragment weatherFragmentWithBundle = new WeatherFragment();
                     Bundle args = new Bundle();
-                    //TODO : Replace default values with lat and lon from selected cache
-                    args.putDouble("latitude", 59.28);
-                    args.putDouble("longitude", 11.12);
+                    args.putDouble("latitude", selectedCacheMarker.getPosition().latitude);
+                    args.putDouble("longitude", selectedCacheMarker.getPosition().longitude);
                     weatherFragmentWithBundle.setArguments(args);
 
-                    FragmentTransaction fragmentTransaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction fragmentTransaction = Objects.requireNonNull(parentActivity).getSupportFragmentManager().beginTransaction();
 
                     fragmentTransaction.replace(R.id.mainLayout, weatherFragmentWithBundle);
 
@@ -151,7 +146,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     //.replace(R.id.mainLayout, weatherFragmentWithBundle);
                     setSheetState(lastSheetState);
                 });
-        closeSheetBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_COLLAPSED));
         foundCacheBtn.setOnClickListener(v -> setSheetState(BottomSheetBehavior.STATE_HIDDEN));
         saveCacheBtn.setOnClickListener(v ->
         {
@@ -168,13 +162,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 LatLng latLng = new LatLng(Double.parseDouble(editTextLat.getText().toString()), Double.parseDouble(editTextLon.getText().toString()));
                 Cache newCache = Caches.createCashe(latLng, cDescription,cName, 2);
                 //old code
-                // Caches.createCashe(newCacheLocation, "Hello","Some Name", 2);
                 setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-                if(newMarkerForCache.getPosition() != latLng)
+                if(selectedCacheMarker.getPosition() != latLng)
                 {
-                    newMarkerForCache.setPosition(latLng);
+                    selectedCacheMarker.setPosition(latLng);
                 }
-                markersOnMap.put(newMarkerForCache.getId(), newCache.getCacheId());
+                markersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
             }
 
         });
@@ -187,9 +180,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
             else
             {
-                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-                parentActivity.hideActionBar();
+                setSheetState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
         editTextLon.setOnFocusChangeListener((v, hasFocus) ->
@@ -200,9 +191,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
             else
             {
-                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-                parentActivity.hideActionBar();
+                setSheetState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
         editTextDescription.setOnFocusChangeListener((v, hasFocus) ->
@@ -213,9 +202,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
             else
             {
-                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-                parentActivity.hideActionBar();
+                setSheetState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
         editTextName.setOnFocusChangeListener((v, hasFocus) ->
@@ -226,9 +213,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
             else
             {
-                mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-                parentActivity.hideActionBar();
+                setSheetState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
     }
@@ -242,8 +227,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 isChangingSheetState = false;
                 mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-                parentActivity.hideActionBar();
-                closeSheetBtn.setVisibility(View.VISIBLE);
+                isExpandedSheed = true;
+                parentActivity.showBackButton(true);
+                parentActivity.setToolbarColored(true);
+                filler.setVisibility(View.VISIBLE);
                 break;
             }
             case BottomSheetBehavior.STATE_HALF_EXPANDED:
@@ -251,8 +238,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 isChangingSheetState = false;
                 mBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                 lastSheetState = BottomSheetBehavior.STATE_HALF_EXPANDED;
-                parentActivity.showActionBar();
-                closeSheetBtn.setVisibility(View.GONE);
+                isExpandedSheed = false;
+                parentActivity.showBackButton(false);
+                parentActivity.setToolbarColored(false);
+                filler.setVisibility(View.GONE);
                 break;
             }
             case BottomSheetBehavior.STATE_COLLAPSED:
@@ -260,8 +249,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 isChangingSheetState = false;
                 mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 lastSheetState = BottomSheetBehavior.STATE_COLLAPSED;
-                parentActivity.showActionBar();
-                closeSheetBtn.setVisibility(View.GONE);
+                isExpandedSheed = false;
+                parentActivity.showBackButton(false);
+                parentActivity.setToolbarColored(false);
+                filler.setVisibility(View.GONE);
                 break;
             }
             case BottomSheetBehavior.STATE_HIDDEN:
@@ -269,6 +260,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 isChangingSheetState = false;
                 mBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 lastSheetState = BottomSheetBehavior.STATE_HIDDEN;
+                isExpandedSheed = false;
+                parentActivity.showBackButton(false);
+                parentActivity.setToolbarColored(false);
+                filler.setVisibility(View.GONE);
                 break;
             }
             case BottomSheetBehavior.STATE_DRAGGING:
@@ -321,22 +316,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     private void setEditable(EditText editTextView, boolean editable)
     {
-        if(editable)
-        {
-            editTextView.setFocusable(true);
-            editTextView.setClickable(true);
-            editTextView.setFocusableInTouchMode(true);
-            editTextView.setLongClickable(true);
-            editTextView.setInputType(InputType.TYPE_CLASS_TEXT);
-        }
-        else
-        {
-            editTextView.setFocusable(false);
-            editTextView.setClickable(false);
-            editTextView.setFocusableInTouchMode(false);
-            editTextView.setLongClickable(false);
-            editTextView.setInputType(InputType.TYPE_NULL);
-        }
+            editTextView.setFocusable(editable);
+            editTextView.setClickable(editable);
+            editTextView.setFocusableInTouchMode(editable);
+            editTextView.setLongClickable(editable);
+            if(editable)
+                editTextView.setInputType(InputType.TYPE_CLASS_TEXT);
+            else
+                editTextView.setInputType(InputType.TYPE_NULL);
     }
 
     @Override
@@ -430,14 +417,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void addMarker(LatLng latLng, String title)
     {
-        newMarkerForCache = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        selectedCacheMarker = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     @Override
     public void onMapLongClick(LatLng latLng)
     {
         addMarker(latLng, "");
-        newCacheLocation = latLng;
         openEditBottomSheet(latLng);
     }
 
@@ -451,6 +437,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             Cache cache = Caches.getCaches().get(i);
             openViewBottomSheet(cache);
         }
+        selectedCacheMarker = marker;
         //Cache newCache = new Cache(new LatLng(20,20), "Dette er en test Cache", "TestNavn", 1);
 
         return false;
@@ -494,6 +481,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onProviderDisabled(String provider)
     {
 
+    }
+
+    public void closeSheet()
+    {
+        setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    public boolean isExpandedSheet()
+    {
+        return isExpandedSheed;
     }
 
     /*  args = new Bundle();

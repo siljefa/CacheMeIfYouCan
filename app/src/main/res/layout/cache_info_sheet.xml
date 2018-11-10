@@ -18,20 +18,27 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#D3D3D3"
             android:windowSoftInputMode="stateHidden">
+
+            <View
+            android:id="@+id/filler"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginTop="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/text_input_layout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:hint="@string/cache_tittel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/closeSheetBtn">
+                app:layout_constraintTop_toBottomOf="@+id/filler">
 
                 <EditText
                     android:id="@+id/name_edit"
@@ -46,12 +53,9 @@
                 android:id="@+id/text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:hint="Latitude"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout4">
 
                 <EditText
@@ -67,8 +71,6 @@
                 android:id="@+id/text_input_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:hint="Longitude"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,8 +90,6 @@
                 android:id="@+id/text_input_layout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:hint="Description"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,34 +116,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout3" />
 
             <Button
-                android:id="@+id/closeSheetBtn"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/btn_dialog"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
                 android:id="@+id/saveCacheBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/save_cache"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_layout3"
-                android:layout_marginStart="8dp" />
+                app:layout_constraintStart_toStartOf="@+id/foundCacheBtn"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout3" />
 
             <Button
                 android:id="@+id/weatherBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/weather_button_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/foundCacheBtn"
-                android:layout_marginStart="8dp" />
+                app:layout_constraintTop_toBottomOf="@+id/foundCacheBtn" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weatherBtn" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
