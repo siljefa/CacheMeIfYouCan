@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -56,12 +58,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainLayout, mapFragment);
-        fragmentTransaction.add(R.id.mainLayout, profileFragment, "profile_fragment");
-        fragmentTransaction.add(R.id.mainLayout, achievementsFragment, "achievements_fragment");
-        fragmentTransaction.hide(profileFragment);
-        fragmentTransaction.hide(achievementsFragment);
+        fragmentTransaction.replace(R.id.mainLayout, mapFragment, "map_fragment");
+        fragmentTransaction.add(R.id.mainLayout, profileFragment, "profile_fragment").hide(profileFragment);
+        fragmentTransaction.add(R.id.mainLayout, achievementsFragment, "achievements_fragment").hide(achievementsFragment);
         fragmentTransaction.commit();
+        //showBackButton(false);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationProvider = locationManager.getBestProvider(new Criteria(), false);
@@ -76,28 +77,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             drawerToggle.setDrawerIndicatorEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            if(mapFragment.isExpandedSheet())
+
+            if (mapFragment.isExpandedSheet())
             {
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_expand_more_black_24dp);
+                setToolbarColored(true);
+                setToolbarBackIconDown(true);
             }
             else
             {
-                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
+                setToolbarColored(false);
+                setToolbarBackIconDown(false);
             }
+
             if (!toolBarNavigationListenerIsRegistered)
             {
                 drawerToggle.setToolbarNavigationClickListener(v ->
                 {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.hide(profileFragment);
-                    fragmentTransaction.show(mapFragment);
-                    if(mapFragment.isExpandedSheet())
+                    FragmentTransaction fragmentTransactionOnClick = fragmentManager.beginTransaction();
+
+                    if(achievementsFragment.isVisible())
                     {
+                        fragmentTransactionOnClick.hide(achievementsFragment);
+                        fragmentTransactionOnClick.show(mapFragment);
+                        fragmentTransactionOnClick.commit();
                         mapFragment.closeSheet();
+                        showBackButton(false);
+                    }
+                    if(profileFragment.isVisible())
+                    {
+                        fragmentTransactionOnClick.hide(profileFragment);
+                        fragmentTransactionOnClick.show(mapFragment);
+                        fragmentTransactionOnClick.commit();
+                        mapFragment.closeSheet();
+                        showBackButton(false);
+                    }
+                    if(mapFragment.isVisible())
+                    {
+                        mapFragment.collapseSheet();
                         topToolbar.setBackgroundColor(Color.TRANSPARENT);
                     }
-                        fragmentTransaction.commit();
-                        showBackButton(false);
+
+                    Fragment weatherFragment = fragmentManager.findFragmentByTag("weather_Fragment");
+                    if (weatherFragment instanceof WeatherFragment)
+                    {
+                        fragmentTransactionOnClick.remove(weatherFragment);
+                        fragmentTransactionOnClick.show(mapFragment);
+                        fragmentTransactionOnClick.commit();
+                        if(mapFragment.isExpandedSheet())
+                        {
+                            showBackButton(true);
+                            setToolbarColored(true);
+                            setToolbarBackIconDown(true);
+                        }
+                        else
+                            showBackButton(false);
+                    }
                 });
                 toolBarNavigationListenerIsRegistered = true;
             }
@@ -112,6 +146,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void setToolbarBackIconDown(boolean down)
+    {
+        if (down)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_expand_more_black_24dp);
+        else
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_chevron_left_black_24dp);
+    }
+
     public void setToolbarColored(boolean addColor)
     {
         if(addColor)
@@ -120,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             topToolbar.setBackgroundColor(Color.TRANSPARENT);
     }
 
-    public boolean checkLocationPermission()
+    private boolean checkLocationPermission()
     {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
@@ -202,20 +244,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-    @Override
-    public void onBackPressed()
-    {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START))
-        {
-            drawer.closeDrawer(GravityCompat.START);
-        } else
-        {
-            super.onBackPressed();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -238,8 +266,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
