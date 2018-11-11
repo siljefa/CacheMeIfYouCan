@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class SignUpActivity extends AppCompatActivity {
-    private Button btnSignUp;//Sign up button
+    private Button btnSignUp; //Sign up button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
