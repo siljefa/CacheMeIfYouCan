@@ -47,7 +47,7 @@
         android:layout_marginBottom="89dp"
         app:layout_constraintBottom_toTopOf="@+id/activity_login_btn_signUp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/adobe_post_20181109_120924" />
