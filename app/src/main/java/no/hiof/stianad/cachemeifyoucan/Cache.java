@@ -8,14 +8,17 @@ public class Cache
     private LatLng latLng;
     private String description;
     private int difficulty;
+    private int cacheId;
 
 
-    public Cache(LatLng latLng, String description, String name, int difficulty)
+
+    public Cache(LatLng latLng, String description, String name, int difficulty, int cacheId)
     {
         this.name = name;
         this.latLng = latLng;
         this.description = description;
         this.difficulty = difficulty;
+        this.cacheId = cacheId;
     }
 
     public Cache(){
@@ -24,6 +27,11 @@ public class Cache
     public String getName()
     {
         return name;
+    }
+
+    public int getCacheId()
+    {
+        return cacheId;
     }
 
     public LatLng getLatLng()
