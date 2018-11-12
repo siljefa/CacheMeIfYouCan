@@ -6,50 +6,53 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".LoginActivity"
-    tools:showIn="@layout/activity_login">
+    tools:showIn="@layout/activity_login"
+    android:background="#000000">
 
     <Button
         android:id="@+id/activity_login_btn_signUp"
-        android:layout_width="319dp"
-        android:layout_height="wrap_content"
+        android:layout_width="339dp"
+        android:layout_height="49dp"
         android:layout_marginStart="33dp"
-        android:layout_marginTop="93dp"
+        android:layout_marginTop="330dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="14dp"
-        android:text="@string/sign_up"
+        android:layout_marginBottom="35dp"
+        android:background="#D50000"
+        android:text="@string/sign_up_btn"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/activty_login_btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_iv_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/activty_login_btn_login"
-        android:layout_width="321dp"
+        android:layout_width="335dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="133dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="105dp"
+        android:background="#FFFFFF"
         android:contentDescription="@string/login_button"
         android:text="@string/login"
+        android:textColor="#212121"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_login_btn_signUp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/activity_login_iv_logo"
-        android:layout_width="254dp"
-        android:layout_height="188dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="89dp"
+        android:layout_width="229dp"
+        android:layout_height="196dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="77dp"
+        android:layout_marginBottom="92dp"
         app:layout_constraintBottom_toTopOf="@+id/activity_login_btn_signUp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/adobe_post_20181109_120924" />
+        app:srcCompat="@drawable/adobe_post_20181111_172918" />
+
 
 </android.support.constraint.ConstraintLayout>
