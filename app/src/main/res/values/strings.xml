@@ -28,4 +28,6 @@
     <string name="name">Name</string>
     <string name="sign_up">sign_up</string>
     <string name="sign_up_btn">Sign up</string>
+    <string name="er_username">Username</string>
+    <string name="btn_login_in">Login in</string>
 </resources>
