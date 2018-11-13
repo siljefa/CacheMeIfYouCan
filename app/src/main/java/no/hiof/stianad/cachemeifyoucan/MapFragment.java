@@ -35,11 +35,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private MainActivity parentActivity;
     private GoogleMap gMap;
     private boolean mapReady = false;
-    //hash to hold caches on the map, and connected marker.
+    //hashMap to hold caches on the map, and connected marker.
     private HashMap<String, Integer> cacheMarkersOnMap = new HashMap<>();
     private Marker selectedCacheMarker;
 
-    CacheBottomSheet cacheBottomSheet;
+    private CacheBottomSheet cacheBottomSheet;
 
 
 
