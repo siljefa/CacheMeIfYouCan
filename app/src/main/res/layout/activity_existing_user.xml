@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#64b5f6"
     tools:context=".ExistingUserActivity">
 
     <EditText
@@ -56,9 +56,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="103dp"
         android:layout_marginBottom="236dp"
-        android:background="#000000"
+        android:background="#9be7ff"
         android:text="@string/btn_login_in"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.287"
