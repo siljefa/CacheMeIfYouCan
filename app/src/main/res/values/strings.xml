@@ -49,5 +49,10 @@
     <string name="mark_cache_as_found">Mark as found</string>
     <string name="save_cache">Save Cache</string>
     <string name="weather_button_text">Weather</string>
+    <string name="app_logo">App logo</string>
+    <string name="signUp_username">Username</string>
+    <string name="signUp_password">Password</string>
+    <string name="signUp_signup">Sign up</string>
+    <string name="ExistingUser_login">Login</string>
     <!-- Weather end -->
 </resources>
