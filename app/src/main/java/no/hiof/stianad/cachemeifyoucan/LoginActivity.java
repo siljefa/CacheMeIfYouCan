@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button btnSignup;//For user signup
-    private Button btnExistingUser;//For existing user accounts
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +19,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //When button is clicked it takes the user to the signup activity
-        btnSignup = (Button) findViewById(R.id.activity_login_btn_signUp);
+        //For user signup
+        Button btnSignup = (Button) findViewById(R.id.activity_login_btn_signUp);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,7 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //When button is clicked it takes user to existing user activity
-        btnExistingUser = (Button) findViewById(R.id.activity_existingUser_btn_login);
+        //For existing user accounts
+        Button btnExistingUser = (Button) findViewById(R.id.activty_login_btn_login);
         btnExistingUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,6 +4,7 @@
     package="no.hiof.stianad.cachemeifyoucan">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.location.gps" />
 
     <!-- silje var her -->
@@ -15,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="HardcodedDebugMode">
+        tools:ignore="HardcodedDebugMode, GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -35,7 +36,13 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="no.hiof.stianad.cachemeifyoucan.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="no.hiof.stianad.cachemeifyoucan.MainActivity" />
         </activity>
+        <activity android:name=".ExistingUserActivity" />
+        <activity android:name=".SignUpActivity" />
     </application>
 </manifest>

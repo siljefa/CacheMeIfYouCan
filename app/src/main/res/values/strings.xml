@@ -9,7 +9,7 @@
     <string name="action_settings">Settings</string>
     <string name="logg_ut">Logg ut</string>
     <string name="Innstillinger">Innstillinger</string>
-    <string name="achievements">Achivements</string>
+    <string name="achievements">Achievements</string>
     <string name="profil">Profil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -30,4 +30,24 @@
     <string name="sign_up_btn">Sign up</string>
     <string name="er_username">Username</string>
     <string name="btn_login_in">Login in</string>
+
+    <!-- Weather -->
+
+    <string name="openWeather_appId">9b6fa263a126cfce8d04a650063cb914</string>
+
+    <string name="weather_sunny">&#xf00d;</string>
+    <string name="weather_clear_night">&#xf02e;</string>
+    <string name="weather_foggy">&#xf014;</string>
+    <string name="weather_cloudy">&#xf013;</string>
+    <string name="weather_rainy">&#xf019;</string>
+    <string name="weather_snowy">&#xf01b;</string>
+    <string name="weather_thunder">&#xf01e;</string>
+    <string name="weather_drizzle">&#xf01c;</string>
+
+    <string name="place_not_found">Sorry, no weather data found.</string>
+    <string name="cache_tittel">Cache Title</string>
+    <string name="mark_cache_as_found">Mark as found</string>
+    <string name="save_cache">Save Cache</string>
+    <string name="weather_button_text">Weather</string>
+    <!-- Weather end -->
 </resources>
