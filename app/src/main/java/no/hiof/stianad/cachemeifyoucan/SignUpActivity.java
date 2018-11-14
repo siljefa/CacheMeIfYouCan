@@ -14,7 +14,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        //When button is clicked user is taken to mainActivity
+        //Redirects to mainActivity
         btnSignUp = (Button) findViewById(R.id.activity_singUp_btn_login);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    //Method that opens mainActivity
+    //Starts mainActivity
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

@@ -14,7 +14,7 @@ public class ExistingUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_user);
 
-        //When clicked button opens mainActivity
+        //Redirects to mainActivity
         btnLogin = (Button) findViewById(R.id.activity_existingUser_btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,7 +24,7 @@ public class ExistingUserActivity extends AppCompatActivity {
         });
     }
 
-    //Method that start MainActivity
+    //Starts MainActivity
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

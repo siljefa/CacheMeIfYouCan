@@ -18,8 +18,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //When button is clicked it takes the user to the signup activity
-        //For user signup
+        //For new sign up profiles
         Button btnSignup = (Button) findViewById(R.id.activity_login_btn_signUp);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,8 +27,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //When button is clicked it takes user to existing user activity
-        //For existing user accounts
+
+        //For existing user profiles
         Button btnExistingUser = (Button) findViewById(R.id.activty_login_btn_login);
         btnExistingUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,13 +38,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    //Method that start signUpActivity
+    //Starts signUpActivity
     public void openSignUpActivity(){
         Intent intent1 = new Intent(this, SignUpActivity.class);
         startActivity(intent1);
     }
 
-    //Method that starts existingUseractivity
+    //Starts existingUseractivity
     public void openExiStingUserActivity(){
         Intent intent2 = new Intent(this, ExistingUserActivity.class);
         startActivity(intent2);
