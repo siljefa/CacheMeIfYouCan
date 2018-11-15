@@ -9,7 +9,6 @@
     <uses-feature android:name="android.hardware.location.gps" />
     <!-- silje var her -->
     <application
-        android:name=".Notification"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +23,7 @@
 
         <!-- Changed LoginActivity to launcher -->
         <activity
-            android:name=".TestingNotificationActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -44,7 +43,7 @@
         </activity>
         <activity android:name=".ExistingUserActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".TestingNotificationActivity"></activity>
     </application>
 
 </manifest>
