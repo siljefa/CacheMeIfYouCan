@@ -17,10 +17,6 @@ public final class Caches
     {
 
     }
-    public static HashMap<Integer, Cache> getCaches()
-    {
-        return caches;
-    }
 
     public static Cache createCashe(LatLng latLng, String description, String name, int difficulty)
     {
@@ -28,6 +24,11 @@ public final class Caches
         caches.put((caches.size()+1), newCache);
         addCacheToDatabse(newCache);
         return  newCache;
+    }
+
+    public static HashMap<Integer, Cache> getCaches()
+    {
+        return caches;
     }
 
     private static void addCacheToDatabse(Cache cache)

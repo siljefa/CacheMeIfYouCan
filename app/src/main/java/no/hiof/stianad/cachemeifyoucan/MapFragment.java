@@ -26,6 +26,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,9 +37,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private MainActivity parentActivity;
     private GoogleMap gMap;
     private boolean mapReady = false;
+    private LatLng lastPositionUpdate;
+
     //hashMap to hold caches on the map, and connected marker.
     private HashMap<String, Integer> cacheMarkersOnMap = new HashMap<>();
     private Marker selectedCacheMarker;
+    private boolean filterFoundCache = true, filterLocation = true, filterDifficulty = false;
 
     private CacheBottomSheet cacheBottomSheet;
 
@@ -66,15 +70,137 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         //Get a custom BottomSheet made for caches.
         cacheBottomSheet = new CacheBottomSheet(view, parentActivity);
 
-        Caches.createCashe(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
-        Caches.createCashe(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
-        Caches.createCashe(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
+
+        //region TestCaches
+        Cache cache1 = Caches.createCashe(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
+        Cache cache2 = Caches.createCashe(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
+        Cache cache3 = Caches.createCashe(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
         Caches.createCashe(new LatLng(37.72, -122.07), "Hello", "Some Name", 5);
         Caches.createCashe(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
+        ArrayList<Integer> list  = User.getCacheIds();
+        list.add(cache1.getCacheId());
+        list.add(cache2.getCacheId());
+        list.add(cache3.getCacheId());
+        //endregion
+        setBottomSheetButtonListeners();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap)
+    {
+        gMap = googleMap;
+        googleMap.setOnMapLongClickListener(latLng ->
+        {
+            //Long click is used for crating new Caches.
+            addMarker(latLng, "");
+            cacheBottomSheet.openSheetInEditMode(latLng);
+        });
+
+        googleMap.setOnMarkerClickListener(marker ->
+        {
+            //Open cache info sheet
+            try
+            {
+                Integer cacheId = cacheMarkersOnMap.get(marker.getId());
+                Cache cache = Caches.getCaches().get(Objects.requireNonNull(cacheId));
+                cacheBottomSheet.openSheetInViewMode(Objects.requireNonNull(cache));
+                selectedCacheMarker = marker;
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        });
+
+        googleMap.setOnMapClickListener(latLng ->
+        {
+            //Click on map should close sheet.
+            if ((cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_EXPANDED) || (cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_HALF_EXPANDED))
+            {
+                //Hidden first because the BottomSheetBehavior thinks it's collapsed.
+                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
+                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+            else if (cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_COLLAPSED)
+            {
+                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });
+        setUpDefaultUISettings();
+        mapReady = true;
+    }
+
+    /*
+        When map is ready and location is updated, load caches around location.
+     */
+    private void onFirstLocation(LatLng latLon)
+    {
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLon, 10, 0, 0)));
+        gMap.animateCamera(CameraUpdateFactory.newLatLng(latLon), 2000, null);
+
+        LatLngBounds testBounds = new BoundingBox(latLon, 1000).getBoundingBox();
+
+        filterCaches();
+
+        /*for (Map.Entry<Integer, Cache> e : Caches.getCaches().entrySet())
+        {
+            Integer cacheId = e.getKey();
+            Cache cache = e.getValue();
+            addMarker(testBounds.northeast, "northeast BoundingBox");
+            addMarker(testBounds.southwest, "southwest BoundingBox");
 
 
+            if (testBounds.contains(cache.getLatLng()))
+            {
+                if(!User.getCacheIds().contains(cacheId))
+                {
+                    Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
+                    cacheMarkersOnMap.put(newMarker.getId(), cacheId);
+                }
+            }
+        }*/
+    }
 
-        //region BottomSheetButtons setOnClickListeners
+    private void filterCaches()
+    {
+        cacheMarkersOnMap = new HashMap<>();
+        LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 1000).getBoundingBox();
+        for (Map.Entry<Integer, Cache> e : Caches.getCaches().entrySet())
+        {
+            Marker newMarker = null;
+            Integer cacheId = e.getKey();
+            Cache cache = e.getValue();
+            if (filterLocation)
+            {
+                if(testBounds.contains(cache.getLatLng()))
+                {
+                    newMarker = addMarker(cache.getLatLng(),"2222 RRR");
+                    cacheMarkersOnMap.put(newMarker.getId(),cacheId);
+                }
+            }
+            else
+            {
+                newMarker = addMarker(cache.getLatLng(),"1111 RRR");
+                cacheMarkersOnMap.put(newMarker.getId(),cacheId);
+            }
+            if (filterFoundCache)
+            {
+                if(User.getCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
+                {
+                    cacheMarkersOnMap.remove(newMarker.getId());
+                    selectedCacheMarker.remove();
+                }
+            }
+            if (filterDifficulty)
+            {
+
+            }
+        }
+    }
+
+    private void setBottomSheetButtonListeners()
+    {
         cacheBottomSheet.setWeatherBtnOnClickListener(v ->
         {
             WeatherFragment weatherFragmentWithBundle = new WeatherFragment();
@@ -100,7 +226,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             parentActivity.setToolbarBackIconDown(false);
         });
 
-        cacheBottomSheet.setFoundCacheBtnOnClickListener(v -> cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN));
+        cacheBottomSheet.setFoundCacheBtnOnClickListener(v ->
+        {
+            User.getCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
+            cacheMarkersOnMap.remove(selectedCacheMarker.getId());
+            selectedCacheMarker.remove();
+            cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
+        });
 
         //Save a new cache to database with the information present in the BottomSheet.
         cacheBottomSheet.setSaveCacheBtnOnClickListener(v ->
@@ -131,85 +263,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             }
 
         });
-        //endregion
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
-        gMap = googleMap;
-        googleMap.setOnMapLongClickListener(latLng ->
-        {
-            //Long click is used for crating new Caches.
-            addMarker(latLng, "");
-            cacheBottomSheet.openSheetInEditMode(latLng);
-        });
-
-        googleMap.setOnMarkerClickListener(marker ->
-        {
-            //Open cache info sheet
-            try
-            {
-                Integer cacheId = cacheMarkersOnMap.get(marker.getId());
-                Cache cache = Caches.getCaches().get(Objects.requireNonNull(cacheId));
-                cacheBottomSheet.openSheetInViewMode(Objects.requireNonNull(cache));
-                selectedCacheMarker = marker;
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-
-        });
-
-        googleMap.setOnMapClickListener(latLng ->
-        {
-            //Click on map should close sheet.
-            if ((cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_EXPANDED) || (cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_HALF_EXPANDED))
-            {
-                //Hidden first because the BottomSheetBehavior thinks it's collapsed.
-                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
-                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-            else if (cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_COLLAPSED)
-            {
-                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
-            }
-        });
-        setUpDefaultUISettings();
-        mapReady = true;
-    }
-
-    /*
-        When map is ready and location is updated, load caches around location.
-     */
-    private void onFirstLocation(LatLng latLon)
-    {
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLon, 10, 0, 0)));
-        gMap.animateCamera(CameraUpdateFactory.newLatLng(latLon), 2000, null);
-
-        HashMap<Integer, Cache> testCaches = Caches.getCaches();
-        LatLngBounds testBounds = new BoundingBox(latLon, 10).getBoundingBox();
-
-        for (Map.Entry<Integer, Cache> e : testCaches.entrySet())
-        {
-            Integer cacheId = e.getKey();
-            Cache cache = e.getValue();
-            addMarker(testBounds.northeast, "northeast BoundingBox");
-            addMarker(testBounds.southwest, "southwest BoundingBox");
-
-            if (testBounds.contains(cache.getLatLng()))
-            {
-                Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
-                cacheMarkersOnMap.put(newMarker.getId(), cacheId);
-            }
-        }
-    }
-
-    public void addMarker(LatLng latLng, String title)
+    public Marker addMarker(LatLng latLng, String title)
     {
         selectedCacheMarker = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        return selectedCacheMarker;
     }
 
     /*
@@ -231,6 +290,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         {
             onFirstLocation(new LatLng(location.getLatitude(), location.getLongitude()));
         }
+        lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     @Override

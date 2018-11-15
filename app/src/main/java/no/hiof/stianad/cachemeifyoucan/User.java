@@ -1,0 +1,17 @@
+package no.hiof.stianad.cachemeifyoucan;
+
+import java.util.ArrayList;
+
+public final class User
+{
+    private static ArrayList<Integer> CacheIds = new ArrayList<>();
+
+    private User(int i)
+    {
+    }
+
+    public static ArrayList<Integer> getCacheIds()
+    {
+        return CacheIds;
+    }
+}

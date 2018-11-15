@@ -49,7 +49,7 @@ public class CustomSheetBehavior
                     }
                     case BottomSheetBehavior.STATE_HIDDEN:
                     {
-                        setSheetState(BottomSheetBehavior.STATE_HIDDEN);
+                        //setSheetState(BottomSheetBehavior.STATE_HIDDEN);
                     }
                 }
             }
@@ -74,6 +74,10 @@ public class CustomSheetBehavior
                     } else if ((slideOffset < 0.5 && lastSheetState == BottomSheetBehavior.STATE_HALF_EXPANDED) || (slideOffset <= 0.40 && lastSheetState == BottomSheetBehavior.STATE_EXPANDED))
                     {
                         setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+                    else
+                    {
+                        setSheetState(BottomSheetBehavior.STATE_HIDDEN);
                     }
                     //The user has let dropped the sheet and is no longer changing the sheet state.
                     userIsChangingSheetState = false;
@@ -116,6 +120,7 @@ public class CustomSheetBehavior
                 parentActivity.setToolbarColored(false);
                 fillerSpaceForToolbar.setVisibility(View.GONE);
                 hideKeyboard(bottomSheet);
+                bottomSheet.clearFocus();
                 break;
             }
             case BottomSheetBehavior.STATE_COLLAPSED:
@@ -127,12 +132,13 @@ public class CustomSheetBehavior
                 parentActivity.setToolbarColored(false);
                 fillerSpaceForToolbar.setVisibility(View.GONE);
                 hideKeyboard(bottomSheet);
+                bottomSheet.clearFocus();
                 break;
             }
             case BottomSheetBehavior.STATE_HIDDEN:
             {
                 userIsChangingSheetState = false;
-                //sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 lastSheetState = BottomSheetBehavior.STATE_HIDDEN;
                 parentActivity.showBackButton(false);
                 parentActivity.setToolbarColored(false);
