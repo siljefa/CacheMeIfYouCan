@@ -94,7 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         list.add(cache3.getCacheId());*/
         //endregion
 
-        Caches.setEventListener();
+        CacheManager.setEventListener();
         setBottomSheetButtonListeners();
     }
 
