@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,6 +21,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.FetchFromOpenweathermap;
+import no.hiof.stianad.cachemeifyoucan.R;
 
 public class WeatherFragment extends Fragment {
 

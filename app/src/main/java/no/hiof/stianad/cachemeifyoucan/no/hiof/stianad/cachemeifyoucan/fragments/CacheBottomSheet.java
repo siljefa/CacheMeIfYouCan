@@ -1,7 +1,6 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments;
 
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.CoordinatorLayout;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +9,11 @@ import android.widget.EditText;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Locale;
+
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.CustomSheetBehavior;
+import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
 
 public class CacheBottomSheet
 {

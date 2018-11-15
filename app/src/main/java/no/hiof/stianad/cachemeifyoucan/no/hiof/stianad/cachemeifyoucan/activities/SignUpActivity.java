@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class ExistingUserActivity extends AppCompatActivity {
-    private Button btnLogin;//Login button
+import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
+
+public class SignUpActivity extends AppCompatActivity {
+    private Button btnSignUp;   //Sign up button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_existing_user);
+        setContentView(R.layout.activity_sign_up);
 
         //Redirects to mainActivity
-        btnLogin = (Button) findViewById(R.id.activity_existingUser_btn_login);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnSignUp = (Button) findViewById(R.id.activity_singUp_btn_login);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMainActivity();
@@ -24,7 +27,7 @@ public class ExistingUserActivity extends AppCompatActivity {
         });
     }
 
-    //Starts MainActivity
+    //Starts mainActivity
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

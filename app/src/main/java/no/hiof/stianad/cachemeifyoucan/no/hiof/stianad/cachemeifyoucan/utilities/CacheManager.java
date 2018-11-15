@@ -1,28 +1,28 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public final class Caches
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
+
+public final class CacheManager
 {
 
     private static HashMap<Integer, Cache> caches = new HashMap<>();
-    private Caches()
+    private CacheManager()
     {
 
     }
 
-    public static Cache createCashe(LatLng latLng, String description, String name, int difficulty)
+    public static Cache createCache(LatLng latLng, String description, String name, int difficulty)
     {
         Cache newCache = new Cache(latLng, description, name, difficulty, caches.size()+1);
         caches.put((caches.size()+1), newCache);
-        addCacheToDatabse(newCache);
+        addCacheToDatabase(newCache);
         return  newCache;
     }
 
@@ -31,7 +31,7 @@ public final class Caches
         return caches;
     }
 
-    private static void addCacheToDatabse(Cache cache)
+    private static void addCacheToDatabase(Cache cache)
     {
         //firebase refference and instance
         FirebaseDatabase database = FirebaseDatabase.getInstance();

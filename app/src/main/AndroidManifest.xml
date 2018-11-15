@@ -24,7 +24,7 @@
 
         <!-- Changed LoginActivity to launcher-->
         <activity
-            android:name=".LoginActivity"
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -34,15 +34,15 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName="no.hiof.stianad.cachemeifyoucan.MainActivity">
+            android:parentActivityName="no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="no.hiof.stianad.cachemeifyoucan.MainActivity" />
+                android:value="no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity" />
         </activity>
-        <activity android:name=".ExistingUserActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.ExistingUserActivity" />
+        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
     </application>
 </manifest>
