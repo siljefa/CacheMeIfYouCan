@@ -10,7 +10,6 @@ public class Cache
     private int difficulty;
     private int cacheId;
 
-
     public Cache(LatLng latLng, String description, String name, int difficulty, int cacheId)
     {
         this.name = name;
