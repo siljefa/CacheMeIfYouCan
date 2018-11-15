@@ -11,6 +11,7 @@
     <string name="Innstillinger">Innstillinger</string>
     <string name="achievements">Achievements</string>
     <string name="profil">Profil</string>
+    <string name="filter">Filter caches</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

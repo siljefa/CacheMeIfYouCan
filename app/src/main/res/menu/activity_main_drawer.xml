@@ -13,6 +13,9 @@
             android:id="@+id/nav_settings"
             android:title="@string/Innstillinger" />
         <item
+            android:id="@+id/nav_filter"
+            android:title="@string/filter" />
+        <item
             android:id="@+id/nav_logout"
             android:title="@string/logg_ut" />
 </menu>

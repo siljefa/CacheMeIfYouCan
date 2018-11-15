@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/filterFoundCacheButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="FoundCache"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/filterLocationForCacheBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="FilterLocation"
+        app:layout_constraintStart_toStartOf="@+id/filterFoundCacheButton"
+        app:layout_constraintTop_toBottomOf="@+id/filterFoundCacheButton" />
+
+    <Button
+        android:id="@+id/filterDifficultyOfCacheBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="FilterDifficulty"
+        app:layout_constraintStart_toStartOf="@+id/filterLocationForCacheBtn"
+        app:layout_constraintTop_toBottomOf="@+id/filterLocationForCacheBtn" />
+</android.support.constraint.ConstraintLayout>
