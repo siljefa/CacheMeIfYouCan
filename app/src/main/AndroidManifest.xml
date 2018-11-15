@@ -6,8 +6,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.location.gps" />
-
+    <!-- silje var her -->
     <application
+        android:name=".Notification"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,9 +21,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!-- Changed LoginActivity to launcher-->
+        <!-- Changed LoginActivity to launcher -->
         <activity
-            android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
+            android:name=".TestingNotificationActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -42,4 +43,5 @@
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.ExistingUserActivity" />
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
     </application>
+
 </manifest>
