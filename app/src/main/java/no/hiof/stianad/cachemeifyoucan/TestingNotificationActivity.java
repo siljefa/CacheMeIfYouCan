@@ -30,6 +30,7 @@ public class TestingNotificationActivity extends AppCompatActivity {
         String title = editText.getText().toString();
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_menu_camera)
                 .setContentTitle(title)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 //Notification type
