@@ -1,20 +1,25 @@
 package no.hiof.stianad.cachemeifyoucan;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
-public class Cache
+import java.lang.annotation.Annotation;
+
+public class Cache implements Annotation
 {
     private String name;
-    private LatLng latLng;
+    private double latitude;
+    private double longitude;
     private String description;
     private int difficulty;
     private int cacheId;
 
-
     public Cache(LatLng latLng, String description, String name, int difficulty, int cacheId)
     {
         this.name = name;
-        this.latLng = latLng;
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
         this.description = description;
         this.difficulty = difficulty;
         this.cacheId = cacheId;
@@ -24,6 +29,46 @@ public class Cache
     public Cache()
     {
 
+    }
+
+    public void setLatitude(double latitude)
+    {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude)
+    {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude()
+    {
+        return latitude;
+    }
+
+    public double getLongitude()
+    {
+        return longitude;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public void setDifficulty(int difficulty)
+    {
+        this.difficulty = difficulty;
+    }
+
+    public void setCacheId(int cacheId)
+    {
+        this.cacheId = cacheId;
     }
 
     public String getName()
@@ -36,9 +81,10 @@ public class Cache
         return cacheId;
     }
 
+    @Exclude
     public LatLng getLatLng()
     {
-        return latLng;
+        return new LatLng(latitude, longitude);
     }
 
     public String getDescription()
@@ -49,5 +95,11 @@ public class Cache
     public int getDifficulty()
     {
         return difficulty;
+    }
+
+    @Override
+    public Class<? extends Annotation> annotationType()
+    {
+        return null;
     }
 }

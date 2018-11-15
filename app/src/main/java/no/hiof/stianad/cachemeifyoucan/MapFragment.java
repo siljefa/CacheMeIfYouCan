@@ -21,6 +21,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -42,18 +46,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     //hashMap to hold caches on the map, and connected marker.
     private HashMap<String, Integer> cacheMarkersOnMap = new HashMap<>();
     private Marker selectedCacheMarker;
-    private boolean filterFoundCache = true, filterLocation = true, filterDifficulty = false;
+    private boolean filterFoundCache = false, filterLocation = false, filterDifficulty = false;
 
     private CacheBottomSheet cacheBottomSheet;
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
@@ -67,21 +68,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             // To acquire a GoogleMap in onMapReady.
             mapFragment.getMapAsync(this);
         }
+
         //Get a custom BottomSheet made for caches.
         cacheBottomSheet = new CacheBottomSheet(view, parentActivity);
 
-
         //region TestCaches
-        Cache cache1 = Caches.createCashe(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
-        Cache cache2 = Caches.createCashe(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
-        Cache cache3 = Caches.createCashe(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
-        Caches.createCashe(new LatLng(37.72, -122.07), "Hello", "Some Name", 5);
-        Caches.createCashe(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
+        /*Cache cache1 = Caches.createCache(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
+        Cache cache2 = Caches.createCache(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
+        Cache cache3 = Caches.createCache(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
+        Caches.createCache(new LatLng(37.72, -122.07), "Hello", "Some Name", 5);
+        Caches.createCache(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
+
         ArrayList<Integer> list  = User.getCacheIds();
         list.add(cache1.getCacheId());
         list.add(cache2.getCacheId());
-        list.add(cache3.getCacheId());
+        list.add(cache3.getCacheId());*/
         //endregion
+
+        Caches.setEventListener();
         setBottomSheetButtonListeners();
     }
 
@@ -165,7 +169,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private void filterCaches()
     {
         cacheMarkersOnMap = new HashMap<>();
-        LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 1000).getBoundingBox();
+        LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 10000).getBoundingBox();
         for (Map.Entry<Integer, Cache> e : Caches.getCaches().entrySet())
         {
             Marker newMarker = null;
@@ -194,7 +198,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             }
             if (filterDifficulty)
             {
-
             }
         }
     }
@@ -246,7 +249,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             if (cLat.length() > 0 && cLon.length() > 0)
             {
                 LatLng latLng = new LatLng(Double.parseDouble(cLat), Double.parseDouble(cLon));
-                Cache newCache = Caches.createCashe(latLng, cDescription, cName, 2);
+                Cache newCache = Caches.createCache(latLng, cDescription, cName, 2);
 
                 //If the user has changed the cache location after placing the marker, move the marker.
                 if (selectedCacheMarker.getPosition() != latLng)

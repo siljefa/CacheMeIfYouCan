@@ -295,6 +295,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {
                 break;
             }
+            case R.id.nav_filter:
+            {
+
+                break;
+            }
             case R.id.nav_logout:
             {
                 break;

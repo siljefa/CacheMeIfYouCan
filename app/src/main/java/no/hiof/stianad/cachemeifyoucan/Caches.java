@@ -1,8 +1,11 @@
 package no.hiof.stianad.cachemeifyoucan;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,19 +14,27 @@ import com.google.firebase.database.ValueEventListener;
 
 public final class Caches
 {
-
     private static HashMap<Integer, Cache> caches = new HashMap<>();
     private Caches()
     {
 
     }
 
-    public static Cache createCashe(LatLng latLng, String description, String name, int difficulty)
+    public static Cache createCache(LatLng latLng, String description, String name, int difficulty)
     {
-        Cache newCache = new Cache(latLng, description, name, difficulty, caches.size()+1);
-        caches.put((caches.size()+1), newCache);
-        addCacheToDatabse(newCache);
-        return  newCache;
+        int cacheId = caches.size()+1;
+        while(true)
+        {
+            if (!caches.containsKey(cacheId))
+            {
+                Cache newCache = new Cache(latLng, description, name, difficulty, caches.size() + 1);
+                caches.put((cacheId), newCache);
+                addCacheToDatabase(newCache);
+                return newCache;
+            }
+            else
+                cacheId++;
+        }
     }
 
     public static HashMap<Integer, Cache> getCaches()
@@ -31,9 +42,43 @@ public final class Caches
         return caches;
     }
 
-    private static void addCacheToDatabse(Cache cache)
+    public static void setEventListener()
     {
-        //firebase refference and instance
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("cache");
+        ref.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                if (dataSnapshot != null)
+                {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        Cache value = snapshot.getValue(Cache.class);
+                        caches.put(value.getCacheId(), value);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error)
+            {
+                // Failed to read value
+                // Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private static void getDataFromDatabase()
+    {
+    }
+
+    private static void addCacheToDatabase(Cache cache)
+    {
+        //FireBase reference and instance
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseCache = database.getReference("cache");
         String cacheId = databaseCache.push().getKey();
