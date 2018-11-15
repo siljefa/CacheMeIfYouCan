@@ -38,7 +38,6 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activitie
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.BoundingBox;
 
-
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener
 {
     private MainActivity parentActivity;
@@ -49,7 +48,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     //hashMap to hold caches on the map, and connected marker.
     private HashMap<String, Integer> cacheMarkersOnMap = new HashMap<>();
     private Marker selectedCacheMarker;
-    private boolean filterFoundCache = true, filterLocation = true, filterDifficulty = false;
+    private boolean filterFoundCache = true;
+    private boolean filterLocation = true;
+    private boolean filterDifficulty = false;
     private CacheBottomSheet cacheBottomSheet;
 
     @Override
@@ -72,7 +73,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         }
         //Get a custom BottomSheet made for caches.
         cacheBottomSheet = new CacheBottomSheet(view, parentActivity);
-
 
         //region TestCaches
         Cache cache1 = CacheManager.createCache(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
