@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.location.gps" />
 
-    <!-- silje var her -->
     <application
         android:allowBackup="true"
         android:debuggable="true"
@@ -21,7 +20,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
         <!-- Changed LoginActivity to launcher-->
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
@@ -32,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
             android:label="@string/title_activity_main"
