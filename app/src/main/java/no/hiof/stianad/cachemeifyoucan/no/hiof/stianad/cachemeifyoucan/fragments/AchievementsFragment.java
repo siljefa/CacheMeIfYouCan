@@ -22,14 +22,15 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.adapters.
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Achievement;
 
 public class AchievementsFragment extends Fragment{
+    /**
+     *  Contains the achievement objects to be shown on screen
+     */
+    public static ArrayList<Achievement> achievements = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_achievements, container, false);
-
-        //
-
         return view;
     }
     @Override
@@ -38,7 +39,6 @@ public class AchievementsFragment extends Fragment{
     }
 
     private void AttachCustomAdapterToListView() {
-        ArrayList<Achievement> achievements = new ArrayList<>();
 
         AchievementsAdapter adapter = new AchievementsAdapter(this.getContext(), achievements);
 
@@ -46,38 +46,27 @@ public class AchievementsFragment extends Fragment{
 
         listView.setAdapter(adapter);
 
-        ArrayList<Achievement> newAchievements = new ArrayList<>();
-        /*newAchievements.add(new Achievement("10k", "walk 10000 metres"));
-        newAchievements.add(new Achievement("20k", "walk 20000 metres"));
-        newAchievements.add(new Achievement("30k", "walk 30000 metres"));
-        */
+        FillArrayListWithAchievements();
 
-        newAchievements = FillArrayListWithAchievements();
-
-        adapter.addAll(newAchievements);
+        adapter.addAll(achievements);
     }
 
-    private ArrayList<Achievement> FillArrayListWithAchievements(){
-        ArrayList<Achievement> list = new ArrayList<>();
+    private void FillArrayListWithAchievements(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
         ref.child("achievement").addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for (DataSnapshot child: children) {
-                    Achievement achievement = child.getValue(Achievement.class);
-                    //adding achievements to list
-                    list.add(achievement);
+                for (DataSnapshot achievementSnapshot: dataSnapshot.getChildren()) {
+                    AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //TODO: Fix some error handling bro
             }
         });
-
-        return list;
     }
 }
