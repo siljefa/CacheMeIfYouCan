@@ -23,7 +23,7 @@
 
         <!-- Changed LoginActivity to launcher -->
         <activity
-            android:name=".TestingNotificationActivity"
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

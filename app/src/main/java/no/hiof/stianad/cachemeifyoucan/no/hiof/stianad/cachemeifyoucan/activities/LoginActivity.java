@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         //For existing user profiles
         Button btnExistingUser = (Button) findViewById(R.id.activty_login_btn_login);
         btnExistingUser.setOnClickListener(new View.OnClickListener() {
