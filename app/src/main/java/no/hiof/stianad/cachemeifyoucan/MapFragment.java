@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +24,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.location.Location;
 import android.location.LocationListener;
+import android.widget.Toast;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -49,17 +50,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
         parentActivity = (MainActivity) getActivity();
+        //SupportMapFragment handles the life cycle of a google map.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null)
         {
+            // To acquire a GoogleMap in onMapReady.
             mapFragment.getMapAsync(this);
         }
-        cacheBottomSheet = new CacheBottomSheet(view, (MainActivity) getActivity());
+        //Get a custom BottomSheet made for caches.
+        cacheBottomSheet = new CacheBottomSheet(view, parentActivity);
 
         Caches.createCashe(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
         Caches.createCashe(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
@@ -68,6 +73,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         Caches.createCashe(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
 
 
+
+        //region BottomSheetButtons setOnClickListeners
         cacheBottomSheet.setWeatherBtnOnClickListener(v ->
         {
             WeatherFragment weatherFragmentWithBundle = new WeatherFragment();
@@ -92,32 +99,39 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             parentActivity.setToolbarColored(false);
             parentActivity.setToolbarBackIconDown(false);
         });
+
         cacheBottomSheet.setFoundCacheBtnOnClickListener(v -> cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN));
 
+        //Save a new cache to database with the information present in the BottomSheet.
         cacheBottomSheet.setSaveCacheBtnOnClickListener(v ->
         {
-            //Silje was here, tried to make so that description and name from the txt fields are
-            // passed as name and description values to the create cache function feel free to
-            //comment out and go back to old if its wrong or messes up the code in any way
             String cDescription = cacheBottomSheet.getEditTextDescription().getText().toString();
             String cName = cacheBottomSheet.getEditTextName().getText().toString();
             String cLat = cacheBottomSheet.getEditTextLat().getText().toString();
             String cLon = cacheBottomSheet.getEditTextLon().getText().toString();
 
+            //Test if the location field has value.
             if (cLat.length() > 0 && cLon.length() > 0)
             {
                 LatLng latLng = new LatLng(Double.parseDouble(cLat), Double.parseDouble(cLon));
                 Cache newCache = Caches.createCashe(latLng, cDescription, cName, 2);
 
-                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
+                //If the user has changed the cache location after placing the marker, move the marker.
                 if (selectedCacheMarker.getPosition() != latLng)
                 {
                     selectedCacheMarker.setPosition(latLng);
                 }
                 cacheMarkersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
+                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
             }
-        });
+            else
+            {
+                Toast.makeText(parentActivity, Objects.requireNonNull(parentActivity).getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
+                cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            }
 
+        });
+        //endregion
     }
 
     @Override
@@ -128,17 +142,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         {
             //Long click is used for crating new Caches.
             addMarker(latLng, "");
-            cacheBottomSheet.openEditBottomSheet(latLng);
+            cacheBottomSheet.openSheetInEditMode(latLng);
         });
 
         googleMap.setOnMarkerClickListener(marker ->
         {
             //Open cache info sheet
-            Integer cacheId = cacheMarkersOnMap.get(marker.getId());
-            Cache cache = Caches.getCaches().get(Objects.requireNonNull(cacheId));
-            cacheBottomSheet.openViewBottomSheet(Objects.requireNonNull(cache));
-            selectedCacheMarker = marker;
-            return false;
+            try
+            {
+                Integer cacheId = cacheMarkersOnMap.get(marker.getId());
+                Cache cache = Caches.getCaches().get(Objects.requireNonNull(cacheId));
+                cacheBottomSheet.openSheetInViewMode(Objects.requireNonNull(cache));
+                selectedCacheMarker = marker;
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         });
 
         googleMap.setOnMapClickListener(latLng ->

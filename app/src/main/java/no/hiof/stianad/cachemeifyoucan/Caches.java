@@ -37,6 +37,5 @@ public final class Caches
         DatabaseReference databaseCache = database.getReference("cache");
         String cacheId = databaseCache.push().getKey();
         databaseCache.child(cacheId).setValue(cache);
-
     }
 }

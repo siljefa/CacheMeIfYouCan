@@ -1,6 +1,7 @@
 package no.hiof.stianad.cachemeifyoucan;
 
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -30,11 +31,16 @@ public class CacheBottomSheet
         saveCacheBtn = cacheBottomSheet.findViewById(R.id.saveCacheBtn);
         weatherBtn = cacheBottomSheet.findViewById(R.id.weatherBtn);
 
+        /*
+        For all editTextFields set the sheet state to expanded when in focus to make space for keyboard.
+         */
+        //region Set EditTextView onClickListeners.
         editTextLat.setOnFocusChangeListener((v, hasFocus) ->
         {
             if (hasFocus)
                 sheetBehavior.setSheetState(BottomSheetBehavior.STATE_EXPANDED);
         });
+
         editTextLon.setOnFocusChangeListener((v, hasFocus) ->
         {
             if (hasFocus)
@@ -47,23 +53,24 @@ public class CacheBottomSheet
         });
         editTextName.setOnFocusChangeListener((v, hasFocus) ->
         {
-            if (!hasFocus)
+            if (hasFocus)
                 sheetBehavior.setSheetState(BottomSheetBehavior.STATE_EXPANDED);
         });
+        //endregion
 
     }
 
-    public void openViewBottomSheet(Cache selectedCache)
+
+    //BottomSheet can be opened in two different modes edit or view.
+    //region BottomSheet modes.
+    // When sheet is opened in view mode the text views are not editable. A found cache button and a weather button is visible.
+    public void openSheetInViewMode(Cache selectedCache)
     {
         sheetBehavior.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         saveCacheBtn.setVisibility(View.GONE);
         foundCacheBtn.setVisibility(View.VISIBLE);
         weatherBtn.setVisibility(View.VISIBLE);
-
-        setEditTextEditable(editTextLat, false);
-        setEditTextEditable(editTextLon, false);
-        setEditTextEditable(editTextDescription, false);
-        setEditTextEditable(editTextName, false);
+        setEditTextFieldsEditable(false);
 
         editTextDescription.setText(selectedCache.getDescription());
         editTextLat.setText(String.format(Locale.getDefault(), "%s", selectedCache.getLatLng().latitude));
@@ -71,29 +78,33 @@ public class CacheBottomSheet
         editTextName.setText(selectedCache.getName());
     }
 
-    /*
-        Open bottomSheet in create cache mode.
-        Make text editable. Show saveCacheBtn.
-    */
-    public void openEditBottomSheet(LatLng latLng)
+    // When sheet is opened in edit mode the text views are editable. A save button is visible.
+    public void openSheetInEditMode(LatLng latLng)
     {
         sheetBehavior.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         foundCacheBtn.setVisibility(View.GONE);
-        saveCacheBtn.setVisibility(View.VISIBLE);
         weatherBtn.setVisibility(View.GONE);
+        saveCacheBtn.setVisibility(View.VISIBLE);
+        setEditTextFieldsEditable(true);
 
-        setEditTextEditable(editTextLat, true);
-        setEditTextEditable(editTextLon, true);
-        setEditTextEditable(editTextDescription, true);
-        setEditTextEditable(editTextName, true);
         editTextDescription.setText("");
         editTextLat.setText(String.format(Locale.getDefault(), "%s", latLng.latitude));
         editTextLon.setText(String.format(Locale.getDefault(), "%s", latLng.longitude));
         editTextName.setText("");
     }
+    //endregion
 
+    //Set if all EditTextView in this bottomSheet should be editable or not.
+    private void setEditTextFieldsEditable(boolean editable)
+    {
+        setEditTextViewEditable(editTextLat, editable);
+        setEditTextViewEditable(editTextLon, editable);
+        setEditTextViewEditable(editTextDescription, editable);
+        setEditTextViewEditable(editTextName, editable);
+    }
 
-    private void setEditTextEditable(EditText editTextView, boolean editable)
+    //Set if a EditTextView should be editable or not.
+    private void setEditTextViewEditable(EditText editTextView, boolean editable)
     {
         editTextView.setFocusable(editable);
         editTextView.setClickable(editable);

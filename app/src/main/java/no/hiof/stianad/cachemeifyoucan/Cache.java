@@ -11,7 +11,6 @@ public class Cache
     private int cacheId;
 
 
-
     public Cache(LatLng latLng, String description, String name, int difficulty, int cacheId)
     {
         this.name = name;
@@ -21,9 +20,12 @@ public class Cache
         this.cacheId = cacheId;
     }
 
-    public Cache(){
+    //Empty constructor needed for database.
+    public Cache()
+    {
 
     }
+
     public String getName()
     {
         return name;

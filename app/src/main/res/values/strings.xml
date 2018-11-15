@@ -30,6 +30,7 @@
     <string name="sign_up_btn">Sign up</string>
     <string name="er_username">Username</string>
     <string name="btn_login_in">Login in</string>
+    <string name="toast_save_cache_failed">Save cache failed</string>
 
     <!-- Weather -->
 
