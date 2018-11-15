@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,7 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.ProfileFragment;
+import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {

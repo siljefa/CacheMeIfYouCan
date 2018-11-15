@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.adapters.AchievementsAdapter;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Achievement;
 
 public class AchievementsFragment extends Fragment{
     @Nullable

@@ -1,21 +1,23 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public final class Caches
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
+
+public final class CacheManager
 {
+
     private static HashMap<Integer, Cache> caches = new HashMap<>();
-    private Caches()
+    private CacheManager()
     {
 
     }

@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +35,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.CacheManager;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.BoundingBox;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener
 {
@@ -46,15 +52,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     //hashMap to hold caches on the map, and connected marker.
     private HashMap<String, Integer> cacheMarkersOnMap = new HashMap<>();
     private Marker selectedCacheMarker;
-    private boolean filterFoundCache = false, filterLocation = false, filterDifficulty = false;
-
+    private boolean filterFoundCache = false;
+    private boolean filterLocation = false;
+    private boolean filterDifficulty = false;
     private CacheBottomSheet cacheBottomSheet;
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
@@ -68,17 +78,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             // To acquire a GoogleMap in onMapReady.
             mapFragment.getMapAsync(this);
         }
-
         //Get a custom BottomSheet made for caches.
         cacheBottomSheet = new CacheBottomSheet(view, parentActivity);
 
-        //region TestCaches
-        /*Cache cache1 = Caches.createCache(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
-        Cache cache2 = Caches.createCache(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
-        Cache cache3 = Caches.createCache(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
-        Caches.createCache(new LatLng(37.72, -122.07), "Hello", "Some Name", 5);
-        Caches.createCache(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
 
+        //region TestCaches
+        /*Cache cache1 = CacheManager.createCache(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
+        Cache cache2 = CacheManager.createCache(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
+        Cache cache3 = CacheManager.createCache(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
+        CacheManager.createCache(new LatLng(37.72, -122.07), "Hello", "Some Name", 5);
+        CacheManager.createCache(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
         ArrayList<Integer> list  = User.getCacheIds();
         list.add(cache1.getCacheId());
         list.add(cache2.getCacheId());
@@ -95,7 +104,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         gMap = googleMap;
         googleMap.setOnMapLongClickListener(latLng ->
         {
-            //Long click is used for crating new Caches.
+            //Long click is used for crating new CacheManager.
             addMarker(latLng, "");
             cacheBottomSheet.openSheetInEditMode(latLng);
         });
@@ -106,7 +115,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             try
             {
                 Integer cacheId = cacheMarkersOnMap.get(marker.getId());
-                Cache cache = Caches.getCaches().get(Objects.requireNonNull(cacheId));
+                Cache cache = CacheManager.getCaches().get(Objects.requireNonNull(cacheId));
                 cacheBottomSheet.openSheetInViewMode(Objects.requireNonNull(cache));
                 selectedCacheMarker = marker;
                 return true;
@@ -134,7 +143,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         setUpDefaultUISettings();
         mapReady = true;
     }
-
     /*
         When map is ready and location is updated, load caches around location.
      */
@@ -147,7 +155,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         filterCaches();
 
-        /*for (Map.Entry<Integer, Cache> e : Caches.getCaches().entrySet())
+        /*for (Map.Entry<Integer, Cache> e : CacheManager.getCaches().entrySet())
         {
             Integer cacheId = e.getKey();
             Cache cache = e.getValue();
@@ -170,7 +178,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     {
         cacheMarkersOnMap = new HashMap<>();
         LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 10000).getBoundingBox();
-        for (Map.Entry<Integer, Cache> e : Caches.getCaches().entrySet())
+        for (Map.Entry<Integer, Cache> e : CacheManager.getCaches().entrySet())
         {
             Marker newMarker = null;
             Integer cacheId = e.getKey();
@@ -249,7 +257,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             if (cLat.length() > 0 && cLon.length() > 0)
             {
                 LatLng latLng = new LatLng(Double.parseDouble(cLat), Double.parseDouble(cLon));
-                Cache newCache = Caches.createCache(latLng, cDescription, cName, 2);
+                Cache newCache = CacheManager.createCache(latLng, cDescription, cName, 2);
 
                 //If the user has changed the cache location after placing the marker, move the marker.
                 if (selectedCacheMarker.getPosition() != latLng)

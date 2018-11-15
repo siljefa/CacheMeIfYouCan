@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;

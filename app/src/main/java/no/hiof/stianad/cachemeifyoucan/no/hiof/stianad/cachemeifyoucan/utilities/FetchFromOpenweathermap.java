@@ -1,4 +1,4 @@
-package no.hiof.stianad.cachemeifyoucan;
+package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import no.hiof.stianad.cachemeifyoucan.R;
 
 public class FetchFromOpenweathermap {
 

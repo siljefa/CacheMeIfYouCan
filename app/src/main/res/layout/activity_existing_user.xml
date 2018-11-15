@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#64b5f6"
-    tools:context=".ExistingUserActivity">
+    tools:context=".no.hiof.stianad.cachemeifyoucan.activities.ExistingUserActivity">
 
     <EditText
         android:id="@+id/activity_existingUser_tv_username"
