@@ -15,10 +15,12 @@ import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.adapters.AchievementsAdapter;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Achievement;
 
-public class AchievementsFragment extends Fragment{
+public class AchievementsFragment extends Fragment
+{
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
 
         View view = inflater.inflate(R.layout.fragment_achievements, container, false);
 
@@ -26,12 +28,15 @@ public class AchievementsFragment extends Fragment{
 
         return view;
     }
+
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
         AttachCustomAdapterToListView();
     }
 
-    private void AttachCustomAdapterToListView() {
+    private void AttachCustomAdapterToListView()
+    {
         ArrayList<Achievement> achievements = new ArrayList<>();
 
         AchievementsAdapter adapter = new AchievementsAdapter(this.getContext(), achievements);
@@ -54,3 +59,4 @@ public class AchievementsFragment extends Fragment{
         adapter.addAll(newAchievements);
     }
 }
+

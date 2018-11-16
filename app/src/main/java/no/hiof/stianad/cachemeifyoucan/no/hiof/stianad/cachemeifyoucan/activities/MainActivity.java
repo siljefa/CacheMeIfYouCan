@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.FilterCacheFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.ProfileFragment;
 import no.hiof.stianad.cachemeifyoucan.R;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MapFragment mapFragment = new MapFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
     private AchievementsFragment achievementsFragment = new AchievementsFragment();
+    private FilterCacheFragment filterCacheFragment = new FilterCacheFragment();
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Toolbar topToolbar;
 
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.mainLayout, mapFragment, "map_fragment");
         fragmentTransaction.add(R.id.mainLayout, profileFragment, "profile_fragment").hide(profileFragment);
         fragmentTransaction.add(R.id.mainLayout, achievementsFragment, "achievements_fragment").hide(achievementsFragment);
+        fragmentTransaction.add(R.id.mainLayout, filterCacheFragment, "filter_cache_fragment").hide(filterCacheFragment);
         fragmentTransaction.commit();
         //showBackButton(false);
 
@@ -116,13 +119,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mapFragment.closeSheet();
                         showBackButton(false);
                     }
+                    if(filterCacheFragment.isVisible())
+                    {
+                        fragmentTransactionOnClick.hide(filterCacheFragment);
+                        fragmentTransactionOnClick.show(mapFragment);
+                        fragmentTransactionOnClick.commit();
+                        mapFragment.closeSheet();
+                        showBackButton(false);
+                    }
                     if(mapFragment.isVisible())
                     {
                         mapFragment.collapseSheet();
                         topToolbar.setBackgroundColor(Color.TRANSPARENT);
                     }
 
-                    Fragment weatherFragment = fragmentManager.findFragmentByTag("weather_Fragment");
+                    Fragment weatherFragment = fragmentManager.findFragmentByTag("weather_fragment");
                     if (weatherFragment instanceof WeatherFragment)
                     {
                         fragmentTransactionOnClick.remove(weatherFragment);
@@ -302,7 +313,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_filter:
             {
-
+                showBackButton(true);
+                fragmentTransaction.hide(mapFragment);
+                fragmentTransaction.show(filterCacheFragment);
                 break;
             }
             case R.id.nav_logout:

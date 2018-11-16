@@ -57,14 +57,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private boolean filterDifficulty = false;
     private CacheBottomSheet cacheBottomSheet;
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
@@ -176,8 +173,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     private void filterCaches()
     {
+        gMap.clear();
         cacheMarkersOnMap = new HashMap<>();
-        LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 10000).getBoundingBox();
+        LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 1000).getBoundingBox();
         for (Map.Entry<Integer, Cache> e : CacheManager.getCaches().entrySet())
         {
             Marker newMarker = null;
@@ -201,7 +199,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 if(User.getCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
                 {
                     cacheMarkersOnMap.remove(newMarker.getId());
-                    selectedCacheMarker.remove();
+                    newMarker.remove();
                 }
             }
             if (filterDifficulty)
@@ -229,7 +227,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 fragmentTransaction.hide(fragment);
             }
 
-            fragmentTransaction.add(R.id.mainLayout, weatherFragmentWithBundle, "weather_Fragment");
+            fragmentTransaction.add(R.id.mainLayout, weatherFragmentWithBundle, "weather_fragment");
             fragmentTransaction.show(weatherFragmentWithBundle);
             fragmentTransaction.commit();
             parentActivity.showBackButton(true);
@@ -240,8 +238,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         cacheBottomSheet.setFoundCacheBtnOnClickListener(v ->
         {
             User.getCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
-            cacheMarkersOnMap.remove(selectedCacheMarker.getId());
-            selectedCacheMarker.remove();
+            if(filterFoundCache)
+            {
+                cacheMarkersOnMap.remove(selectedCacheMarker.getId());
+                selectedCacheMarker.remove();
+            }
             cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
         });
 
@@ -272,7 +273,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 Toast.makeText(parentActivity, Objects.requireNonNull(parentActivity).getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
             }
-
         });
     }
 
@@ -292,6 +292,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         uiSettings.setTiltGesturesEnabled(false);
         uiSettings.setZoomControlsEnabled(false);
         uiSettings.setMapToolbarEnabled(false);
+    }
+
+    public void setFilters(boolean filterFoundCache, boolean filterLocation, boolean filterDifficulty)
+    {
+        if (mapReady)
+        {
+            this.filterFoundCache = filterFoundCache;
+            this.filterLocation = filterLocation;
+            this.filterDifficulty = filterDifficulty;
+            filterCaches();
+        }
     }
 
     @Override
