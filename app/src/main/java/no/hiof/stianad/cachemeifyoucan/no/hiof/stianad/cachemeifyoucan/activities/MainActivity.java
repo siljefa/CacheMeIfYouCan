@@ -30,7 +30,7 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.WeatherFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapFragment.IMapFragment
 {
     MapFragment mapFragment = new MapFragment();
     private ProfileFragment profileFragment = new ProfileFragment();

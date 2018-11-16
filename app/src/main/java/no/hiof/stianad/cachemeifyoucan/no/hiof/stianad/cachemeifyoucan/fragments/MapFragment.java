@@ -344,4 +344,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     {
         return cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_EXPANDED;
     }
+
+    public interface IMapFragment {
+        void setToolbarBackIconDown(boolean down);
+        void setToolbarColored(boolean addColor);
+        void showBackButton(boolean showButton);
+    }
 }
