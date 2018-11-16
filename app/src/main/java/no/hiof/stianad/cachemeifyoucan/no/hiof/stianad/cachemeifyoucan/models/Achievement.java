@@ -9,4 +9,11 @@ public class Achievement {
         this.description = description;
         this.name = name;
     }
+
+    public Achievement(){
+
+    }
+
+    public void setDescription(String description){this.description = description;}
+    public void setName(String name){this.name = name;}
 }
