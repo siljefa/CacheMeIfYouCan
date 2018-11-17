@@ -7,27 +7,27 @@ import android.view.View;
 import android.widget.Button;
 
 import no.hiof.stianad.cachemeifyoucan.R;
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
 
 public class SignUpActivity extends AppCompatActivity {
-    private Button btnSignUp;   //Sign up button
+    private Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        //Redirects to mainActivity
-        btnSignUp = (Button) findViewById(R.id.activity_singUp_btn_login);
+        //For signup
+        Button btnSignUp = (Button) findViewById(R.id.activity_signUp_btn_signUp);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMainActivity();
             }
         });
+
     }
 
-    //Starts mainActivity
+    //Starts MainActivity
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

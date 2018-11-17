@@ -4,11 +4,11 @@
     package="no.hiof.stianad.cachemeifyoucan">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name=".Notification"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,27 +21,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!-- Changed LoginActivity to launcher -->
+        <!-- Changed UserAccountOptions to launcher -->
         <activity
-            android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
-            android:label="@string/title_activity_login"
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName="no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity">
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity" />
         </activity>
-        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.ExistingUserActivity" />
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
+        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"></activity>
     </application>
 
 </manifest>

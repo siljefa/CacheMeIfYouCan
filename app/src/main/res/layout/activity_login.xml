@@ -1,11 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#64b5f6"
     tools:context=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity">
 
-    <include layout="@layout/content_login" />
+    <EditText
+        android:id="@+id/activity_login_tv_username"
+        android:layout_width="334dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginEnd="20dp"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/enter_username"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:text="@string/er_username"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <EditText
+        android:id="@+id/activity_login_tv_password"
+        android:layout_width="332dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="62dp"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/enter_password"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:text="@string/password"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/activity_login_btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_tv_username" />
+
+    <Button
+        android:id="@+id/activity_login_btn_login"
+        android:layout_width="266dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="220dp"
+        android:background="#9be7ff"
+        android:text="@string/ExistingUser_login"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.318" />
+
+</android.support.constraint.ConstraintLayout>
