@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,30 +16,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/filterFoundCacheButton"
+    <Switch
+        android:id="@+id/filterFoundCacheSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:text="FoundCache"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Filter Found Caches"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filler" />
 
-    <Button
-        android:id="@+id/filterLocationForCacheBtn"
+    <Switch
+        android:id="@+id/filterLocationSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="FilterLocation"
-        app:layout_constraintStart_toStartOf="@+id/filterFoundCacheButton"
-        app:layout_constraintTop_toBottomOf="@+id/filterFoundCacheButton" />
+        android:text="Filter Location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filterFoundCacheSwitch" />
 
-    <Button
-        android:id="@+id/filterDifficultyOfCacheBtn"
+    <Switch
+        android:id="@+id/filterDifficultySwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="FilterDifficulty"
-        app:layout_constraintStart_toStartOf="@+id/filterLocationForCacheBtn"
-        app:layout_constraintTop_toBottomOf="@+id/filterLocationForCacheBtn" />
+        android:text="Filter Difficulty Switch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filterLocationSwitch" />
 </android.support.constraint.ConstraintLayout>
