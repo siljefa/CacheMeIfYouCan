@@ -8,7 +8,10 @@
 
     <uses-feature android:name="android.hardware.location.gps" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
+        android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -42,6 +45,8 @@
         </activity>
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"></activity>
+        <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/>
+
     </application>
 
 </manifest>
