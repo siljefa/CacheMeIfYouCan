@@ -14,6 +14,7 @@ public class AppNotification extends Application {
 
         createNotificationChannel();
     }
+
     //Creates notification channel
     private void createNotificationChannel(){
         //Checks version of Android. If API is 26 or higher notification channel group is implemented.
