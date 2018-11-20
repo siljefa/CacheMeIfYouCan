@@ -2,7 +2,6 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activiti
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
@@ -21,10 +20,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.FilterCacheFragment;
@@ -219,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             else
             {
-                // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOCATION);
             }
             return false;
@@ -234,22 +230,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
-            switch (requestCode)
+        switch (requestCode)
+        {
+            case PERMISSIONS_REQUEST_LOCATION:
             {
-                case PERMISSIONS_REQUEST_LOCATION:
+                // If request is cancelled, the result array is empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
-                    // If request is cancelled, the result array is empty.
-                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                     {
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                        {
-                            locationProvider = locationManager.getBestProvider(new Criteria(), false);
-                            locationManager.requestLocationUpdates(locationProvider, 400, 1, mapFragment);
-                        }
+                        locationProvider = locationManager.getBestProvider(new Criteria(), false);
+                        locationManager.requestLocationUpdates(locationProvider, 400, 1, mapFragment);
                     }
-                    break;
                 }
+                break;
             }
+        }
     }
 
     @Override
