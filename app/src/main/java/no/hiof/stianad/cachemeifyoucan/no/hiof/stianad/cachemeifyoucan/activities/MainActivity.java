@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         topToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(topToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         checkLocationPermission();
 
         //Starts foreground service to show notification
-        //startService();
+        startService();
     }
 
     //Starts service
