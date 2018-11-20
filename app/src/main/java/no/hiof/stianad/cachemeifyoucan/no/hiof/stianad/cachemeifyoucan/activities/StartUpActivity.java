@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import no.hiof.stianad.cachemeifyoucan.R;
 
-public class UserAccountOptions extends AppCompatActivity {
+public class StartUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

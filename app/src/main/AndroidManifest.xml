@@ -11,8 +11,9 @@
     <!-- Features -->
     <uses-feature android:name="android.hardware.location.gps" />
 
-    <!--android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification" -->
+
     <application
+        android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification"
     android:allowBackup="true"
     android:debuggable="true"
     android:icon="@mipmap/ic_launcher"
@@ -26,7 +27,7 @@
         android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,14 +44,15 @@
 
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity"
-            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
         />
 
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
-            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
         />
-        <!-- <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/> -->
+        <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"
+        />
 
     </application>
 </manifest>

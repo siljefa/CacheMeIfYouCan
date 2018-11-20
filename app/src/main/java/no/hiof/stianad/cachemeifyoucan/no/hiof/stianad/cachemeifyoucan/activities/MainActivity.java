@@ -29,6 +29,7 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.ProfileFragment;
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.WeatherFragment;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
 //import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapFragment.IMapFragment
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //startService();
     }
 
-    /*//Starts service
+    //Starts service
     private void startService() {
         Intent serviceIntent = new Intent(this, AppService.class);
 
@@ -338,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_logout:
             {
+                startActivity(new Intent( this, LoginActivity.class ));
                 break;
             }
         }
