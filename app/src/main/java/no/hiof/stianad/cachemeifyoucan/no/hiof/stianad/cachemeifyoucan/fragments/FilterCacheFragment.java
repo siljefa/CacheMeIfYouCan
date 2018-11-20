@@ -44,11 +44,11 @@ public class FilterCacheFragment extends Fragment
         {
             if(isChecked)
             {
-                filterLocation = false;
+                filterLocation = true;
             }
             else
             {
-                filterLocation = true;
+                filterLocation = false;
             }
         });
 
