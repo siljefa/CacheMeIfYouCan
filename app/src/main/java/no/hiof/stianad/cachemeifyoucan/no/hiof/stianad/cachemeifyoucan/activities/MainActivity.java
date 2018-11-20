@@ -32,7 +32,7 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.ProfileFragment;
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.WeatherFragment;
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
+//import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapFragment.IMapFragment
 {
@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         checkLocationPermission();
 
         //Starts foreground service to show notification
-        startService();
+        //startService();
     }
 
-    //Starts service
+    /*//Starts service
     private void startService() {
         Intent serviceIntent = new Intent(this, AppService.class);
 
@@ -234,8 +234,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
-        try
-        {
             switch (requestCode)
             {
                 case PERMISSIONS_REQUEST_LOCATION:
@@ -252,11 +250,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 }
             }
-        }
-        catch (Exception e)
-        {
-            int i = 4;
-        }
     }
 
     @Override

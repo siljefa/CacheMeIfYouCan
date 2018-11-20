@@ -10,21 +10,21 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
+    <!--android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification" -->
     <application
-        android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification"
-        android:allowBackup="true"
-        android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="HardcodedDebugMode, GoogleAppIndexingWarning">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+    android:allowBackup="true"
+    android:debuggable="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme"
+    tools:ignore="HardcodedDebugMode, GoogleAppIndexingWarning">
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/google_maps_key" />
 
-        <!-- Changed UserAccountOptions to launcher -->
+    <!-- Changed UserAccountOptions to launcher -->
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
             android:theme="@style/AppTheme.NoActionBar">
@@ -45,7 +45,7 @@
         </activity>
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
         <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"></activity>
-        <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/>
+        <!-- <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/> -->
 
     </application>
 
