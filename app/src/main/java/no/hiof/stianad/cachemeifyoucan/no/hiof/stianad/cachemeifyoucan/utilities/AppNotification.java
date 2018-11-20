@@ -6,7 +6,7 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 public class AppNotification extends Application {
-    public static final String CHANNEL_ID = "Geocaching";
+    public static final String CHANNEL_ID = "GeoCaching";
 
     @Override
     public void onCreate() {
@@ -20,7 +20,7 @@ public class AppNotification extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                     "Geocaching",
+                     "GeoCaching",
                     //Sets the importance to the highest level, however a lower level can work for this app
                     NotificationManager.IMPORTANCE_HIGH
             );
