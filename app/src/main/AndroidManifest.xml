@@ -39,18 +39,17 @@
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
         />
 
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity"
             android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"
         />
 
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
             android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"
         />
         <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"
         />
