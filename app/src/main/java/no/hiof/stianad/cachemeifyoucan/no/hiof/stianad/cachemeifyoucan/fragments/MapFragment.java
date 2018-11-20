@@ -78,21 +78,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         //Get a custom BottomSheet made for caches.
         cacheBottomSheet = new CacheBottomSheet(view, parentActivity);
 
-
-        //region TestCaches
-        /*Cache cache1 = CacheManager.createCache(new LatLng(37.42, -122.07), "Hello", "Some Name", 2);
-        Cache cache2 = CacheManager.createCache(new LatLng(37.47, -122.07), "Hello", "Some Name", 3);
-        Cache cache3 = CacheManager.createCache(new LatLng(37.62, -122.07), "Hello", "Some Name", 4);
-        CacheManager.createCache(new LatLng(37.72, -122.07), "Hello", "Some Name", 5);
-        CacheManager.createCache(new LatLng(38.82, -122.07), "Hello", "Some Name", 6);
-        ArrayList<Integer> list  = User.getCacheIds();
-        list.add(cache1.getCacheId());
-        list.add(cache2.getCacheId());
-        list.add(cache3.getCacheId());*/
-        //endregion
-
-        CacheManager.setEventListener();
+        CacheManager.setEventListener(this);
         setBottomSheetButtonListeners();
+    }
+
+    public void updateMap()
+    {
+        filterCaches();
     }
 
     @Override
