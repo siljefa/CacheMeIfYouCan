@@ -2,6 +2,7 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activiti
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
@@ -23,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.FilterCacheFragment;
@@ -30,6 +32,7 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.ProfileFragment;
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.WeatherFragment;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapFragment.IMapFragment
 {
@@ -76,7 +79,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationProvider = locationManager.getBestProvider(new Criteria(), false);
         checkLocationPermission();
+
+        //Starts foreground service to show notification
+        startService();
     }
+
+    //Starts service
+    private void startService() {
+        Intent serviceIntent = new Intent(this, AppService.class);
+
+        //Build-in-function to check android version. Starts foreground service.
+        ContextCompat.startForegroundService(this,serviceIntent);
+    }
+
+    //Stops service. Method is nerver used, but shown in code to display how to stop a service.
+    /*public void stopService(View v){
+        Intent serviceIntent = new Intent(this, AppService.class);
+        stopService(serviceIntent);
+    }*/
 
     //Decides what kind of button to show on the toolbar, set drawer accessible when button is burger.
     public void showBackButton(boolean showBackButton)
