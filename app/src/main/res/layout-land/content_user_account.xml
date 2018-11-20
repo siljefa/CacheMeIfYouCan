@@ -12,53 +12,42 @@
 
     <Button
         android:id="@+id/activity_userAccount_btn_signUp"
-        android:layout_width="339dp"
-        android:layout_height="49dp"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="38dp"
+        android:layout_marginTop="72dp"
         android:background="#2286c3"
         android:text="@string/sign_up_btn"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/activty_userAccount_btn_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_userAccount_iv_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/activty_userAccount_btn_login"
-        android:layout_width="340dp"
+        android:layout_width="278dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="61dp"
+        android:layout_marginBottom="8dp"
         android:background="#9be7ff"
         android:contentDescription="@string/login_button"
         android:text="@string/login"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_userAccount_btn_signUp" />
+        app:layout_constraintStart_toStartOf="@+id/activity_userAccount_btn_signUp"
+        app:layout_constraintTop_toBottomOf="@+id/activity_userAccount_btn_signUp"
+        app:layout_constraintVertical_bias="0.050000012" />
 
     <ImageView
         android:id="@+id/activity_userAccount_iv_logo"
         android:layout_width="271dp"
         android:layout_height="189dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="76dp"
         android:contentDescription="@string/app_logo"
-        app:layout_constraintBottom_toTopOf="@+id/activity_userAccount_btn_signUp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/activty_userAccount_btn_login"
+        app:layout_constraintStart_toEndOf="@+id/activty_userAccount_btn_login"
+        app:layout_constraintTop_toTopOf="@+id/activity_userAccount_btn_signUp"
         app:srcCompat="@drawable/adobe_post_20181111_172918" />
 
 

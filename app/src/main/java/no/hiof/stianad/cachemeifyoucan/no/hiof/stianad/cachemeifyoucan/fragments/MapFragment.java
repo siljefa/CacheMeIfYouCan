@@ -141,34 +141,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         mapReady = true;
     }
     /*
-        When map is ready and location is updated, load caches around location.
+        When map is ready and location is updated move camera and apply filter for caches.
      */
-    private void onFirstLocation(LatLng latLon)
+    private void onFirstLocation()
     {
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLon, 10, 0, 0)));
-        gMap.animateCamera(CameraUpdateFactory.newLatLng(latLon), 2000, null);
-
-        LatLngBounds testBounds = new BoundingBox(latLon, 1000).getBoundingBox();
-
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(lastPositionUpdate, 10, 0, 0)));
+        gMap.animateCamera(CameraUpdateFactory.newLatLng(lastPositionUpdate), 2000, null);
         filterCaches();
-
-        /*for (Map.Entry<Integer, Cache> e : CacheManager.getCaches().entrySet())
-        {
-            Integer cacheId = e.getKey();
-            Cache cache = e.getValue();
-            addMarker(testBounds.northeast, "northeast BoundingBox");
-            addMarker(testBounds.southwest, "southwest BoundingBox");
-
-
-            if (testBounds.contains(cache.getLatLng()))
-            {
-                if(!User.getCacheIds().contains(cacheId))
-                {
-                    Marker newMarker = gMap.addMarker(new MarkerOptions().position(cache.getLatLng()).title("Cache ved Fredrikstad Kino"));
-                    cacheMarkersOnMap.put(newMarker.getId(), cacheId);
-                }
-            }
-        }*/
     }
 
     private void filterCaches()
@@ -308,11 +287,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onLocationChanged(Location location)
     {
+        lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
         if (mapReady)
         {
-            onFirstLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+            onFirstLocation();
         }
-        lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
+
     }
 
     @Override
@@ -343,5 +323,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     public boolean isExpandedSheet()
     {
         return cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_EXPANDED;
+    }
+
+    public interface IMapFragment {
+        void setToolbarBackIconDown(boolean down);
+        void setToolbarColored(boolean addColor);
+        void showBackButton(boolean showButton);
     }
 }

@@ -1,6 +1,12 @@
 <resources>
+
+    <!-- Activity titles -->
+    <string name="title_activity_main">Map</string>
+    <string name="title_activity_signup">Sign up</string>
+    <string name="title_activity_login">Login</string>
+    <!-- Activity titles end -->
+
     <string name="app_name">CacheMeIfYouCan</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Username</string>
@@ -13,8 +19,6 @@
     <string name="profile">Profile</string>
     <string name="filter">Filter caches</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_activity_login">LoginActivity</string>
     <string name="create_user">Create user</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -59,4 +63,5 @@
     <string name="latitude_hint">Latitude</string>
     <string name="longitude_hint">Longitude</string>
     <string name="description_hint">Description</string>
+
 </resources>

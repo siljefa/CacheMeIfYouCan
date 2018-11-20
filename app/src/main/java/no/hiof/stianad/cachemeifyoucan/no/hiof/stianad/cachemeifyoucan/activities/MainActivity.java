@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,9 +32,9 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.ProfileFragment;
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.WeatherFragment;
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
+//import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.AppService;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MapFragment.IMapFragment
 {
     MapFragment mapFragment = new MapFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
@@ -80,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         checkLocationPermission();
 
         //Starts foreground service to show notification
-        startService();
+        //startService();
     }
 
-    //Starts service
+    /*//Starts service
     private void startService() {
         Intent serviceIntent = new Intent(this, AppService.class);
 
@@ -230,24 +231,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
-        switch (requestCode)
-        {
-            case PERMISSIONS_REQUEST_LOCATION:
+            switch (requestCode)
             {
-                // If request is cancelled, the result array is empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                case PERMISSIONS_REQUEST_LOCATION:
                 {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    // If request is cancelled, the result array is empty.
+                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     {
-                        locationManager.requestLocationUpdates(locationProvider, 400, 1, mapFragment);
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                        {
+                            locationProvider = locationManager.getBestProvider(new Criteria(), false);
+                            locationManager.requestLocationUpdates(locationProvider, 400, 1, mapFragment);
+                        }
                     }
+                    break;
                 }
             }
-        }
     }
 
     @Override
@@ -340,6 +342,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_logout:
             {
+                startActivity(new Intent( this, LoginActivity.class ));
                 break;
             }
         }

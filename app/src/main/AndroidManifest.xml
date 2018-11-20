@@ -3,50 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="no.hiof.stianad.cachemeifyoucan">
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-feature android:name="android.hardware.location.gps" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
-    <application
-        android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification"
-        android:allowBackup="true"
-        android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="HardcodedDebugMode, GoogleAppIndexingWarning">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+    <!-- Features -->
+    <uses-feature android:name="android.hardware.location.gps" />
 
-        <!-- Changed UserAccountOptions to launcher -->
+    <!--android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification" -->
+    <application
+    android:allowBackup="true"
+    android:debuggable="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme"
+    tools:ignore="HardcodedDebugMode, GoogleAppIndexingWarning">
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/google_maps_key" />
+
         <activity
-            android:name=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity" />
-        </activity>
-        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
-        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"></activity>
-        <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/>
+            android:theme="@style/AppTheme.NoActionBar"
+        />
+
+        <activity
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity"
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
+        />
+
+        <activity
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity"
+        />
+        <!-- <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/> -->
 
     </application>
-
 </manifest>
