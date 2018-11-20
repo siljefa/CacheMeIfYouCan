@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="no.hiof.stianad.cachemeifyoucan">
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-feature android:name="android.hardware.location.gps" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <!-- Features -->
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <!--android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppNotification" -->
     <application
@@ -24,29 +25,32 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/google_maps_key" />
 
-    <!-- Changed UserAccountOptions to launcher -->
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity" />
-        </activity>
-        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity" />
-        <activity android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+        />
+
+        <activity
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.SignUpActivity"
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
+        />
+
+        <activity
+            android:name=".no.hiof.stianad.cachemeifyoucan.activities.LoginActivity"
+            android:parentActivityName=".no.hiof.stianad.cachemeifyoucan.activities.UserAccountOptions"
+        />
         <!-- <service android:name=".no.hiof.stianad.cachemeifyoucan.utilities.AppService"/> -->
 
     </application>
-
 </manifest>
