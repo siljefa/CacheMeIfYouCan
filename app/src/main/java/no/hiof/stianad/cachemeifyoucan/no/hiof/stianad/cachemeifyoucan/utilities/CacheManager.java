@@ -2,6 +2,7 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilitie
 
 import android.util.Log;
 
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public final class CacheManager
         return caches;
     }
 
-    public static void setEventListener()
+    public static void setEventListener(no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment map)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("cache");
@@ -61,6 +62,7 @@ public final class CacheManager
                     {
                         Cache value = snapshot.getValue(Cache.class);
                         caches.put(value.getCacheId(), value);
+                        map.updateMap();
                     }
                 }
             }
