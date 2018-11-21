@@ -84,7 +84,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     public void updateMap()
     {
-        filterCaches();
+        if (lastPositionUpdate != null)
+        {
+            filterCaches();
+        }
     }
 
     @Override
