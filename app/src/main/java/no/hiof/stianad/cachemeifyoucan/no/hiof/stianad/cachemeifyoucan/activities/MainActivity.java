@@ -24,6 +24,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.FilterCacheFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment;
@@ -85,11 +87,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //Starts service
-    private void startService() {
+    private void startService()
+    {
         Intent serviceIntent = new Intent(this, AppService.class);
 
         //Build-in-function to check android version. Starts foreground service.
-        ContextCompat.startForegroundService(this,serviceIntent);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
     //Stops service. Method is nerver used, but shown in code to display how to stop a service.
@@ -111,8 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             {
                 setToolbarColored(true);
                 setToolbarBackIconDown(true);
-            }
-            else
+            } else
             {
                 setToolbarColored(false);
                 setToolbarBackIconDown(false);
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 {
                     FragmentTransaction fragmentTransactionOnClick = fragmentManager.beginTransaction();
 
-                    if(achievementsFragment.isVisible())
+                    if (achievementsFragment.isVisible())
                     {
                         fragmentTransactionOnClick.hide(achievementsFragment);
                         fragmentTransactionOnClick.show(mapFragment);
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mapFragment.closeSheet();
                         showBackButton(false);
                     }
-                    if(profileFragment.isVisible())
+                    if (profileFragment.isVisible())
                     {
                         fragmentTransactionOnClick.hide(profileFragment);
                         fragmentTransactionOnClick.show(mapFragment);
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mapFragment.closeSheet();
                         showBackButton(false);
                     }
-                    if(filterCacheFragment.isVisible())
+                    if (filterCacheFragment.isVisible())
                     {
                         fragmentTransactionOnClick.hide(filterCacheFragment);
                         fragmentTransactionOnClick.show(mapFragment);
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mapFragment.closeSheet();
                         showBackButton(false);
                     }
-                    if(mapFragment.isVisible())
+                    if (mapFragment.isVisible())
                     {
                         mapFragment.collapseSheet();
                         topToolbar.setBackgroundColor(Color.TRANSPARENT);
@@ -160,20 +162,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentTransactionOnClick.remove(weatherFragment);
                         fragmentTransactionOnClick.show(mapFragment);
                         fragmentTransactionOnClick.commit();
-                        if(mapFragment.isExpandedSheet())
+                        if (mapFragment.isExpandedSheet())
                         {
                             showBackButton(true);
                             setToolbarColored(true);
                             setToolbarBackIconDown(true);
-                        }
-                        else
+                        } else
                             showBackButton(false);
                     }
                 });
                 toolBarNavigationListenerIsRegistered = true;
             }
-        }
-        else
+        } else
         {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setToolbarColored(boolean addColor)
     {
-        if(addColor)
+        if (addColor)
             topToolbar.setBackgroundColor(Color.WHITE);
         else
             topToolbar.setBackgroundColor(Color.TRANSPARENT);
@@ -216,14 +216,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         })
                         .create()
                         .show();
-            }
-            else
+            } else
             {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOCATION);
             }
             return false;
-        }
-        else
+        } else
         {
             locationManager.requestLocationUpdates(locationProvider, 400, 1, mapFragment);
             return true;
@@ -252,7 +250,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         onBackPressed();
         return true;
     }
@@ -341,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_logout:
             {
-                startActivity(new Intent( this, LoginActivity.class ));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             }
         }
@@ -349,5 +348,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public LatLng getLastKnownLocation()
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        double lat = locationManager.getLastKnownLocation(locationProvider).getLatitude();
+        double lon = locationManager.getLastKnownLocation(locationProvider).getLatitude();
+
+        return new LatLng(lat,lon);
     }
 }

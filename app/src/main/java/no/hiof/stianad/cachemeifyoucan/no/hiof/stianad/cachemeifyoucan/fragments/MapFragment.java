@@ -1,9 +1,12 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -111,8 +114,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 cacheBottomSheet.openSheetInViewMode(Objects.requireNonNull(cache));
                 selectedCacheMarker = marker;
                 return true;
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 return false;
             }
@@ -126,15 +128,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 //Hidden first because the BottomSheetBehavior thinks it's collapsed.
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-            else if (cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_COLLAPSED)
+            } else if (cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_COLLAPSED)
             {
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
         setUpDefaultUISettings();
         mapReady = true;
+        lastPositionUpdate = parentActivity.getLastKnownLocation();
+        updateMap();
     }
+
     /*
         When map is ready and location is updated move camera and apply filter for caches.
      */
