@@ -203,12 +203,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOCATION);
+
+            /*if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
             {
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission")
-                        .setMessage("Asking for permission")
+                        .setMessage("Location Permission is needed for the app to function.")
                         .setPositiveButton("Ok", (dialogInterface, i) ->
                         {
                             //Prompt the user once explanation has been shown
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else
             {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOCATION);
-            }
+            }*/
             return false;
         } else
         {
@@ -348,5 +349,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public LatLng getLastKnownLocation()
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOCATION);
+            return null;
+        }
+        double lat = locationManager.getLastKnownLocation(locationProvider).getLatitude();
+        double lon = locationManager.getLastKnownLocation(locationProvider).getLatitude();
+
+        return new LatLng(lat,lon);
     }
 }

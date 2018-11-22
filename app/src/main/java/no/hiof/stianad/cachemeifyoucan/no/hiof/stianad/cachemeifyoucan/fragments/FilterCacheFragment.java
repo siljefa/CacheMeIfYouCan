@@ -3,18 +3,14 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragment
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import no.hiof.stianad.cachemeifyoucan.R;
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
 
 public class FilterCacheFragment extends Fragment
 {
@@ -76,7 +72,7 @@ public class FilterCacheFragment extends Fragment
         {
             FragmentManager fragmentManager = (getActivity()).getSupportFragmentManager();
             MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentByTag("map_fragment");
-            mapFragment.setFilters(filterFoundCache, filterLocation, filterDifficulty);
+            mapFragment.setCacheFilters(filterFoundCache, filterLocation, filterDifficulty);
         }
     }
 }

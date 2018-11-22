@@ -1,12 +1,9 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,16 +21,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -50,12 +42,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private MainActivity parentActivity;
     private GoogleMap gMap;
     private boolean mapReady = false;
-    private LatLng lastPositionUpdate;
+    private LatLng lastPositionUpdate = null;
 
     //hashMap to hold caches on the map, and connected marker.
     private HashMap<String, Integer> cacheMarkersOnMap = new HashMap<>();
     private Marker selectedCacheMarker;
-    private boolean filterFoundCache = false;
+    private boolean filterFoundCache = true;
     private boolean filterLocation = false;
     private boolean filterDifficulty = false;
     private CacheBottomSheet cacheBottomSheet;
@@ -85,18 +77,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         setBottomSheetButtonListeners();
     }
 
-    public void updateMap()
-    {
-        if (lastPositionUpdate != null)
-        {
-            filterCaches();
-        }
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap)
     {
         gMap = googleMap;
+        mapReady = true;
+        setUpDefaultUISettings();
+        if(lastPositionUpdate != null)
+            onFirstLocation();
+
+
         googleMap.setOnMapLongClickListener(latLng ->
         {
             //Long click is used for crating new CacheManager.
@@ -110,14 +100,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             try
             {
                 Integer cacheId = cacheMarkersOnMap.get(marker.getId());
-                Cache cache = CacheManager.getCaches().get(Objects.requireNonNull(cacheId));
-                cacheBottomSheet.openSheetInViewMode(Objects.requireNonNull(cache));
+                Cache cache = CacheManager.getCaches().get(cacheId);
+                cacheBottomSheet.openSheetInViewMode(cache);
                 selectedCacheMarker = marker;
-                return true;
-            } catch (Exception e)
-            {
-                return false;
             }
+            catch (NullPointerException  e)
+            {
+                Toast.makeText(parentActivity, parentActivity.getString(R.string.toast_failed_to_find_cache), Toast.LENGTH_LONG).show();
+            }
+            return true;
         });
 
         googleMap.setOnMapClickListener(latLng ->
@@ -133,54 +124,44 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
-        setUpDefaultUISettings();
-        mapReady = true;
-        updateMap();
-    }
-
-    /*
-        When map is ready and location is updated move camera and apply filter for caches.
-     */
-    private void onFirstLocation()
-    {
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(lastPositionUpdate, 10, 0, 0)));
-        gMap.animateCamera(CameraUpdateFactory.newLatLng(lastPositionUpdate), 2000, null);
-        filterCaches();
     }
 
     private void filterCaches()
     {
-        gMap.clear();
-        cacheMarkersOnMap = new HashMap<>();
-        LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 1000).getBoundingBox();
-        for (Map.Entry<Integer, Cache> e : CacheManager.getCaches().entrySet())
+        if (lastPositionUpdate != null && mapReady)
         {
-            Marker newMarker = null;
-            Integer cacheId = e.getKey();
-            Cache cache = e.getValue();
-            if (filterLocation)
+            //Map clear removes everything, should remove each marker form a list fo markers.
+            gMap.clear();
+            cacheMarkersOnMap = new HashMap<>();
+            LatLngBounds testBounds = new BoundingBox(lastPositionUpdate, 10).getBoundingBox();
+            for (Map.Entry<Integer, Cache> e : CacheManager.getCaches().entrySet())
             {
-                if(testBounds.contains(cache.getLatLng()))
+                Marker newMarker = null;
+                Integer cacheId = e.getKey();
+                Cache cache = e.getValue();
+                if (filterLocation)
                 {
-                    newMarker = addMarker(cache.getLatLng(),"2222 RRR");
-                    cacheMarkersOnMap.put(newMarker.getId(),cacheId);
-                }
-            }
-            else
-            {
-                newMarker = addMarker(cache.getLatLng(),"1111 RRR");
-                cacheMarkersOnMap.put(newMarker.getId(),cacheId);
-            }
-            if (filterFoundCache)
-            {
-                if(User.getCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
+                    if (testBounds.contains(cache.getLatLng()))
+                    {
+                        newMarker = addMarker(cache.getLatLng(), "");
+                        cacheMarkersOnMap.put(newMarker.getId(), cacheId);
+                    }
+                } else
                 {
-                    cacheMarkersOnMap.remove(newMarker.getId());
-                    newMarker.remove();
+                    newMarker = addMarker(cache.getLatLng(), "");
+                    cacheMarkersOnMap.put(newMarker.getId(), cacheId);
                 }
-            }
-            if (filterDifficulty)
-            {
+                if (filterFoundCache)
+                {
+                    if (User.getCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
+                    {
+                        cacheMarkersOnMap.remove(newMarker.getId());
+                        newMarker.remove();
+                    }
+                }
+                if (filterDifficulty)
+                {
+                }
             }
         }
     }
@@ -247,13 +228,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             }
             else
             {
-                Toast.makeText(parentActivity, Objects.requireNonNull(parentActivity).getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
+                Toast.makeText(parentActivity, parentActivity.getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
             }
         });
     }
 
-    public Marker addMarker(LatLng latLng, String title)
+    private Marker addMarker(LatLng latLng, String title)
     {
         selectedCacheMarker = gMap.addMarker(new MarkerOptions().position(latLng).title(title));
         return selectedCacheMarker;
@@ -271,26 +252,38 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         uiSettings.setMapToolbarEnabled(false);
     }
 
-    public void setFilters(boolean filterFoundCache, boolean filterLocation, boolean filterDifficulty)
+    /*
+       When map is ready and location is updated move camera and apply filter for caches.
+    */
+    private void onFirstLocation()
     {
-        if (mapReady)
-        {
-            this.filterFoundCache = filterFoundCache;
-            this.filterLocation = filterLocation;
-            this.filterDifficulty = filterDifficulty;
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(lastPositionUpdate, 10, 0, 0)));
+        gMap.animateCamera(CameraUpdateFactory.newLatLng(lastPositionUpdate), 2000, null);
+        filterCaches();
+    }
+
+    public void updateCachesOnMap()
+    {
             filterCaches();
-        }
+    }
+
+    public void setCacheFilters(boolean filterFoundCache, boolean filterLocation, boolean filterDifficulty)
+    {
+        this.filterFoundCache = filterFoundCache;
+        this.filterLocation = filterLocation;
+        this.filterDifficulty = filterDifficulty;
+        filterCaches();
     }
 
     @Override
     public void onLocationChanged(Location location)
     {
-        lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
-        if (mapReady)
+        if(mapReady)
         {
+            lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
             onFirstLocation();
         }
-
+        lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     @Override

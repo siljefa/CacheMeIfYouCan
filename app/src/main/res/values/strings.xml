@@ -35,6 +35,7 @@
     <string name="er_username">Username</string>
     <string name="btn_login_in">Login in</string>
     <string name="toast_save_cache_failed">Save cache failed</string>
+    <string name="toast_failed_to_find_cache">Failed to find cache.</string>
 
     <!-- Weather -->
     <string name="openWeather_appId">9b6fa263a126cfce8d04a650063cb914</string>
