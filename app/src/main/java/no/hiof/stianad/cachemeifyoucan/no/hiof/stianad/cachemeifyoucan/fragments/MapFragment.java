@@ -135,7 +135,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         });
         setUpDefaultUISettings();
         mapReady = true;
-        lastPositionUpdate = parentActivity.getLastKnownLocation();
         updateMap();
     }
 
