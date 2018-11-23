@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.CacheManager;
@@ -152,7 +151,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 if (filterFoundCache)
                 {
-                    if (User.getCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
+                    if (User.getFoundCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
                     {
                         cacheMarkersOnMap.remove(newMarker.getId());
                         newMarker.remove();
@@ -194,7 +193,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         cacheBottomSheet.setFoundCacheBtnOnClickListener(v ->
         {
-            User.getCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
+            User.getFoundCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
             if (filterFoundCache)
             {
                 cacheMarkersOnMap.remove(selectedCacheMarker.getId());
@@ -224,7 +223,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 cacheMarkersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-            } else
+                User.getCreatedCacheIds().add(newCache.getCacheId());
+            }
+            else
             {
                 Toast.makeText(parentActivity, parentActivity.getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);

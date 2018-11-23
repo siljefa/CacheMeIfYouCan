@@ -5,12 +5,18 @@ import java.util.List;
 
 public final class User
 {
-    private static List<Integer> CacheIds = new ArrayList<>();
+    private static List<Integer> foundCacheIds = new ArrayList<>();
+    private static List<Integer> createdCacheIds = new ArrayList<>();
     private static  List<Integer> achievementsIds = new ArrayList<>();
 
     private User()
     {
 
+    }
+
+    public static List<Integer> getCreatedCacheIds()
+    {
+        return createdCacheIds;
     }
 
     public static List<Integer> getAchievementsIds()
@@ -20,8 +26,8 @@ public final class User
         return achievementsIds;
     }
 
-    public static List<Integer> getCacheIds()
+    public static List<Integer> getFoundCacheIds()
     {
-        return CacheIds;
+        return foundCacheIds;
     }
 }

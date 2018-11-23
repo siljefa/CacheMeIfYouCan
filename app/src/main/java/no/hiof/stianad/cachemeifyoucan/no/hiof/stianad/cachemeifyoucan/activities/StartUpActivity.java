@@ -32,6 +32,7 @@ public class StartUpActivity extends AppCompatActivity {
                 v -> login()
         );
     }
+
     @Override
     public void onStart() {
         super.onStart();
