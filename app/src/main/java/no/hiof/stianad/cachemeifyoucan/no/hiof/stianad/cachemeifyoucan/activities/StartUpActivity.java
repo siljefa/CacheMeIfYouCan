@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 
 public class StartUpActivity extends AppCompatActivity {
 
@@ -42,6 +43,8 @@ public class StartUpActivity extends AppCompatActivity {
             String userEmail = currentUser.getEmail();
             Toast tLogedIn = Toast.makeText(this,"Already signed in as: " + userEmail,Toast.LENGTH_SHORT);
             tLogedIn.show();
+            User.setUserId(currentUser.getUid());
+            User.setUserEmail(currentUser.getEmail());
             //gå til main
             openMainActivity();
         }
