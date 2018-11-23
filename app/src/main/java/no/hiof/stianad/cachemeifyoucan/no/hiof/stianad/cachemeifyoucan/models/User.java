@@ -34,8 +34,9 @@ public final class User
         return userId;
     }
 
-    public static String getUserEmail() {
-        return userEmail;
+    public static void setUserEmail(String newuserEmail) {
+        userEmail = newuserEmail;
+        name = newuserEmail;
     }
 
     public static String getName() {
@@ -49,11 +50,6 @@ public final class User
 
     public static void setUserId(String newuserId) {
         userId = newuserId;
-    }
-
-    public static void setUserEmail(String newuserEmail) {
-        userEmail = newuserEmail;
-        name = userEmail;
     }
 
     public static void setName(String newname) {
