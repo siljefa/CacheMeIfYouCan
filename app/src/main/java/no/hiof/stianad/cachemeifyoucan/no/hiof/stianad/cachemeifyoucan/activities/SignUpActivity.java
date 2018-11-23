@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 //firebase login
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,6 +59,8 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(SignUpActivity.this, "Welcome.",
                                     Toast.LENGTH_SHORT).show();
+                            User.setUserId(user.getUid());
+                            User.setUserEmail(user.getEmail());
                             openMainActivity();
                         } else {
                             // error
