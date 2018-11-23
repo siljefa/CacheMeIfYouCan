@@ -23,10 +23,10 @@ public final class UserManager
         databaseUser.child(user.getUserId()).setValue(user);
     }
 
-    public static void createUser(String name, String id, String email)
+    public static void createUser(String id, String email)
     {
-        User newUser = new User(name, id, email);
-        addUserToDatabase(newUser);
+        user = new User(id, email);
+        addUserToDatabase(user);
     }
 
     public static void setEventListener()

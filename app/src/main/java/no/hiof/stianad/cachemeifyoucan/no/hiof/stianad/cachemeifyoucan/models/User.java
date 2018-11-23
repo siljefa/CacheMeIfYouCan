@@ -12,11 +12,11 @@ public class User
     private String userEmail = "";
     private String name = "";
 
-    public User(String userId, String userEmail, String name)
+    public User(String userId, String userEmail)
     {
         this.userId = userId;
         this.userEmail = userEmail;
-        this.name = name;
+        this.name = userEmail;
     }
 
     public List<Integer> getCreatedCacheIds()

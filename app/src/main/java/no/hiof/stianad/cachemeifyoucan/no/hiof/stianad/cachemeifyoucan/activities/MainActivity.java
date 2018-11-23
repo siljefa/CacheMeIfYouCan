@@ -353,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_logout:
             {
-                startActivity(new Intent(this, LoginActivity.class));
+                startActivity(new Intent(this, StartUpActivity.class));
                 break;
             }
         }
