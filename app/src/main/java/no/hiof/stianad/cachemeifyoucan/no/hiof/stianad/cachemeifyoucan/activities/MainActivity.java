@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.FilterCacheFragment;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private boolean toolBarNavigationListenerIsRegistered = false;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationProvider = locationManager.getBestProvider(new Criteria(), false);
         checkLocationPermission();
+        mAuth = FirebaseAuth.getInstance();
 
         //Starts foreground service to show notification
         startService();
@@ -353,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_logout:
             {
+                mAuth.signOut();
                 startActivity(new Intent(this, StartUpActivity.class));
                 break;
             }
