@@ -20,12 +20,15 @@ import java.util.ArrayList;
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.adapters.AchievementsAdapter;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Achievement;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 
-public class AchievementsFragment extends Fragment{
+public class AchievementsFragment extends Fragment
+{
     /**
-     *  Contains the achievement objects to be shown on screen
+     * Contains the achievement objects to be shown on screen
      */
     public static ArrayList<Achievement> achievements = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -41,7 +44,8 @@ public class AchievementsFragment extends Fragment{
         AttachCustomAdapterToListView();
     }
 
-    private void AttachCustomAdapterToListView() {
+    private void AttachCustomAdapterToListView()
+    {
 
         AchievementsAdapter adapter = new AchievementsAdapter(this.getContext(), achievements);
 
@@ -54,20 +58,28 @@ public class AchievementsFragment extends Fragment{
         adapter.addAll(achievements);
     }
 
-    private void FillArrayListWithAchievements(){
+    private void FillArrayListWithAchievements()
+    {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference();
-        ref.child("achievement").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child("achievement").addListenerForSingleValueEvent(new ValueEventListener()
+        {
 
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot achievementSnapshot: dataSnapshot.getChildren()) {
-                    AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot achievementSnapshot : dataSnapshot.getChildren())
+                {
+                    if(User.getAchievementsIds().contains(achievementSnapshot.getValue(Achievement.class).id ))
+                    {
+                        AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
+                    }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
                 //TODO: Fix some error handling bro
             }
         });

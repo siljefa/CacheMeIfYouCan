@@ -1,18 +1,26 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class User
 {
-    private static ArrayList<Integer> CacheIds = new ArrayList<>();
-    private static  ArrayList<Integer> achivementIds = new ArrayList<>();
+    private static List<Integer> CacheIds = new ArrayList<>();
+    private static  List<Integer> achievementsIds = new ArrayList<>();
 
-    private User(int i)
+    private User()
     {
 
     }
 
-    public static ArrayList<Integer> getCacheIds()
+    public static List<Integer> getAchievementsIds()
+    {
+        achievementsIds.add(1);
+        achievementsIds.add(2);
+        return achievementsIds;
+    }
+
+    public static List<Integer> getCacheIds()
     {
         return CacheIds;
     }
