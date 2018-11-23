@@ -14,7 +14,7 @@ import no.hiof.stianad.cachemeifyoucan.R;
 
 public class FilterCacheFragment extends Fragment
 {
-    private boolean filterFoundCache = false;
+    private boolean filterFoundCache = true;
     private boolean filterLocation = false;
     private boolean filterDifficulty = false;
 
@@ -65,10 +65,11 @@ public class FilterCacheFragment extends Fragment
 }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
+    public void onHiddenChanged(boolean hidden)
+    {
         super.onHiddenChanged(hidden);
 
-        if(hidden)
+        if (hidden)
         {
             FragmentManager fragmentManager = (getActivity()).getSupportFragmentManager();
             MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentByTag("map_fragment");
