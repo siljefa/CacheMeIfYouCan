@@ -68,6 +68,10 @@ public final class UserManager
 
     public static User getUser()
     {
+        if (user == null)
+        {
+            throw new NullPointerException("Did not get user from database");
+        }
         return user;
     }
 }

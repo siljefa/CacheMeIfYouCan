@@ -8,15 +8,20 @@ public class User
     private List<Integer> foundCacheIds = new ArrayList<>();
     private List<Integer> createdCacheIds = new ArrayList<>();
     private  List<Integer> achievementsIds = new ArrayList<>();
-    private String userId = "";
-    private String userEmail = "";
-    private String name = "";
+    private String userId;
+    private String userEmail;
+    private String name;
 
     public User(String userId, String userEmail)
     {
         this.userId = userId;
         this.userEmail = userEmail;
         this.name = userEmail;
+    }
+
+    public User()
+    {
+
     }
 
     public List<Integer> getCreatedCacheIds()
@@ -35,10 +40,6 @@ public class User
         return userId;
     }
 
-    public void setUserEmail(String newuserEmail) {
-        userEmail = newuserEmail;
-        name = newuserEmail;
-    }
 
     public String getName() {
         return name;
@@ -75,5 +76,10 @@ public class User
 
     public void setName(String newname) {
         name = newname;
+    }
+
+    public void setUserEmail(String newuserEmail) {
+        userEmail = newuserEmail;
+        name = newuserEmail;
     }
 }

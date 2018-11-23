@@ -15,14 +15,24 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities
 
 public class ProfileFragment  extends Fragment{
 
+    private View thisView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        TextView nameText= view.findViewById(R.id.name);
-        //nameText.setText(UserManager.getUser().getName());
-
+        thisView = view;
         return view;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        if(!hidden)
+        {
+            TextView nameText = thisView.findViewById(R.id.name);
+            nameText.setText(UserManager.getUser().getName());
+        }
+    }
+
 }

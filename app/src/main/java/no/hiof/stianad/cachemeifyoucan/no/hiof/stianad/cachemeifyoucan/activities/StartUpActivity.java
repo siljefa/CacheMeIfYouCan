@@ -50,6 +50,7 @@ public class StartUpActivity extends AppCompatActivity {
             openMainActivity();
         }
     }
+
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
