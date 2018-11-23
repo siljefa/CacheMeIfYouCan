@@ -83,7 +83,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         gMap = googleMap;
         mapReady = true;
         setUpDefaultUISettings();
-        if(lastPositionUpdate != null)
+        if (lastPositionUpdate != null)
             onFirstLocation();
 
 
@@ -103,8 +103,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 Cache cache = CacheManager.getCaches().get(cacheId);
                 cacheBottomSheet.openSheetInViewMode(cache);
                 selectedCacheMarker = marker;
-            }
-            catch (NullPointerException  e)
+            } catch (NullPointerException e)
             {
                 Toast.makeText(parentActivity, parentActivity.getString(R.string.toast_failed_to_find_cache), Toast.LENGTH_LONG).show();
             }
@@ -196,7 +195,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         cacheBottomSheet.setFoundCacheBtnOnClickListener(v ->
         {
             User.getCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
-            if(filterFoundCache)
+            if (filterFoundCache)
             {
                 cacheMarkersOnMap.remove(selectedCacheMarker.getId());
                 selectedCacheMarker.remove();
@@ -225,8 +224,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 cacheMarkersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-            else
+            } else
             {
                 Toast.makeText(parentActivity, parentActivity.getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
@@ -264,7 +262,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
     public void updateCachesOnMap()
     {
-            filterCaches();
+        filterCaches();
     }
 
     public void setCacheFilters(boolean filterFoundCache, boolean filterLocation, boolean filterDifficulty)
@@ -278,7 +276,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onLocationChanged(Location location)
     {
-        if(mapReady)
+        if (mapReady)
         {
             lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
             onFirstLocation();
@@ -316,9 +314,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         return cacheBottomSheet.getLastSheetState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 
-    public interface IMapFragment {
+    public interface IMapFragment
+    {
         void setToolbarBackIconDown(boolean down);
+
         void setToolbarColored(boolean addColor);
+
         void showBackButton(boolean showButton);
     }
 }
