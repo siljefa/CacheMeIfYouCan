@@ -85,9 +85,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         setUpDefaultUISettings();
         if (lastPositionUpdate != null)
             onFirstLocation();
-        else
-
-
 
         googleMap.setOnMapLongClickListener(latLng ->
         {
