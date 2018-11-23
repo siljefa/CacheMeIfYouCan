@@ -57,7 +57,6 @@ public class CustomSheetBehavior
                 }
             }
 
-
             //Set state based on where the user drops the sheet. This is hackish and prone to bugs.
             //This should have been done using a different BottomSheetBehavior.
             @Override
@@ -77,8 +76,7 @@ public class CustomSheetBehavior
                     } else if ((slideOffset < 0.5 && lastSheetState == BottomSheetBehavior.STATE_HALF_EXPANDED) || (slideOffset <= 0.40 && lastSheetState == BottomSheetBehavior.STATE_EXPANDED))
                     {
                         setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-                    }
-                    else
+                    } else
                     {
                         setSheetState(BottomSheetBehavior.STATE_HIDDEN);
                     }
@@ -89,65 +87,37 @@ public class CustomSheetBehavior
         });
     }
 
-    public void hideKeyboard(View view) {
+    //Hides Keyboard and clear focus of bottom sheet
+    public void hideKeyboard(View view)
+    {
         InputMethodManager inputMethodManager = (InputMethodManager) parentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        bottomSheet.clearFocus();
     }
 
     //Move sheet to new state and change appearance accordingly.
     public void setSheetState(int state)
     {
-        //Make sure the system know the user is not moving the sheet manually
-        //Set last sheet state because it's more reliable than getting current state.
-        //Set the actual new state.
-        //Change navigation options.
-        //Change if the keyboard should be visible.
         switch (state)
         {
             case BottomSheetBehavior.STATE_EXPANDED:
             {
-                userIsChangingSheetState = false;
-                sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                lastSheetState = BottomSheetBehavior.STATE_EXPANDED;
-                parentActivity.showBackButton(true);
-                parentActivity.setToolbarColored(true);
-                fillerSpaceForToolbar.setVisibility(View.VISIBLE);
+                onStateChange(BottomSheetBehavior.STATE_EXPANDED);
                 break;
             }
             case BottomSheetBehavior.STATE_HALF_EXPANDED:
             {
-                userIsChangingSheetState = false;
-                sheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
-                lastSheetState = BottomSheetBehavior.STATE_HALF_EXPANDED;
-                parentActivity.showBackButton(false);
-                parentActivity.setToolbarColored(false);
-                fillerSpaceForToolbar.setVisibility(View.GONE);
-                hideKeyboard(bottomSheet);
-                bottomSheet.clearFocus();
+                onStateChange(BottomSheetBehavior.STATE_HALF_EXPANDED);
                 break;
             }
             case BottomSheetBehavior.STATE_COLLAPSED:
             {
-                userIsChangingSheetState = false;
-                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                lastSheetState = BottomSheetBehavior.STATE_COLLAPSED;
-                parentActivity.showBackButton(false);
-                parentActivity.setToolbarColored(false);
-                fillerSpaceForToolbar.setVisibility(View.GONE);
-                hideKeyboard(bottomSheet);
-                bottomSheet.clearFocus();
+                onStateChange(BottomSheetBehavior.STATE_COLLAPSED);
                 break;
             }
             case BottomSheetBehavior.STATE_HIDDEN:
             {
-                userIsChangingSheetState = false;
-                sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                lastSheetState = BottomSheetBehavior.STATE_HIDDEN;
-                parentActivity.showBackButton(false);
-                parentActivity.setToolbarColored(false);
-                fillerSpaceForToolbar.setVisibility(View.GONE);
-                hideKeyboard(bottomSheet);
-                bottomSheet.clearFocus();
+                onStateChange(BottomSheetBehavior.STATE_HIDDEN);
                 break;
             }
             case BottomSheetBehavior.STATE_DRAGGING:
@@ -156,6 +126,30 @@ public class CustomSheetBehavior
                 break;
             }
         }
+    }
+
+    private void onStateChange(int sheetState)
+    {
+        //Make sure the system know the user is not moving the sheet manually
+        //Set last sheet state because it's more reliable than getting current state.
+        //Change navigation options.
+        //Change if the keyboard should be visible.
+        if(sheetState == BottomSheetBehavior.STATE_EXPANDED)
+        {
+            parentActivity.showBackButton(true);
+            parentActivity.setToolbarColored(true);
+            fillerSpaceForToolbar.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            parentActivity.showBackButton(false);
+            parentActivity.setToolbarColored(false);
+            fillerSpaceForToolbar.setVisibility(View.GONE);
+            hideKeyboard(bottomSheet);
+        }
+        userIsChangingSheetState = false;
+        sheetBehavior.setState(sheetState);
+        lastSheetState = sheetState;
     }
 
     public int getLastSheetState()

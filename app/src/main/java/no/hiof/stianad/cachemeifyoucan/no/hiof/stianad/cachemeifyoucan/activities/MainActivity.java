@@ -123,54 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (!toolBarNavigationListenerIsRegistered)
             {
                 drawerToggle.setToolbarNavigationClickListener(v ->
-                {
-                    FragmentTransaction fragmentTransactionOnClick = fragmentManager.beginTransaction();
+                        onBackNavigation());
 
-                    if (achievementsFragment.isVisible())
-                    {
-                        fragmentTransactionOnClick.hide(achievementsFragment);
-                        fragmentTransactionOnClick.show(mapFragment);
-                        fragmentTransactionOnClick.commit();
-                        mapFragment.closeSheet();
-                        showBackButton(false);
-                    }
-                    if (profileFragment.isVisible())
-                    {
-                        fragmentTransactionOnClick.hide(profileFragment);
-                        fragmentTransactionOnClick.show(mapFragment);
-                        fragmentTransactionOnClick.commit();
-                        mapFragment.closeSheet();
-                        showBackButton(false);
-                    }
-                    if (filterCacheFragment.isVisible())
-                    {
-                        fragmentTransactionOnClick.hide(filterCacheFragment);
-                        fragmentTransactionOnClick.show(mapFragment);
-                        fragmentTransactionOnClick.commit();
-                        mapFragment.closeSheet();
-                        showBackButton(false);
-                    }
-                    if (mapFragment.isVisible())
-                    {
-                        mapFragment.collapseSheet();
-                        topToolbar.setBackgroundColor(Color.TRANSPARENT);
-                    }
-
-                    Fragment weatherFragment = fragmentManager.findFragmentByTag("weather_fragment");
-                    if (weatherFragment instanceof WeatherFragment)
-                    {
-                        fragmentTransactionOnClick.remove(weatherFragment);
-                        fragmentTransactionOnClick.show(mapFragment);
-                        fragmentTransactionOnClick.commit();
-                        if (mapFragment.isExpandedSheet())
-                        {
-                            showBackButton(true);
-                            setToolbarColored(true);
-                            setToolbarBackIconDown(true);
-                        } else
-                            showBackButton(false);
-                    }
-                });
                 toolBarNavigationListenerIsRegistered = true;
             }
         } else
@@ -180,6 +134,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerToggle.setDrawerIndicatorEnabled(true);
             drawerToggle.setToolbarNavigationClickListener(null);
             toolBarNavigationListenerIsRegistered = false;
+        }
+    }
+
+    private void onBackNavigation()
+    {
+        FragmentTransaction fragmentTransactionOnClick = fragmentManager.beginTransaction();
+
+        if (achievementsFragment.isVisible())
+        {
+            fragmentTransactionOnClick.hide(achievementsFragment);
+            fragmentTransactionOnClick.show(mapFragment);
+            fragmentTransactionOnClick.commit();
+            mapFragment.closeSheet();
+            showBackButton(false);
+        }
+        if (profileFragment.isVisible())
+        {
+            fragmentTransactionOnClick.hide(profileFragment);
+            fragmentTransactionOnClick.show(mapFragment);
+            fragmentTransactionOnClick.commit();
+            mapFragment.closeSheet();
+            showBackButton(false);
+        }
+        if (filterCacheFragment.isVisible())
+        {
+            fragmentTransactionOnClick.hide(filterCacheFragment);
+            fragmentTransactionOnClick.show(mapFragment);
+            fragmentTransactionOnClick.commit();
+            mapFragment.closeSheet();
+            showBackButton(false);
+        }
+        if (mapFragment.isVisible())
+        {
+            mapFragment.collapseSheet();
+            topToolbar.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        Fragment weatherFragment = fragmentManager.findFragmentByTag("weather_fragment");
+        if (weatherFragment instanceof WeatherFragment)
+        {
+            fragmentTransactionOnClick.remove(weatherFragment);
+            fragmentTransactionOnClick.show(mapFragment);
+            fragmentTransactionOnClick.commit();
+            if (mapFragment.isExpandedSheet())
+            {
+                showBackButton(true);
+                setToolbarColored(true);
+                setToolbarBackIconDown(true);
+            } else
+                showBackButton(false);
         }
     }
 
@@ -197,6 +201,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             topToolbar.setBackgroundColor(Color.WHITE);
         else
             topToolbar.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if(mapFragment.isVisible())
+            super.onBackPressed();
+        else
+            onBackNavigation();
     }
 
     private boolean checkLocationPermission()
@@ -345,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
         }
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
         drawerLayout.closeDrawer(GravityCompat.START);
