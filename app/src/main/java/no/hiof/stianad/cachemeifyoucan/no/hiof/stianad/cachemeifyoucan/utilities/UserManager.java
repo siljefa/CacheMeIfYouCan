@@ -49,8 +49,7 @@ public final class UserManager
                         String snapshotUserId = snapshot.getKey();
                         if(snapshotUserId.equals(userId))
                         {
-                            User newUser = snapshot.getValue(User.class);
-                            user = newUser;
+                            user = snapshot.getValue(User.class);
                             user.setUserId(snapshot.getKey());
                         }
                     }
@@ -60,7 +59,7 @@ public final class UserManager
             @Override
             public void onCancelled(DatabaseError error)
             {
-                // Failed to read value
+                //Should trow exception and give message to user that login failed. Also move the user to the sign in page.
                 // Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
@@ -70,7 +69,7 @@ public final class UserManager
     {
         if (user == null)
         {
-            throw new NullPointerException("Did not get user from database");
+            throw new IllegalArgumentException ("Did not get user from database before this methodeCall");
         }
         return user;
     }

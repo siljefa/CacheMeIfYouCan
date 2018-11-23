@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
@@ -25,14 +26,22 @@ public class ProfileFragment  extends Fragment{
         return view;
     }
 
+    //Get User info when profile fragment is visible.
+    //Also an attempt at exception handling
     @Override
     public void onHiddenChanged(boolean hidden)
     {
         if(!hidden)
         {
-            TextView nameText = thisView.findViewById(R.id.name);
-            nameText.setText(UserManager.getUser().getName());
+            try
+            {
+                TextView nameText = thisView.findViewById(R.id.name);
+                nameText.setText(UserManager.getUser().getName());
+            }
+            catch (IllegalArgumentException e)
+            {
+                Toast.makeText(getActivity(), "Failed to find user", Toast.LENGTH_LONG).show();
+            }
         }
     }
-
 }
