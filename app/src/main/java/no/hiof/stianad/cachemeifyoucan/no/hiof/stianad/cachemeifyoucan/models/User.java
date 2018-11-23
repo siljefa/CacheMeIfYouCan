@@ -11,12 +11,12 @@ public final class User
     private static  List<Integer> achievementsIds = new ArrayList<>();
     private static String userId;
     private static String userEmail;
-    private static String name = userEmail;
+    private static String name;
+
     private User()
     {
 
     }
-
 
     public static List<Integer> getCreatedCacheIds()
     {
@@ -34,28 +34,29 @@ public final class User
         return userId;
     }
 
-    public static void setUserId(String newuserId) {
-        userId = newuserId;
-    }
-
     public static String getUserEmail() {
         return userEmail;
-    }
-
-    public static void setUserEmail(String newuserEmail) {
-        userEmail = newuserEmail;
     }
 
     public static String getName() {
         return name;
     }
 
-    public static void setName(String newname) {
-        name = newname;
-    }
-
     public static List<Integer> getFoundCacheIds()
     {
         return foundCacheIds;
+    }
+
+    public static void setUserId(String newuserId) {
+        userId = newuserId;
+    }
+
+    public static void setUserEmail(String newuserEmail) {
+        userEmail = newuserEmail;
+        name = userEmail;
+    }
+
+    public static void setName(String newname) {
+        name = newname;
     }
 }
