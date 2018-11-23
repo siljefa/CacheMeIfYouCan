@@ -8,6 +8,7 @@ public final class User
 
     private User(int i)
     {
+
     }
 
     public static ArrayList<Integer> getCacheIds()
