@@ -1,13 +1,11 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 
 public final class UserManager
@@ -21,9 +19,8 @@ public final class UserManager
     {
         //FireBase reference and instance
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseCache = database.getReference("user");
-        String userId = databaseCache.push().getKey();
-        databaseCache.child(userId).setValue(user);
+        DatabaseReference databaseUser = database.getReference("user");
+        databaseUser.child(user.getUserId()).setValue(user);
     }
 
     public static void createUser(String name, String id, String email)
@@ -35,7 +32,7 @@ public final class UserManager
     public static void setEventListener()
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("cache");
+        DatabaseReference ref = database.getReference("user");
         ref.addValueEventListener(new ValueEventListener()
         {
             @Override

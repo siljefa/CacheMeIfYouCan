@@ -4,19 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.UserManager;
 
-import no.hiof.stianad.cachemeifyoucan.R;
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
-//firebase login
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import no.hiof.stianad.cachemeifyoucan.R;
+
+//firebase login
 //import com.google.firebase.quickstart.auth.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -59,8 +60,8 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(SignUpActivity.this, "Welcome.",
                                     Toast.LENGTH_SHORT).show();
-                            User.setUserId(user.getUid());
-                            User.setUserEmail(user.getEmail());
+                            UserManager.getUser().setUserId(user.getUid());
+                            UserManager.getUser().setUserEmail(user.getEmail());
                             openMainActivity();
                         } else {
                             // error

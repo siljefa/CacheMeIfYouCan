@@ -1,9 +1,5 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +8,9 @@ public class User
     private List<Integer> foundCacheIds = new ArrayList<>();
     private List<Integer> createdCacheIds = new ArrayList<>();
     private  List<Integer> achievementsIds = new ArrayList<>();
-    private String userId;
-    private String userEmail;
-    private String name;
+    private String userId = "";
+    private String userEmail = "";
+    private String name = "";
 
     public User(String userId, String userEmail, String name)
     {
