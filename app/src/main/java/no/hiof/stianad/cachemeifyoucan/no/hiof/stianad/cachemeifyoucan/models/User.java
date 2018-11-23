@@ -44,9 +44,29 @@ public class User
         return name;
     }
 
+    public String getUserEmail()
+    {
+        return userEmail;
+    }
+
     public List<Integer> getFoundCacheIds()
     {
         return foundCacheIds;
+    }
+
+    public void setFoundCacheIds(List<Integer> foundCacheIds)
+    {
+        this.foundCacheIds = foundCacheIds;
+    }
+
+    public void setCreatedCacheIds(List<Integer> createdCacheIds)
+    {
+        this.createdCacheIds = createdCacheIds;
+    }
+
+    public void setAchievementsIds(List<Integer> achievementsIds)
+    {
+        this.achievementsIds = achievementsIds;
     }
 
     public void setUserId(String newuserId) {

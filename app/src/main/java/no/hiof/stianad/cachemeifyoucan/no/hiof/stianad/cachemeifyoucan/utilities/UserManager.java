@@ -10,6 +10,7 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Us
 
 public final class UserManager
 {
+    private static String userId;
     private static User user;
     private UserManager()
     {
@@ -29,11 +30,12 @@ public final class UserManager
         addUserToDatabase(user);
     }
 
-    public static void setEventListener()
+    public static void setEventListener(String newUserId)
     {
+        userId = newUserId;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("user");
-        ref.addValueEventListener(new ValueEventListener()
+        ref.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -44,8 +46,13 @@ public final class UserManager
                 {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                     {
-                        user = snapshot.getValue(User.class);
-                        user.setUserId(snapshot.getKey());
+                        String snapshotUserId = snapshot.getKey();
+                        if(snapshotUserId.equals(userId))
+                        {
+                            User newUser = snapshot.getValue(User.class);
+                            user = newUser;
+                            user.setUserId(snapshot.getKey());
+                        }
                     }
                 }
             }

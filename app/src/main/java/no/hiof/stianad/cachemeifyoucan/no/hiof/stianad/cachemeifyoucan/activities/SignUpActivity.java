@@ -60,10 +60,9 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(SignUpActivity.this, "Welcome.",
                                     Toast.LENGTH_SHORT).show();
-                            UserManager.setEventListener();
+                            UserManager.createUser(user.getUid() ,user.getEmail());
                             openMainActivity();
-                        }
-                        else {
+                        } else {
                             // error
                             Toast.makeText(SignUpActivity.this, "Registration failed.",
                                     Toast.LENGTH_SHORT).show();

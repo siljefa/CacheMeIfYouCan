@@ -55,8 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success
                             FirebaseUser user = mAuth.getCurrentUser();
-                            UserManager.getUser().setUserId(user.getUid());
-                            UserManager.getUser().setUserEmail(user.getEmail());
+                            UserManager.setEventListener(user.getUid());
                             openMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
