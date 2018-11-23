@@ -21,6 +21,7 @@ import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.adapters.AchievementsAdapter;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Achievement;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.UserManager;
 
 public class AchievementsFragment extends Fragment
 {
@@ -70,7 +71,7 @@ public class AchievementsFragment extends Fragment
             {
                 for (DataSnapshot achievementSnapshot : dataSnapshot.getChildren())
                 {
-                    if(User.getAchievementsIds().contains(achievementSnapshot.getValue(Achievement.class).id ))
+                    if(UserManager.getUser().getAchievementsIds().contains(achievementSnapshot.getValue(Achievement.class).id ))
                     {
                         AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
                     }

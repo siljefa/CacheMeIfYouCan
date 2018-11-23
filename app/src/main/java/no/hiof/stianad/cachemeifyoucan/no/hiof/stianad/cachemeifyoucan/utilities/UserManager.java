@@ -1,8 +1,6 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.HashMap;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -10,39 +8,31 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 
-public final class CacheManager
+public final class UserManager
 {
-
-    private static HashMap<Integer, Cache> caches = new HashMap<>();
-    private CacheManager()
+    private static User user;
+    private UserManager()
     {
-
     }
 
-    public static Cache createCache(LatLng latLng, String description, String name, int difficulty)
+    private static void addUserToDatabase(User user)
     {
-        int cacheId = caches.size()+1;
-        while(true)
-        {
-            if (!caches.containsKey(cacheId))
-            {
-                Cache newCache = new Cache(latLng, description, name, difficulty, caches.size() + 1);
-                caches.put((cacheId), newCache);
-                addCacheToDatabase(newCache);
-                return newCache;
-            }
-            else
-                cacheId++;
-        }
+        //FireBase reference and instance
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseCache = database.getReference("user");
+        String userId = databaseCache.push().getKey();
+        databaseCache.child(userId).setValue(user);
     }
 
-    public static HashMap<Integer, Cache> getCaches()
+    public static void createUser(String name, String id, String email)
     {
-        return caches;
+        User newUser = new User(name, id, email);
+        addUserToDatabase(newUser);
     }
 
-    public static void setEventListener(no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment map)
+    public static void setEventListener()
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("cache");
@@ -57,9 +47,8 @@ public final class CacheManager
                 {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                     {
-                        Cache value = snapshot.getValue(Cache.class);
-                        caches.put(value.getCacheId(), value);
-                        map.updateCachesOnMap();
+                        user = snapshot.getValue(User.class);
+                        user.setUserId(snapshot.getKey());
                     }
                 }
             }
@@ -73,12 +62,8 @@ public final class CacheManager
         });
     }
 
-    private static void addCacheToDatabase(Cache cache)
+    public static User getUser()
     {
-        //FireBase reference and instance
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseCache = database.getReference("cache");
-        String cacheId = databaseCache.push().getKey();
-        databaseCache.child(cacheId).setValue(cache);
+        return user;
     }
 }

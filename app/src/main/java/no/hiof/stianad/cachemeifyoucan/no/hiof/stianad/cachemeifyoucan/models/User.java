@@ -1,29 +1,34 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class User
+public class User
 {
-    private static List<Integer> foundCacheIds = new ArrayList<>();
-    private static List<Integer> createdCacheIds = new ArrayList<>();
-    private static  List<Integer> achievementsIds = new ArrayList<>();
-    private static String userId;
-    private static String userEmail;
-    private static String name;
+    private List<Integer> foundCacheIds = new ArrayList<>();
+    private List<Integer> createdCacheIds = new ArrayList<>();
+    private  List<Integer> achievementsIds = new ArrayList<>();
+    private String userId;
+    private String userEmail;
+    private String name;
 
-    private User()
+    public User(String userId, String userEmail, String name)
     {
-
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.name = name;
     }
 
-    public static List<Integer> getCreatedCacheIds()
+    public List<Integer> getCreatedCacheIds()
     {
         return createdCacheIds;
     }
 
-    public static List<Integer> getAchievementsIds()
+    public List<Integer> getAchievementsIds()
     {
         achievementsIds.add(1);
         achievementsIds.add(2);
@@ -34,25 +39,25 @@ public final class User
         return userId;
     }
 
-    public static void setUserEmail(String newuserEmail) {
+    public void setUserEmail(String newuserEmail) {
         userEmail = newuserEmail;
         name = newuserEmail;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static List<Integer> getFoundCacheIds()
+    public List<Integer> getFoundCacheIds()
     {
         return foundCacheIds;
     }
 
-    public static void setUserId(String newuserId) {
+    public void setUserId(String newuserId) {
         userId = newuserId;
     }
 
-    public static void setName(String newname) {
+    public void setName(String newname) {
         name = newname;
     }
 }

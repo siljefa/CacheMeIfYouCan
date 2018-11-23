@@ -35,6 +35,7 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Us
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.BoundingBox;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.UserManager;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, LocationListener
 {
@@ -151,7 +152,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 if (filterFoundCache)
                 {
-                    if (User.getFoundCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
+                    if (UserManager.getUser().getFoundCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
                     {
                         cacheMarkersOnMap.remove(newMarker.getId());
                         newMarker.remove();
@@ -193,7 +194,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         cacheBottomSheet.setFoundCacheBtnOnClickListener(v ->
         {
-            User.getFoundCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
+            UserManager.getUser().getFoundCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
             if (filterFoundCache)
             {
                 cacheMarkersOnMap.remove(selectedCacheMarker.getId());
@@ -223,7 +224,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 cacheMarkersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-                User.getCreatedCacheIds().add(newCache.getCacheId());
+                UserManager.getUser().getCreatedCacheIds().add(newCache.getCacheId());
             }
             else
             {
