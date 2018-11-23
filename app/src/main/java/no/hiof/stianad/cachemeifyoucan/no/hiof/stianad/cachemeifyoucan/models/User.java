@@ -7,7 +7,7 @@ public final class User
 {
     private static String userId;
     private static String userEmail;
-    private static String name = userEmail;
+    private static String name;
     private static ArrayList<Integer> CacheIds = new ArrayList<>();
 
     private User(int i)
@@ -29,6 +29,7 @@ public final class User
 
     public static void setUserEmail(String newuserEmail) {
         userEmail = newuserEmail;
+        name = newuserEmail;
     }
 
     public static String getName() {
