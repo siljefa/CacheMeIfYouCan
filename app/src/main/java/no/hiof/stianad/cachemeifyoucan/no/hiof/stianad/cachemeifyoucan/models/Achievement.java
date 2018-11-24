@@ -9,6 +9,7 @@ public class Achievement {
     {
         this.description = description;
         this.name = name;
+        this.id = id;
     }
 
     public Achievement(){
