@@ -3,6 +3,8 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models;
 import java.util.ArrayList;
 import java.util.List;
 
+//Object to be saved in database
+//Should only be created from UserManager
 public class User
 {
     private List<Integer> foundCacheIds = new ArrayList<>();

@@ -1,6 +1,7 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Achievement;
 import no.hiof.stianad.cachemeifyoucan.R;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.UserManager;
 
 public class AchievementsAdapter extends ArrayAdapter<Achievement>
 {
@@ -36,6 +38,8 @@ public class AchievementsAdapter extends ArrayAdapter<Achievement>
         assert achievement != null;
         textView_name.setText(achievement.name);
         textView_description.setText(achievement.description);
+        if(UserManager.getAchievementsIds().contains(achievement.id))
+            convertView.setBackgroundColor(Color.GREEN);
 
         return convertView;
     }

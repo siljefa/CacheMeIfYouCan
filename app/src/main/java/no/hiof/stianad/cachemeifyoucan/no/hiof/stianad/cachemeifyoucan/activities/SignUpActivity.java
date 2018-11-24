@@ -2,23 +2,16 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activiti
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.UserManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import no.hiof.stianad.cachemeifyoucan.R;
-
-//firebase login
-//import com.google.firebase.quickstart.auth.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -50,25 +43,27 @@ public class SignUpActivity extends AppCompatActivity {
         createUser(email,password);
     }
 
-    public void createUser(String email, String password ){
-
+    public void createUser(String email, String password )
+    {
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(SignUpActivity.this, "Welcome.",
-                                    Toast.LENGTH_SHORT).show();
-                            UserManager.createUser(user.getUid() ,user.getEmail());
-                            UserManager.userAchievementsListAdd(1);
-                            UserManager.userAchievementsListAdd(2);
-                            openMainActivity();
-                        } else {
-                            // error
-                            Toast.makeText(SignUpActivity.this, "Registration failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task ->
+                {
+                    if (task.isSuccessful())
+                    {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Toast.makeText(SignUpActivity.this, "Welcome.",
+                                Toast.LENGTH_SHORT).show();
+                        UserManager.createUser(user.getUid(), user.getEmail());
+
+                        //Just a test to se that user can have Achievements
+                        UserManager.userAchievementsListAdd(1);
+                        UserManager.userAchievementsListAdd(3);
+                        openMainActivity();
+                    } else
+                    {
+                        // error
+                        Toast.makeText(SignUpActivity.this, "Registration failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

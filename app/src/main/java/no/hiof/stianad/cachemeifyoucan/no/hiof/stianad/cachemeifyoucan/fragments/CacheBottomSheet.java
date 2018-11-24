@@ -14,13 +14,14 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.UserManager;
 
 public class CacheBottomSheet
 {
     private CustomSheetBehavior sheetBehavior;
 
     private Button foundCacheBtn, saveCacheBtn, weatherBtn;
-    private EditText editTextLat, editTextLon, editTextDescription, editTextName;
+    private EditText editTextLat, editTextLon, editTextDescription, editTextName, editTextCreator;
 
     public CacheBottomSheet(View view, MainActivity parentActivity)
     {
@@ -31,6 +32,7 @@ public class CacheBottomSheet
         editTextLon = cacheBottomSheet.findViewById(R.id.lon_edit);
         editTextDescription = cacheBottomSheet.findViewById(R.id.description_edit);
         editTextName = cacheBottomSheet.findViewById(R.id.name_edit);
+        editTextCreator = cacheBottomSheet.findViewById(R.id.cache_creator_edit);
         foundCacheBtn = cacheBottomSheet.findViewById(R.id.foundCacheBtn);
         saveCacheBtn = cacheBottomSheet.findViewById(R.id.saveCacheBtn);
         weatherBtn = cacheBottomSheet.findViewById(R.id.weatherBtn);
@@ -79,6 +81,7 @@ public class CacheBottomSheet
         editTextDescription.setText(selectedCache.getDescription());
         editTextLat.setText(String.format(Locale.getDefault(), "%s", selectedCache.getLatLng().latitude));
         editTextLon.setText(String.format(Locale.getDefault(), "%s", selectedCache.getLatLng().longitude));
+        editTextCreator.setText(selectedCache.getCreator());
         editTextName.setText(selectedCache.getName());
     }
 
@@ -94,6 +97,7 @@ public class CacheBottomSheet
         editTextDescription.setText("");
         editTextLat.setText(String.format(Locale.getDefault(), "%s", latLng.latitude));
         editTextLon.setText(String.format(Locale.getDefault(), "%s", latLng.longitude));
+        editTextCreator.setText(UserManager.getName());
         editTextName.setText("");
     }
     //endregion
@@ -105,6 +109,7 @@ public class CacheBottomSheet
         setEditTextViewEditable(editTextLon, editable);
         setEditTextViewEditable(editTextDescription, editable);
         setEditTextViewEditable(editTextName, editable);
+        setEditTextViewEditable(editTextCreator, editable);
     }
 
     //Set if a EditTextView should be editable or not.
@@ -119,7 +124,6 @@ public class CacheBottomSheet
         else
             editTextView.setInputType(InputType.TYPE_NULL);
     }
-
 
     void setFoundCacheBtnOnClickListener(View.OnClickListener listener)
     {
@@ -139,6 +143,11 @@ public class CacheBottomSheet
     public EditText getEditTextLat()
     {
         return editTextLat;
+    }
+
+    public EditText getEditTextCreator()
+    {
+        return editTextCreator;
     }
 
     public EditText getEditTextLon()

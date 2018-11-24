@@ -2,9 +2,7 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilitie
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,14 +21,14 @@ public final class CacheManager
 
     }
 
-    public static Cache createCache(LatLng latLng, String description, String name, int difficulty)
+    public static Cache createCache(LatLng latLng, String description, String name, int difficulty, String creator)
     {
         int cacheId = caches.size()+1;
         while(true)
         {
             if (!caches.containsKey(cacheId))
             {
-                Cache newCache = new Cache(latLng, description, name, difficulty, caches.size() + 1);
+                Cache newCache = new Cache(latLng, description, name, difficulty, caches.size() + 1, creator);
                 caches.put((cacheId), newCache);
                 addCacheToDatabase(newCache);
                 return newCache;

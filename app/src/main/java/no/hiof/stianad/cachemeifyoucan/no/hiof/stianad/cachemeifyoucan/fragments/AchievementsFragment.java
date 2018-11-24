@@ -56,6 +56,8 @@ public class AchievementsFragment extends Fragment
 
         listView.setAdapter(adapter);
 
+        FillArrayListWithAchievements();
+
         adapter.addAll(achievements);
     }
 
@@ -71,10 +73,7 @@ public class AchievementsFragment extends Fragment
             {
                 for (DataSnapshot achievementSnapshot : dataSnapshot.getChildren())
                 {
-                    if(UserManager.getAchievementsIds().contains(achievementSnapshot.getValue(Achievement.class).id ))
-                    {
-                        AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
-                    }
+                    AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
                 }
             }
 
@@ -84,22 +83,6 @@ public class AchievementsFragment extends Fragment
                 //TODO: Fix some error handling bro
             }
         });
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden)
-    {
-        if(!hidden)
-        {
-            try
-            {
-                FillArrayListWithAchievements();
-            }
-            catch (IllegalArgumentException e)
-            {
-                Toast.makeText(getActivity(), "Failed to find user", Toast.LENGTH_LONG).show();
-            }
-        }
     }
 }
 

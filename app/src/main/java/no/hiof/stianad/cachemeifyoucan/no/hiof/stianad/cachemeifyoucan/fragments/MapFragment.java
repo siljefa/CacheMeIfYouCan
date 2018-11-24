@@ -27,6 +27,7 @@ import android.location.LocationListener;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import no.hiof.stianad.cachemeifyoucan.R;
@@ -41,6 +42,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     private MainActivity parentActivity;
     private GoogleMap gMap;
     private boolean mapReady = false;
+    private boolean isFirstLocation = true;
     private LatLng lastPositionUpdate = null;
 
     //hashMap to hold caches on the map, and connected marker.
@@ -82,8 +84,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         gMap = googleMap;
         mapReady = true;
         setUpDefaultUISettings();
-        if (lastPositionUpdate != null)
-            onFirstLocation();
+        parentActivity.getLastKnownLocation();
 
         googleMap.setOnMapLongClickListener(latLng ->
         {
@@ -208,12 +209,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
             String cName = cacheBottomSheet.getEditTextName().getText().toString();
             String cLat = cacheBottomSheet.getEditTextLat().getText().toString();
             String cLon = cacheBottomSheet.getEditTextLon().getText().toString();
+            String cCreator = cacheBottomSheet.getEditTextCreator().getText().toString();
 
             //Test if the location field has value.
             if (cLat.length() > 0 && cLon.length() > 0)
             {
                 LatLng latLng = new LatLng(Double.parseDouble(cLat), Double.parseDouble(cLon));
-                Cache newCache = CacheManager.createCache(latLng, cDescription, cName, 2);
+                Cache newCache = CacheManager.createCache(latLng, cDescription, cName, 2, cCreator);
 
                 //If the user has changed the cache location after placing the marker, move the marker.
                 if (selectedCacheMarker.getPosition() != latLng)
@@ -276,12 +278,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
     @Override
     public void onLocationChanged(Location location)
     {
-        if (mapReady)
-        {
-            lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
-            onFirstLocation();
-        }
         lastPositionUpdate = new LatLng(location.getLatitude(), location.getLongitude());
+        if (isFirstLocation)
+        {
+            onFirstLocation();
+            isFirstLocation = false;
+        }
+        else
+        {
+            filterCaches();
+        }
     }
 
     @Override

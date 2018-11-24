@@ -1,7 +1,5 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
-import android.app.Activity;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +35,8 @@ public final class UserManager
         addUserToDatabase(user);
     }
 
+    //Did not have time to make startupactivity and login have a shared interface or parent. have to take both inn and test for null.
+    //This listener creates the user object form database. Login have to wait for reply.
     public static void setEventListener(String newUserId, StartUpActivity startUpActivity, LoginActivity loginActivity)
     {
         userId = newUserId;
@@ -79,47 +79,42 @@ public final class UserManager
     public static void userFoundCacheListAdd(int id)
     {
         user.getFoundCacheIds().add(id);
-        userLists(id, "foundCacheIds");
+        userLists(user.getFoundCacheIds(), "foundCacheIds");
     }
 
     public static void userCreatedCacheListAdd(int id)
     {
-        user.getFoundCacheIds().add(id);
-        userLists(id, "foundCacheIds");
+        user.getCreatedCacheIds().add(id);
+        userLists(user.getCreatedCacheIds(), "createdCacheIds");
     }
 
     public static void userAchievementsListAdd(int id)
     {
-        user.getFoundCacheIds().add(id);
-        userLists(id, "foundCacheIds");
+        user.getAchievementsIds().add(id);
+        userLists(user.getAchievementsIds(), "achievementsIds");
     }
 
-    private static void userLists(int id, String name)
+    //Replace list in database with new list
+    private static void userLists(List<Integer> newList, String name)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseUser = database.getReference("user");
-        databaseUser.child(user.getUserId()).child(name).setValue(user.getFoundCacheIds());
+        databaseUser.child(user.getUserId()).child(name).setValue(newList);
     }
 
-    /*public static User getUser()
-    {
-        if (user == null)
-        {
-            throw new IllegalArgumentException ("Did not get user from database before this methodeCall");
-        }
-        return user;
-    }*/
-
+    //Return a list that can't be edited because we need to have a custom add function that updates database
     public static List<Integer> getCreatedCacheIds()
     {
             return Collections.unmodifiableList(user.getCreatedCacheIds());
     }
 
+    //Return a list that can't be edited because we need to have a custom add function that updates database
     public static List<Integer> getAchievementsIds()
     {
             return Collections.unmodifiableList(user.getAchievementsIds());
     }
 
+    //Return a list that can't be edited because we need to have a custom add function that updates database
     public static List<Integer> getFoundCacheIds()
     {
             return Collections.unmodifiableList(user.getFoundCacheIds());

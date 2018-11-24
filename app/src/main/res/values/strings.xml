@@ -64,5 +64,6 @@
     <string name="latitude_hint">Latitude</string>
     <string name="longitude_hint">Longitude</string>
     <string name="description_hint">Description</string>
+    <string name="cache_creator">Cache creator</string>
 
 </resources>

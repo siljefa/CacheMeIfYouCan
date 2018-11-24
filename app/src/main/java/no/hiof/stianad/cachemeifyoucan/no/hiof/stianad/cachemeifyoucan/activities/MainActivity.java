@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationProvider = locationManager.getBestProvider(new Criteria(), false);
-        checkLocationPermission();
         mAuth = FirebaseAuth.getInstance();
 
         //Starts foreground service to show notification
@@ -368,16 +367,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public LatLng getLastKnownLocation()
+    public void getLastKnownLocation()
     {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOCATION);
-            return null;
-        }
-        double lat = locationManager.getLastKnownLocation(locationProvider).getLatitude();
-        double lon = locationManager.getLastKnownLocation(locationProvider).getLatitude();
-
-        return new LatLng(lat,lon);
+        checkLocationPermission();
     }
 }

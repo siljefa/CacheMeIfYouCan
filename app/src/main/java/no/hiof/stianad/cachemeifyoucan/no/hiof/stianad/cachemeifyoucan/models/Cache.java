@@ -2,7 +2,6 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.lang.annotation.Annotation;
 
@@ -11,11 +10,12 @@ public class Cache implements Annotation
     private String name;
     private double latitude;
     private double longitude;
-    private String description;
+    private String description= "";
+    private String creator = "";
     private int difficulty;
     private int cacheId;
 
-    public Cache(LatLng latLng, String description, String name, int difficulty, int cacheId)
+    public Cache(LatLng latLng, String description, String name, int difficulty, int cacheId, String creator)
     {
         this.name = name;
         this.latitude = latLng.latitude;
@@ -23,12 +23,23 @@ public class Cache implements Annotation
         this.description = description;
         this.difficulty = difficulty;
         this.cacheId = cacheId;
+        this.creator = creator;
     }
 
     //Empty constructor needed for database.
     public Cache()
     {
 
+    }
+
+    public String getCreator()
+    {
+        return creator;
+    }
+
+    public void setCreator(String creator)
+    {
+        this.creator = creator;
     }
 
     public void setLatitude(double latitude)
