@@ -7,7 +7,7 @@ public class User
 {
     private List<Integer> foundCacheIds = new ArrayList<>();
     private List<Integer> createdCacheIds = new ArrayList<>();
-    private  List<Integer> achievementsIds = new ArrayList<>();
+    private List<Integer> achievementsIds = new ArrayList<>();
     private String userId;
     private String userEmail;
     private String name;
@@ -31,15 +31,12 @@ public class User
 
     public List<Integer> getAchievementsIds()
     {
-        achievementsIds.add(1);
-        achievementsIds.add(2);
         return achievementsIds;
     }
 
     public String getUserId() {
         return userId;
     }
-
 
     public String getName() {
         return name;

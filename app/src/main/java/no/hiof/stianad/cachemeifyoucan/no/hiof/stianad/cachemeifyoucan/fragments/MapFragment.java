@@ -31,7 +31,6 @@ import java.util.Map;
 
 import no.hiof.stianad.cachemeifyoucan.R;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.CacheManager;
-import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.MainActivity;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities.BoundingBox;
@@ -151,7 +150,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 if (filterFoundCache)
                 {
-                    if (UserManager.getUser().getFoundCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
+                    if (UserManager.getFoundCacheIds().contains(cacheId) && cacheMarkersOnMap.containsValue(cacheId))
                     {
                         cacheMarkersOnMap.remove(newMarker.getId());
                         newMarker.remove();
@@ -193,7 +192,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
 
         cacheBottomSheet.setFoundCacheBtnOnClickListener(v ->
         {
-            UserManager.getUser().getFoundCacheIds().add(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
+            UserManager.userFoundCacheListAdd(cacheMarkersOnMap.get(selectedCacheMarker.getId()));
             if (filterFoundCache)
             {
                 cacheMarkersOnMap.remove(selectedCacheMarker.getId());
@@ -223,7 +222,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 }
                 cacheMarkersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
-                UserManager.getUser().getCreatedCacheIds().add(newCache.getCacheId());
+                UserManager.userCreatedCacheListAdd(newCache.getCacheId());
             }
             else
             {

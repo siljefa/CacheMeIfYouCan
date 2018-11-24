@@ -2,7 +2,10 @@ package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilitie
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,4 +84,5 @@ public final class CacheManager
         String cacheId = databaseCache.push().getKey();
         databaseCache.child(cacheId).setValue(cache);
     }
+
 }

@@ -71,7 +71,7 @@ public class AchievementsFragment extends Fragment
             {
                 for (DataSnapshot achievementSnapshot : dataSnapshot.getChildren())
                 {
-                    if(UserManager.getUser().getAchievementsIds().contains(achievementSnapshot.getValue(Achievement.class).id ))
+                    if(UserManager.getAchievementsIds().contains(achievementSnapshot.getValue(Achievement.class).id ))
                     {
                         AchievementsFragment.achievements.add(achievementSnapshot.getValue(Achievement.class));
                     }

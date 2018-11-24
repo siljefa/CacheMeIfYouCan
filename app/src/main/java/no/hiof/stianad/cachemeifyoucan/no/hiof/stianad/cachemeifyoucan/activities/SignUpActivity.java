@@ -61,6 +61,8 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "Welcome.",
                                     Toast.LENGTH_SHORT).show();
                             UserManager.createUser(user.getUid() ,user.getEmail());
+                            UserManager.userAchievementsListAdd(1);
+                            UserManager.userAchievementsListAdd(2);
                             openMainActivity();
                         } else {
                             // error

@@ -6,6 +6,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Collections;
+import java.util.List;
+
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 
 public final class UserManager
@@ -65,12 +68,66 @@ public final class UserManager
         });
     }
 
-    public static User getUser()
+    public static void userFoundCacheListAdd(int id)
+    {
+        user.getFoundCacheIds().add(id);
+        userLists(id, "foundCacheIds");
+    }
+
+    public static void userCreatedCacheListAdd(int id)
+    {
+        user.getFoundCacheIds().add(id);
+        userLists(id, "foundCacheIds");
+    }
+
+    public static void userAchievementsListAdd(int id)
+    {
+        user.getFoundCacheIds().add(id);
+        userLists(id, "foundCacheIds");
+    }
+
+    private static void userLists(int id, String name)
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseUser = database.getReference("user");
+        databaseUser.child(user.getUserId()).child(name).setValue(user.getFoundCacheIds());
+    }
+
+    /*public static User getUser()
     {
         if (user == null)
         {
             throw new IllegalArgumentException ("Did not get user from database before this methodeCall");
         }
         return user;
+    }*/
+
+    public static List<Integer> getCreatedCacheIds()
+    {
+        return Collections.unmodifiableList(user.getCreatedCacheIds());
     }
+
+    public static List<Integer> getAchievementsIds()
+    {
+        return Collections.unmodifiableList(user.getAchievementsIds());
+    }
+
+    public static List<Integer> getFoundCacheIds()
+    {
+        return Collections.unmodifiableList(user.getFoundCacheIds());
+    }
+
+    public static String getUserId() {
+        return user.getUserId();
+    }
+
+    public static String getName() {
+        return user.getName();
+    }
+
+    public static String getUserEmail()
+    {
+        return user.getUserEmail();
+    }
+
 }

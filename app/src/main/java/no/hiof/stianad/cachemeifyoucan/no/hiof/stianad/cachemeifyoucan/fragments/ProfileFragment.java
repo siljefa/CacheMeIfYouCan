@@ -36,7 +36,7 @@ public class ProfileFragment  extends Fragment{
             try
             {
                 TextView nameText = thisView.findViewById(R.id.name);
-                nameText.setText(UserManager.getUser().getName());
+                nameText.setText(UserManager.getName());
             }
             catch (IllegalArgumentException e)
             {
