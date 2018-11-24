@@ -1,5 +1,7 @@
 package no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities;
 
+import android.app.Activity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -9,6 +11,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Collections;
 import java.util.List;
 
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.LoginActivity;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.activities.StartUpActivity;
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.User;
 
 public final class UserManager
@@ -33,7 +37,7 @@ public final class UserManager
         addUserToDatabase(user);
     }
 
-    public static void setEventListener(String newUserId)
+    public static void setEventListener(String newUserId, StartUpActivity startUpActivity, LoginActivity loginActivity)
     {
         userId = newUserId;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,6 +58,10 @@ public final class UserManager
                         {
                             user = snapshot.getValue(User.class);
                             user.setUserId(snapshot.getKey());
+                            if(loginActivity != null)
+                            loginActivity.openMainActivity();
+                            if(startUpActivity != null)
+                            startUpActivity.openMainActivity();
                         }
                     }
                 }
@@ -104,17 +112,17 @@ public final class UserManager
 
     public static List<Integer> getCreatedCacheIds()
     {
-        return Collections.unmodifiableList(user.getCreatedCacheIds());
+            return Collections.unmodifiableList(user.getCreatedCacheIds());
     }
 
     public static List<Integer> getAchievementsIds()
     {
-        return Collections.unmodifiableList(user.getAchievementsIds());
+            return Collections.unmodifiableList(user.getAchievementsIds());
     }
 
     public static List<Integer> getFoundCacheIds()
     {
-        return Collections.unmodifiableList(user.getFoundCacheIds());
+            return Collections.unmodifiableList(user.getFoundCacheIds());
     }
 
     public static String getUserId() {

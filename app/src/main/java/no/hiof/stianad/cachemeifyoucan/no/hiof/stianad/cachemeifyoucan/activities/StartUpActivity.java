@@ -46,9 +46,14 @@ public class StartUpActivity extends AppCompatActivity {
             Toast tLogedIn = Toast.makeText(this,"Already signed in as: " + userEmail,Toast.LENGTH_SHORT);
             tLogedIn.show();
             //gå til main
-            UserManager.setEventListener(currentUser.getUid());
+            UserManager.setEventListener(currentUser.getUid(), this, null);
             openMainActivity();
         }
+    }
+
+    public void startMainActivity()
+    {
+
     }
 
     public void openMainActivity(){

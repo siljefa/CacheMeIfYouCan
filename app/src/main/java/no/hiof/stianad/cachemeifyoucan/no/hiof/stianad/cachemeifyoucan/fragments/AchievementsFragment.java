@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,8 +56,6 @@ public class AchievementsFragment extends Fragment
 
         listView.setAdapter(adapter);
 
-        FillArrayListWithAchievements();
-
         adapter.addAll(achievements);
     }
 
@@ -84,6 +84,22 @@ public class AchievementsFragment extends Fragment
                 //TODO: Fix some error handling bro
             }
         });
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden)
+    {
+        if(!hidden)
+        {
+            try
+            {
+                FillArrayListWithAchievements();
+            }
+            catch (IllegalArgumentException e)
+            {
+                Toast.makeText(getActivity(), "Failed to find user", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
 

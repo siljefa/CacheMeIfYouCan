@@ -21,12 +21,14 @@ import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.utilities
 
 public class LoginActivity extends AppCompatActivity {
 
+    LoginActivity thisActivity;
     private FirebaseAuth mAuth;
     EditText et_email;
     EditText et_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        thisActivity = this;
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
@@ -55,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success
                             FirebaseUser user = mAuth.getCurrentUser();
-                            UserManager.setEventListener(user.getUid());
+                            UserManager.setEventListener(user.getUid(), null, thisActivity);
                             openMainActivity();
                         }
                         else {
