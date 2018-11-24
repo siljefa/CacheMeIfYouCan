@@ -48,27 +48,37 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(String email, String password){
 
-      //check email and pword here
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task ->
+        try
         {
-            if (task.isSuccessful()) {
-                // Sign in success
-                FirebaseUser user = mAuth.getCurrentUser();
-                UserManager.setEventListener(user.getUid(), null, thisActivity);
-            }
-            else {
-                // If sign in fails, display a message to the user.
+            //check email and pword here
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task ->
+            {
+                if (task.isSuccessful())
+                {
+                    // Sign in success
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    UserManager.setEventListener(user.getUid(), null, thisActivity);
+                } else
+                {
+                    // If sign in fails, display a message to the user.
 
-                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show();
-            }
+                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                }
 
-            if (!task.isSuccessful()) {
-                //error message here
-               // mStatusTextView.setText(R.string.auth_failed);
-            }
+                if (!task.isSuccessful())
+                {
+                    //error message here
+                    // mStatusTextView.setText(R.string.auth_failed);
+                }
 
-        });
+            });
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void openMainActivity(){

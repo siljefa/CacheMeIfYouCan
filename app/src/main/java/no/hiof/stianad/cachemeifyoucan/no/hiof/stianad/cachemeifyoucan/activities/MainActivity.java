@@ -18,13 +18,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.AchievementsFragment;
@@ -43,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AchievementsFragment achievementsFragment = new AchievementsFragment();
     private FilterCacheFragment filterCacheFragment = new FilterCacheFragment();
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    private Toolbar topToolbar;
 
     public static final int PERMISSIONS_REQUEST_LOCATION = 99;
     private LocationManager locationManager;
     private String locationProvider;
 
+    private Toolbar topToolbar;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private boolean toolBarNavigationListenerIsRegistered = false;
@@ -128,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 toolBarNavigationListenerIsRegistered = true;
             }
-        } else
+        }
+        else
         {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);

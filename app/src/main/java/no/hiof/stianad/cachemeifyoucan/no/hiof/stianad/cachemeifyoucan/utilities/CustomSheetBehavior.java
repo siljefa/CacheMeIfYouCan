@@ -134,6 +134,10 @@ public class CustomSheetBehavior
         //Set last sheet state because it's more reliable than getting current state.
         //Change navigation options.
         //Change if the keyboard should be visible.
+        userIsChangingSheetState = false;
+        sheetBehavior.setState(sheetState);
+        lastSheetState = sheetState;
+
         if(sheetState == BottomSheetBehavior.STATE_EXPANDED)
         {
             parentActivity.showBackButton(true);
@@ -147,9 +151,6 @@ public class CustomSheetBehavior
             fillerSpaceForToolbar.setVisibility(View.GONE);
             hideKeyboard(bottomSheet);
         }
-        userIsChangingSheetState = false;
-        sheetBehavior.setState(sheetState);
-        lastSheetState = sheetState;
     }
 
     public int getLastSheetState()

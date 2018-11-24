@@ -44,11 +44,13 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void createUser(String email, String password )
+    {try
     {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task ->
                 {
                     if (task.isSuccessful())
+
                     {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(SignUpActivity.this, "Welcome.",
@@ -66,6 +68,12 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+    catch (Exception e)
+    {
+        Toast.makeText(SignUpActivity.this, "Registration failed.",
+                Toast.LENGTH_SHORT).show();
+    }
     }
 
     public void openMainActivity(){

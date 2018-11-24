@@ -9,12 +9,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment;
 
 import no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.models.Cache;
 
 public final class CacheManager
 {
 
+    private static MapFragment mapFragment;
     private static HashMap<Integer, Cache> caches = new HashMap<>();
     private CacheManager()
     {
@@ -43,8 +45,9 @@ public final class CacheManager
         return caches;
     }
 
-    public static void setEventListener(no.hiof.stianad.cachemeifyoucan.no.hiof.stianad.cachemeifyoucan.fragments.MapFragment map)
+    public static void setEventListener(MapFragment map)
     {
+        mapFragment = map;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("cache");
         ref.addValueEventListener(new ValueEventListener()
@@ -60,7 +63,7 @@ public final class CacheManager
                     {
                         Cache value = snapshot.getValue(Cache.class);
                         caches.put(value.getCacheId(), value);
-                        map.updateCachesOnMap();
+                        mapFragment.updateCachesOnMap();
                     }
                 }
             }

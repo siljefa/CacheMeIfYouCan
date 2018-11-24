@@ -16,7 +16,7 @@ import no.hiof.stianad.cachemeifyoucan.R;
 public class FetchFromOpenweathermap {
 
     private static final String OPEN_WEATHER_MAP_API =
-            "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&APPID=%s";
+            "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&APPID=%s";
 
     public static JSONObject getJSON(Context context, LatLng Latlng){
         try {
