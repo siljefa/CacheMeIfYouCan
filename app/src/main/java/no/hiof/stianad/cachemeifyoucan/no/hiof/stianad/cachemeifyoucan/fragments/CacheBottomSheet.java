@@ -76,7 +76,7 @@ public class CacheBottomSheet
         saveCacheBtn.setVisibility(View.GONE);
         foundCacheBtn.setVisibility(View.VISIBLE);
         weatherBtn.setVisibility(View.VISIBLE);
-        setEditTextFieldsEditable(false);
+        setAllEditTextFieldsEditable(false);
 
         editTextDescription.setText(selectedCache.getDescription());
         editTextLat.setText(String.format(Locale.getDefault(), "%s", selectedCache.getLatLng().latitude));
@@ -92,7 +92,7 @@ public class CacheBottomSheet
         foundCacheBtn.setVisibility(View.GONE);
         weatherBtn.setVisibility(View.GONE);
         saveCacheBtn.setVisibility(View.VISIBLE);
-        setEditTextFieldsEditable(true);
+        setAllEditTextFieldsEditable(true);
 
         editTextDescription.setText("");
         editTextLat.setText(String.format(Locale.getDefault(), "%s", latLng.latitude));
@@ -103,7 +103,7 @@ public class CacheBottomSheet
     //endregion
 
     //Set if all EditTextView in this bottomSheet should be editable or not.
-    private void setEditTextFieldsEditable(boolean editable)
+    private void setAllEditTextFieldsEditable(boolean editable)
     {
         setEditTextViewEditable(editTextLat, editable);
         setEditTextViewEditable(editTextLon, editable);
