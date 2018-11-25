@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar topToolbar;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
-    private boolean toolBarNavigationListenerIsRegistered = false;
     private FirebaseAuth mAuth;
 
     @Override
@@ -119,21 +118,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setToolbarBackIconDown(false);
             }
 
-            if (!toolBarNavigationListenerIsRegistered)
-            {
-                drawerToggle.setToolbarNavigationClickListener(v ->
-                        onBackNavigation());
-
-                toolBarNavigationListenerIsRegistered = true;
-            }
-        }
-        else
+            drawerToggle.setToolbarNavigationClickListener(v ->
+                    onBackNavigation());
+        } else
         {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawerToggle.setDrawerIndicatorEnabled(true);
             drawerToggle.setToolbarNavigationClickListener(null);
-            toolBarNavigationListenerIsRegistered = false;
         }
     }
 
