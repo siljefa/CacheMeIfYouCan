@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="70dp"
-                android:text="Samuel L. Jackson"
+                android:text="User Email here"
                 android:textColor="#fff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -79,7 +79,7 @@
                 android:layout_below="@+id/name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="(Samuel motherfucking Jackson)"
+                android:text="(User created quote here)"
                 android:textColor="#fff"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -171,7 +171,7 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="8dp"
                 android:clickable="true"
-                android:text="Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass."
+                android:text="Bacon ipsum dolor amet tail porchetta bresaola strip steak chuck, prosciutto pork pork loin pancetta bacon ground round flank drumstick biltong. Andouille pork loin short ribs, hamburger ribeye corned beef beef ribs. Salami prosciutto ribeye tri-tip kevin tenderloin picanha jerky ham kielbasa strip steak pancetta turducken. Porchetta spare ribs buffalo, prosciutto chuck short ribs landjaeger ball tip turkey swine turducken cupim filet mignon capicola frankfurter."
                 android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_about"
