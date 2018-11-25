@@ -17,6 +17,7 @@ public final class UserManager
 {
     private static String userId;
     private static User user;
+
     private UserManager()
     {
     }
@@ -54,14 +55,14 @@ public final class UserManager
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                     {
                         String snapshotUserId = snapshot.getKey();
-                        if(snapshotUserId.equals(userId))
+                        if (snapshotUserId.equals(userId))
                         {
                             user = snapshot.getValue(User.class);
                             user.setUserId(snapshot.getKey());
-                            if(loginActivity != null)
-                            loginActivity.openMainActivity();
-                            if(startUpActivity != null)
-                            startUpActivity.openMainActivity();
+                            if (loginActivity != null)
+                                loginActivity.openMainActivity();
+                            if (startUpActivity != null)
+                                startUpActivity.openMainActivity();
                         }
                     }
                 }
@@ -105,26 +106,28 @@ public final class UserManager
     //Return a list that can't be edited because we need to have a custom add function that updates database
     public static List<Integer> getCreatedCacheIds()
     {
-            return Collections.unmodifiableList(user.getCreatedCacheIds());
+        return Collections.unmodifiableList(user.getCreatedCacheIds());
     }
 
     //Return a list that can't be edited because we need to have a custom add function that updates database
     public static List<Integer> getAchievementsIds()
     {
-            return Collections.unmodifiableList(user.getAchievementsIds());
+        return Collections.unmodifiableList(user.getAchievementsIds());
     }
 
     //Return a list that can't be edited because we need to have a custom add function that updates database
     public static List<Integer> getFoundCacheIds()
     {
-            return Collections.unmodifiableList(user.getFoundCacheIds());
+        return Collections.unmodifiableList(user.getFoundCacheIds());
     }
 
-    public static String getUserId() {
+    public static String getUserId()
+    {
         return user.getUserId();
     }
 
-    public static String getName() {
+    public static String getName()
+    {
         return user.getName();
     }
 
@@ -132,5 +135,4 @@ public final class UserManager
     {
         return user.getUserEmail();
     }
-
 }

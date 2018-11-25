@@ -132,7 +132,7 @@ public class CacheBottomSheet
 
     void setSaveCacheBtnOnClickListener(View.OnClickListener listener)
     {
-         saveCacheBtn.setOnClickListener(listener);
+        saveCacheBtn.setOnClickListener(listener);
     }
 
     public void setWeatherBtnOnClickListener(View.OnClickListener listener)

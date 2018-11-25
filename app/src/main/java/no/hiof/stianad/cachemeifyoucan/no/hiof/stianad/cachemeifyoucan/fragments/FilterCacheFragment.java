@@ -25,11 +25,10 @@ public class FilterCacheFragment extends Fragment
         Switch filterFoundCacheSwitch = view.findViewById(R.id.filterFoundCacheSwitch);
         filterFoundCacheSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
         {
-            if(isChecked)
+            if (isChecked)
             {
                 filterFoundCache = false;
-            }
-            else
+            } else
             {
                 filterFoundCache = true;
             }
@@ -38,11 +37,10 @@ public class FilterCacheFragment extends Fragment
         Switch filterLocationSwitch = view.findViewById(R.id.filterLocationSwitch);
         filterLocationSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
         {
-            if(isChecked)
+            if (isChecked)
             {
                 filterLocation = true;
-            }
-            else
+            } else
             {
                 filterLocation = false;
             }
@@ -51,18 +49,17 @@ public class FilterCacheFragment extends Fragment
         Switch filterDifficultySwitch = view.findViewById(R.id.filterDifficultySwitch);
         filterDifficultySwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
         {
-            if(isChecked)
+            if (isChecked)
             {
                 filterDifficulty = false;
-            }
-            else
+            } else
             {
                 filterDifficulty = true;
             }
         });
 
         return view;
-}
+    }
 
     @Override
     public void onHiddenChanged(boolean hidden)

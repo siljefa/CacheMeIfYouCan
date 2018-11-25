@@ -36,11 +36,13 @@ public class User
         return achievementsIds;
     }
 
-    public String getUserId() {
+    public String getUserId()
+    {
         return userId;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
@@ -69,15 +71,18 @@ public class User
         this.achievementsIds = achievementsIds;
     }
 
-    public void setUserId(String newuserId) {
+    public void setUserId(String newuserId)
+    {
         userId = newuserId;
     }
 
-    public void setName(String newname) {
+    public void setName(String newname)
+    {
         name = newname;
     }
 
-    public void setUserEmail(String newuserEmail) {
+    public void setUserEmail(String newuserEmail)
+    {
         userEmail = newuserEmail;
         name = newuserEmail;
     }

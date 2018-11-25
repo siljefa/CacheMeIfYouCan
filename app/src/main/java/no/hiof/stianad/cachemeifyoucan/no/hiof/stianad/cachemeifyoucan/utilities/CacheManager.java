@@ -18,6 +18,7 @@ public final class CacheManager
 
     private static MapFragment mapFragment;
     private static HashMap<Integer, Cache> caches = new HashMap<>();
+
     private CacheManager()
     {
 
@@ -25,8 +26,8 @@ public final class CacheManager
 
     public static Cache createCache(LatLng latLng, String description, String name, int difficulty, String creator)
     {
-        int cacheId = caches.size()+1;
-        while(true)
+        int cacheId = caches.size() + 1;
+        while (true)
         {
             if (!caches.containsKey(cacheId))
             {
@@ -34,8 +35,7 @@ public final class CacheManager
                 caches.put((cacheId), newCache);
                 addCacheToDatabase(newCache);
                 return newCache;
-            }
-            else
+            } else
                 cacheId++;
         }
     }
@@ -85,5 +85,4 @@ public final class CacheManager
         String cacheId = databaseCache.push().getKey();
         databaseCache.child(cacheId).setValue(cache);
     }
-
 }

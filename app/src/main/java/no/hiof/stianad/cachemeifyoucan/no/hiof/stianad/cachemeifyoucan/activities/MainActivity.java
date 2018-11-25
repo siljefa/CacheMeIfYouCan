@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.add(R.id.mainLayout, achievementsFragment, "achievements_fragment").hide(achievementsFragment);
         fragmentTransaction.add(R.id.mainLayout, filterCacheFragment, "filter_cache_fragment").hide(filterCacheFragment);
         fragmentTransaction.commit();
-        //showBackButton(false);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationProvider = locationManager.getBestProvider(new Criteria(), false);
@@ -143,15 +142,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (achievementsFragment.isVisible())
         {
-            backNavigationFromDrawerElements(achievementsFragment,fragmentTransactionOnClick);
-        }
-        else if (profileFragment.isVisible())
+            backNavigationFromDrawerElements(achievementsFragment, fragmentTransactionOnClick);
+        } else if (profileFragment.isVisible())
         {
-            backNavigationFromDrawerElements(profileFragment,fragmentTransactionOnClick);
-        }
-        else if (filterCacheFragment.isVisible())
+            backNavigationFromDrawerElements(profileFragment, fragmentTransactionOnClick);
+        } else if (filterCacheFragment.isVisible())
         {
-            backNavigationFromDrawerElements(filterCacheFragment,fragmentTransactionOnClick);
+            backNavigationFromDrawerElements(filterCacheFragment, fragmentTransactionOnClick);
         }
 
         if (mapFragment.isVisible())
@@ -195,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed()
     {
-        if(mapFragment.isVisible())
+        if (mapFragment.isVisible())
             super.onBackPressed();
         else
             onBackNavigation();

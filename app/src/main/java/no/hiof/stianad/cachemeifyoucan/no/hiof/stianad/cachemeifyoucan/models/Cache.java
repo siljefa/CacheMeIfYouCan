@@ -10,7 +10,7 @@ public class Cache implements Annotation
     private String name;
     private double latitude;
     private double longitude;
-    private String description= "";
+    private String description = "";
     private String creator = "";
     private int difficulty;
     private int cacheId;

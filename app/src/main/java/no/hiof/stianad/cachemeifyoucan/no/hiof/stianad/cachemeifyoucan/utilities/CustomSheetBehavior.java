@@ -138,13 +138,12 @@ public class CustomSheetBehavior
         sheetBehavior.setState(sheetState);
         lastSheetState = sheetState;
 
-        if(sheetState == BottomSheetBehavior.STATE_EXPANDED)
+        if (sheetState == BottomSheetBehavior.STATE_EXPANDED)
         {
             parentActivity.showBackButton(true);
             parentActivity.setToolbarColored(true);
             fillerSpaceForToolbar.setVisibility(View.VISIBLE);
-        }
-        else
+        } else
         {
             parentActivity.showBackButton(false);
             parentActivity.setToolbarColored(false);

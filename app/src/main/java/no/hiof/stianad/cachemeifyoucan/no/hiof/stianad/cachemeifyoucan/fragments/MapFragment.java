@@ -224,8 +224,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
                 cacheMarkersOnMap.put(selectedCacheMarker.getId(), newCache.getCacheId());
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_COLLAPSED);
                 UserManager.userCreatedCacheListAdd(newCache.getCacheId());
-            }
-            else
+            } else
             {
                 Toast.makeText(parentActivity, parentActivity.getString(R.string.toast_save_cache_failed), Toast.LENGTH_LONG).show();
                 cacheBottomSheet.setSheetState(BottomSheetBehavior.STATE_HALF_EXPANDED);
@@ -282,8 +281,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         {
             onFirstLocation();
             isFirstLocation = false;
-        }
-        else
+        } else
         {
             filterCaches();
         }
