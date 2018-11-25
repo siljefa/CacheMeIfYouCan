@@ -137,34 +137,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void backNavigationFromDrawerElements(Fragment fragment, FragmentTransaction transaction)
+    {
+        transaction.hide(fragment);
+        transaction.show(mapFragment);
+        mapFragment.closeSheet();
+        showBackButton(false);
+    }
+
     private void onBackNavigation()
     {
         FragmentTransaction fragmentTransactionOnClick = fragmentManager.beginTransaction();
 
         if (achievementsFragment.isVisible())
         {
-            fragmentTransactionOnClick.hide(achievementsFragment);
-            fragmentTransactionOnClick.show(mapFragment);
-            fragmentTransactionOnClick.commit();
-            mapFragment.closeSheet();
-            showBackButton(false);
+            backNavigationFromDrawerElements(achievementsFragment,fragmentTransactionOnClick);
         }
-        if (profileFragment.isVisible())
+        else if (profileFragment.isVisible())
         {
-            fragmentTransactionOnClick.hide(profileFragment);
-            fragmentTransactionOnClick.show(mapFragment);
-            fragmentTransactionOnClick.commit();
-            mapFragment.closeSheet();
-            showBackButton(false);
+            backNavigationFromDrawerElements(profileFragment,fragmentTransactionOnClick);
         }
-        if (filterCacheFragment.isVisible())
+        else if (filterCacheFragment.isVisible())
         {
-            fragmentTransactionOnClick.hide(filterCacheFragment);
-            fragmentTransactionOnClick.show(mapFragment);
-            fragmentTransactionOnClick.commit();
-            mapFragment.closeSheet();
-            showBackButton(false);
+            backNavigationFromDrawerElements(filterCacheFragment,fragmentTransactionOnClick);
         }
+
         if (mapFragment.isVisible())
         {
             mapFragment.collapseSheet();
@@ -176,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             fragmentTransactionOnClick.remove(weatherFragment);
             fragmentTransactionOnClick.show(mapFragment);
-            fragmentTransactionOnClick.commit();
             if (mapFragment.isExpandedSheet())
             {
                 showBackButton(true);
@@ -185,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else
                 showBackButton(false);
         }
+        fragmentTransactionOnClick.commit();
     }
 
     public void setToolbarBackIconDown(boolean down)
@@ -366,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void getLastKnownLocation()
+    public void requestLocationUpdates()
     {
         checkLocationPermission();
     }
