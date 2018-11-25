@@ -79,23 +79,23 @@ public final class UserManager
     public static void userFoundCacheListAdd(int id)
     {
         user.getFoundCacheIds().add(id);
-        userLists(user.getFoundCacheIds(), "foundCacheIds");
+        updateDatabaseUserList(user.getFoundCacheIds(), "foundCacheIds");
     }
 
     public static void userCreatedCacheListAdd(int id)
     {
         user.getCreatedCacheIds().add(id);
-        userLists(user.getCreatedCacheIds(), "createdCacheIds");
+        updateDatabaseUserList(user.getCreatedCacheIds(), "createdCacheIds");
     }
 
     public static void userAchievementsListAdd(int id)
     {
         user.getAchievementsIds().add(id);
-        userLists(user.getAchievementsIds(), "achievementsIds");
+        updateDatabaseUserList(user.getAchievementsIds(), "achievementsIds");
     }
 
     //Replace list in database with new list
-    private static void userLists(List<Integer> newList, String name)
+    private static void updateDatabaseUserList(List<Integer> newList, String name)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseUser = database.getReference("user");

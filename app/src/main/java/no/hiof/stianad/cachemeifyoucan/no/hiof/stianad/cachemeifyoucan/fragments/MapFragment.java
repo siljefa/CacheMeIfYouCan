@@ -27,7 +27,6 @@ import android.location.LocationListener;
 import android.widget.Toast;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import no.hiof.stianad.cachemeifyoucan.R;
@@ -84,7 +83,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Locatio
         gMap = googleMap;
         mapReady = true;
         setUpDefaultUISettings();
-        parentActivity.getLastKnownLocation();
+        parentActivity.requestLocationUpdates();
 
         googleMap.setOnMapLongClickListener(latLng ->
         {
